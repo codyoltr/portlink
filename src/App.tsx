@@ -12,10 +12,9 @@ import TechnicalExpertSelection from './pages/technical-expert/TechnicalExpertSe
 import TechnicalExpertJobDetails from './pages/technical-expert/TechnicalExpertJobDetails';
 import TechnicalExpertResults from './pages/technical-expert/TechnicalExpertResults';
 import PartnershipSelection from './pages/partnership/PartnershipSelection';
-import AgentDashboard from './pages/dashboard/AgentDashboard';
-import SubcontractorDashboard from './pages/dashboard/SubcontractorDashboard';
-import CaptainDashboard from './pages/dashboard/CaptainDashboard';
-import './App.css';
+import AgentDashboardPage from '@/features/dashboard/pages/AgentDashboardPage';
+import SubcontractorDashboardPage from '@/features/dashboard/pages/SubcontractorDashboardPage';
+import CaptainDashboardPage from '@/features/dashboard/pages/CaptainDashboardPage';
 
 function App() {
   return (
@@ -36,9 +35,9 @@ function App() {
         <Route path="/partnership" element={<PartnershipSelection />} />
 
         {/* Dashboards */}
-        <Route path="/dashboard/agent/*" element={<AgentDashboard />} />
-        <Route path="/dashboard/subcontractor/*" element={<SubcontractorDashboard />} />
-        <Route path="/dashboard/captain/*" element={<CaptainDashboard />} />
+        <Route path="/dashboard/agent/*" element={<AgentDashboardPage />} />
+        <Route path="/dashboard/subcontractor/*" element={<SubcontractorDashboardPage />} />
+        <Route path="/dashboard/captain/*" element={<CaptainDashboardPage />} />
       </Routes>
     </Router>
   );

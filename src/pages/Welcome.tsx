@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import FullPageLayout from '../components/FullPageLayout';
+import FullPageLayout from '@/features/shell/components/FullPageLayout';
 
 const Welcome: React.FC = () => {
   const navigate = useNavigate();

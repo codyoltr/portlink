@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Toast from '../../components/Toast';
-import CreateOfferModal from '../../components/offers/CreateOfferModal';
+import CreateOfferModal from '@/features/offers/components/CreateOfferModal';
 
 const LocalAgentResults: React.FC = () => {
     const navigate = useNavigate();
