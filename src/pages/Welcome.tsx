@@ -119,32 +119,51 @@ const Welcome: React.FC = () => {
 
   return (
     <FullPageLayout>
-      {/* Header - Hafif gölge ve geçişler */}
-      <header className="w-full py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200/50 dark:border-slate-700/50 flex-shrink-0 transition-all duration-300 hover:shadow-sm">
+     {/* --- YENİLENEN HEADER (ORTALANMIŞ MENÜ) --- */}
+      <header className="w-full py-5 px-4 sm:px-6 lg:px-8 flex items-center justify-between bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200/50 dark:border-slate-700/50 flex-shrink-0 transition-all duration-300 shadow-sm">
+        
+        {/* Sol Kısım: Logo */}
         <div className="flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <div className="bg-primary p-2 rounded-xl shadow-lg shadow-primary/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
-            <span className="material-icons-round text-white text-3xl">directions_boat</span>
+          <div className="bg-blue-600 p-2 rounded-xl shadow-lg shadow-blue-600/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+            <span className="material-icons-round text-white text-2xl">directions_boat</span>
           </div>
-          <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+          <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-400 dark:to-blue-600 bg-clip-text text-transparent">
             Portlink
           </span>
         </div>
-        <div className="flex items-center gap-6">
+
+        {/* Orta Kısım: Sayfa İçi Linkler (Boşluğu dolduran kısım) */}
+        <nav className="hidden md:flex items-center gap-8">
+          <button
+            onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+            className="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 after:transition-all hover:after:w-full">
+            Nasıl Çalışır?
+          </button>
+          <button
+            onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+            className="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 after:transition-all hover:after:w-full">
+            Hizmetler
+          </button>
           <button
             onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors font-medium relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all hover:after:w-full">
-            Hakkımızda
+            className="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 after:transition-all hover:after:w-full">
+            Neden Portlink?
           </button>
           <button
             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors font-medium relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all hover:after:w-full">
+            className="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 after:transition-all hover:after:w-full">
             İletişim
           </button>
+        </nav>
+
+        {/* Sağ Kısım: Giriş Butonu */}
+        <div className="flex items-center">
           <button
             onClick={() => navigate('/login')}
-            className="px-6 py-2.5 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all duration-300 shadow-md shadow-primary/20 hover:shadow-xl hover:shadow-primary/40 transform hover:-translate-y-0.5"
+            className="px-6 py-2.5 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all duration-300 shadow-md shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/40 transform hover:-translate-y-0.5 flex items-center gap-2"
           >
             Giriş Yap
+            <span className="material-icons-round text-sm">login</span>
           </button>
         </div>
       </header>
@@ -154,7 +173,7 @@ const Welcome: React.FC = () => {
         
         {/* Hero Section */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-24">
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-8">
             <div className="space-y-8 animate-[fade-in-up_1s_ease-out]">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 dark:bg-primary/20 rounded-full text-primary font-semibold text-sm hover:bg-primary/20 transition-colors cursor-default">
                 <span className="material-icons-round text-base animate-pulse">rocket_launch</span>
@@ -223,7 +242,8 @@ const Welcome: React.FC = () => {
         </section>
 
         {/* --- YENİ PREMİUM NASIL ÇALIŞIR BÖLÜMÜ --- */}
-        <section className="w-full py-20 bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
+        <section id="how-it-works" className="w-full py-10 bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 scroll-mt-20"></section>
+        <section className="w-full py-10 bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h3 className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-4">
@@ -259,6 +279,7 @@ const Welcome: React.FC = () => {
 
         {/* --- HİZMET SEÇİMİ KARTLARI SECTION --- */}
         <section className="w-full py-20 bg-white dark:bg-slate-950">
+           <section id="services" className="w-full py-20 bg-white dark:bg-slate-950 scroll-mt-20"></section>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h3 className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-4">
