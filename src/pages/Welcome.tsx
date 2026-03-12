@@ -10,7 +10,6 @@ const services = [
   { id: 2, title: 'Teknik Servis', image: '/images/teknik-servis.jpg' },
   { id: 3, title: 'Lojistik', image: '/images/lojistik.jpg' },
   { id: 4, title: 'Danışmanlık', image: '/images/danismanlik.jpg' },
-  { id: 5, title: 'Sörveyör', image: '/images/sorveyor.jpg' },
 ];
 
 const steps = [
@@ -62,7 +61,6 @@ const categories = [
   { icon: 'build', title: 'Teknik Servis', color: 'text-orange-500', bg: 'bg-orange-500/10' },
   { icon: 'inventory_2', title: 'Lojistik', color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
   { icon: 'support_agent', title: 'Danışmanlık', color: 'text-purple-500', bg: 'bg-purple-500/10' },
-  { icon: 'shutter_speed', title: 'Sörveyör', color: 'text-red-500', bg: 'bg-red-500/10' },
 ];
 
 // Yeni Bento Box (Neden Portlink) için güncellenmiş özellikler listesi
@@ -119,11 +117,11 @@ const Welcome: React.FC = () => {
 
   return (
     <FullPageLayout>
-     {/* --- YENİLENEN HEADER (ORTALANMIŞ MENÜ) --- */}
-      <header className="w-full py-5 px-4 sm:px-6 lg:px-8 flex items-center justify-between bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200/50 dark:border-slate-700/50 flex-shrink-0 transition-all duration-300 shadow-sm">
+    {/* --- GÜNCELLENMİŞ SIRALAMALI HEADER --- */}
+      <header className="w-full py-5 px-4 sm:px-6 lg:px-8 flex items-center justify-between bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200/50 dark:border-slate-700/50 transition-all duration-300 shadow-sm">
         
-        {/* Sol Kısım: Logo */}
-        <div className="flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+        {/* 1. Logo (En Sol) */}
+        <div className="flex items-center gap-3 group cursor-pointer shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <div className="bg-blue-600 p-2 rounded-xl shadow-lg shadow-blue-600/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
             <span className="material-icons-round text-white text-2xl">directions_boat</span>
           </div>
@@ -132,35 +130,42 @@ const Welcome: React.FC = () => {
           </span>
         </div>
 
-        {/* Orta Kısım: Sayfa İçi Linkler (Boşluğu dolduran kısım) */}
-        <nav className="hidden md:flex items-center gap-8">
+        {/* 2. Menü (Sıralama: Nasıl Çalışır -> Hizmetler -> Neden Portlink -> İletişim) */}
+        <nav className="hidden md:flex items-center justify-center flex-1 max-w-2xl mx-auto gap-8 lg:gap-12">
           <button
             onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 after:transition-all hover:after:w-full">
-            Nasıl Çalışır?
+            className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-all relative group">
+            Portlink Nasıl Çalışır?
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
           </button>
+
           <button
             onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 after:transition-all hover:after:w-full">
+            className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-all relative group">
             Hizmetler
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
           </button>
+
           <button
             onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 after:transition-all hover:after:w-full">
+            className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-all relative group">
             Neden Portlink?
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
           </button>
+
           <button
             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 after:transition-all hover:after:w-full">
+            className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-all relative group">
             İletişim
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
           </button>
         </nav>
 
-        {/* Sağ Kısım: Giriş Butonu */}
-        <div className="flex items-center">
+        {/* 3. Buton (En Sağ) */}
+        <div className="shrink-0">
           <button
             onClick={() => navigate('/login')}
-            className="px-6 py-2.5 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all duration-300 shadow-md shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/40 transform hover:-translate-y-0.5 flex items-center gap-2"
+            className="px-6 py-2.5 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-md hover:shadow-blue-600/40 transform hover:-translate-y-0.5 flex items-center gap-2"
           >
             Giriş Yap
             <span className="material-icons-round text-sm">login</span>
@@ -242,8 +247,7 @@ const Welcome: React.FC = () => {
         </section>
 
         {/* --- YENİ PREMİUM NASIL ÇALIŞIR BÖLÜMÜ --- */}
-        <section id="how-it-works" className="w-full py-10 bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 scroll-mt-20"></section>
-        <section className="w-full py-10 bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
+    <section id="how-it-works" className="w-full pt-20 pb-10 bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h3 className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-4">
@@ -276,7 +280,6 @@ const Welcome: React.FC = () => {
             </div>
           </div>
         </section>
-
         {/* --- HİZMET SEÇİMİ KARTLARI SECTION --- */}
         <section className="w-full py-20 bg-white dark:bg-slate-950">
            <section id="services" className="w-full py-20 bg-white dark:bg-slate-950 scroll-mt-20"></section>
@@ -289,9 +292,9 @@ const Welcome: React.FC = () => {
                 İhtiyacınız Olan Hizmet Dalını Seçin
               </h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div className="flex flex-wrap justify-center gap-6">
               {services.map((service) => (
-                <div key={service.id} className="relative group h-96 lg:h-80 rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300">
+                <div key={service.id} className="relative group h-96 lg:h-80 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(23%)] rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300">
                   <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url(${service.image})` }}></div>
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent transition-opacity duration-300 group-hover:from-blue-900/90"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col items-center justify-end h-full transform transition-transform duration-300 group-hover:-translate-y-2">
