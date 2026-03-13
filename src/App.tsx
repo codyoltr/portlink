@@ -12,9 +12,17 @@ import TechnicalExpertSelection from './pages/technical-expert/TechnicalExpertSe
 import TechnicalExpertJobDetails from './pages/technical-expert/TechnicalExpertJobDetails';
 import TechnicalExpertResults from './pages/technical-expert/TechnicalExpertResults';
 import PartnershipSelection from './pages/partnership/PartnershipSelection';
+
+import DashboardLayout from '@/features/dashboard/components/DashboardLayout';
 import AgentDashboardPage from '@/features/dashboard/pages/AgentDashboardPage';
 import SubcontractorDashboardPage from '@/features/dashboard/pages/SubcontractorDashboardPage';
 import CaptainDashboardPage from '@/features/dashboard/pages/CaptainDashboardPage';
+
+// --- YENİ SAYFALAR ---
+import TaseronRehberi from './pages/local-agent/TaseronRehberi'; 
+import ArsivFinans from './pages/local-agent/ArsivFinans';
+import TaseronEkle from './pages/local-agent/TaseronEkle'; 
+import FinansEkle from './pages/local-agent/FinansEkle'; // <-- Burayı kontrol et
 
 function App() {
   return (
@@ -34,10 +42,32 @@ function App() {
         <Route path="/technical-expert/results" element={<TechnicalExpertResults />} />
         <Route path="/partnership" element={<PartnershipSelection />} />
 
-        {/* Dashboards */}
-        <Route path="/dashboard/agent/*" element={<AgentDashboardPage />} />
-        <Route path="/dashboard/subcontractor/*" element={<SubcontractorDashboardPage />} />
-        <Route path="/dashboard/captain/*" element={<CaptainDashboardPage />} />
+        {/* --- ACENTE DASHBOARD --- */}
+        <Route path="/dashboard/agent/*" element={
+          <DashboardLayout role="agent">
+            <Routes>
+              <Route path="/" element={<AgentDashboardPage />} />
+              <Route path="taseron-rehberi" element={<TaseronRehberi />} />
+              <Route path="arsiv-finans" element={<ArsivFinans />} />
+              <Route path="taseron-ekle" element={<TaseronEkle />} /> 
+              {/* ARŞİV'DEKİ BUTONUN GİDECEĞİ YER: */}
+              <Route path="finans-ekle" element={<FinansEkle />} /> 
+            </Routes>
+          </DashboardLayout>
+        } />
+
+        {/* --- DİĞER ROLLER --- */}
+        <Route path="/dashboard/subcontractor/*" element={
+          <DashboardLayout role="subcontractor">
+             <Routes><Route path="/" element={<SubcontractorDashboardPage />} /></Routes>
+          </DashboardLayout>
+        } />
+
+        <Route path="/dashboard/captain/*" element={
+          <DashboardLayout role="captain">
+             <Routes><Route path="/" element={<CaptainDashboardPage />} /></Routes>
+          </DashboardLayout>
+        } />
       </Routes>
     </Router>
   );

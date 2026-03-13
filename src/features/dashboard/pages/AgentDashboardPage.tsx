@@ -1,9 +1,11 @@
 import React from 'react';
-import DashboardLayout from '@/features/dashboard/components/DashboardLayout';
+// DashboardLayout importunu siliyoruz çünkü artık App.tsx'te sarmaladık.
 
 const AgentDashboardPage: React.FC = () => {
   return (
-    <DashboardLayout role="agent">
+    // DashboardLayout etiketini buradan KALDIRDIK. 
+    // Sadece asıl içerik kalıyor.
+    <>
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">Acente Özeti</h2>
         <p className="text-slate-500 dark:text-slate-400">Son 30 günlük işlem hacminiz ve aktif süreçleriniz.</p>
@@ -102,9 +104,8 @@ const AgentDashboardPage: React.FC = () => {
           </table>
         </div>
       </div>
-    </DashboardLayout>
+    </> // DashboardLayout etiketini buradan KALDIRDIK.
   );
 };
 
 export default AgentDashboardPage;
-
