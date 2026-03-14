@@ -42,7 +42,9 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
     { label: 'İş Ara', path: `/dashboard/subcontractor/jobs`, icon: 'search' },
     { label: 'Verilen Teklifler', path: `/dashboard/subcontractor/offers`, icon: 'send' },
     { label: 'Kazanılan İşler', path: `/dashboard/subcontractor/won-jobs`, icon: 'verified' },
+    { label: 'Aktif İşlerim', path: `/dashboard/subcontractor/active-jobs`, icon: 'autorenew' },
     { label: 'Cüzdan ve Kazanç', path: `/dashboard/subcontractor/wallet`, icon: 'account_balance_wallet' },
+    { label: 'Profil ve Kapasite', path: `/dashboard/subcontractor/profile-capacity`, icon: 'badge' },
   ];
 
   const captainNavItems = [

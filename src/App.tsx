@@ -21,6 +21,10 @@ import SubcontractorJobSearchPage from '@/pages/subcontractor/SubcontractorJobSe
 import SubcontractorWonJobsPage from '@/pages/subcontractor/SubcontractorWonJobsPage';
 import SubcontractorOffersPage from '@/pages/subcontractor/SubcontractorOffersPage';
 import SubcontractorWalletPage from '@/pages/subcontractor/SubcontractorWalletPage';
+import SubcontractorActiveJobsPage from '@/pages/subcontractor/SubcontractorActiveJobsPage';
+import SubcontractorJobDetailPage from "@/pages/subcontractor/SubcontractorJobDetailPage";
+import SubcontractorProfileCapacityPage from '@/pages/subcontractor/SubcontractorProfileCapacityPage';
+import SubcontractorProfileEditPage from '@/pages/subcontractor/SubcontractorProfileEditPage';
 
 // --- YENİ SAYFALAR ---
 import TaseronRehberi from './pages/local-agent/TaseronRehberi'; 
@@ -75,6 +79,10 @@ function App() {
                <Route path="offers" element={<SubcontractorOffersPage />} />
                <Route path="won-jobs" element={<SubcontractorWonJobsPage />} />
                <Route path="wallet" element={<SubcontractorWalletPage />} />
+               <Route path="active-jobs/:id" element={<SubcontractorJobDetailPage />} />
+               <Route path="active-jobs" element={<SubcontractorActiveJobsPage />} />
+               <Route path="profile-capacity" element={<SubcontractorProfileCapacityPage />} />
+               <Route path="profile-edit" element={<SubcontractorProfileEditPage />} />
              </Routes>
           </DashboardLayout>
         } />
