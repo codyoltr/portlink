@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DashboardLayout from '@/features/dashboard/components/DashboardLayout';
+import DashboardLayout from '@/features/dashboard/components/LocalAgentDashboard/DashboardLayout';
 
 const Home: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'agent' | 'subcontractor'>('all');

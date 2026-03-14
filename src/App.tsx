@@ -13,7 +13,7 @@ import TechnicalExpertJobDetails from './pages/technical-expert/TechnicalExpertJ
 import TechnicalExpertResults from './pages/technical-expert/TechnicalExpertResults';
 import PartnershipSelection from './pages/partnership/PartnershipSelection';
 
-import DashboardLayout from '@/features/dashboard/components/DashboardLayout';
+import DashboardLayout from '@/features/dashboard/components/LocalAgentDashboard/DashboardLayout';
 import AgentDashboardPage from '@/features/dashboard/pages/AgentDashboardPage';
 import SubcontractorDashboardPage from '@/features/dashboard/pages/SubcontractorDashboardPage';
 import CaptainDashboardPage from '@/features/dashboard/pages/CaptainDashboardPage';

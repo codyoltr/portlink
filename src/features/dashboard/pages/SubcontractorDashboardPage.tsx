@@ -1,5 +1,5 @@
 import React from 'react';
-import DashboardLayout from '@/features/dashboard/components/DashboardLayout';
+import DashboardLayout from '@/features/dashboard/components/LocalAgentDashboard/DashboardLayout';
 
 const SubcontractorDashboardPage: React.FC = () => {
   return (
