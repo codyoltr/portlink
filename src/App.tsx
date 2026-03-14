@@ -17,6 +17,8 @@ import SubcontractorDashboardPage from '@/features/dashboard/pages/Subcontractor
 import CaptainDashboardPage from '@/features/dashboard/pages/CaptainDashboardPage';
 import SubcontractorActiveJobsPage from '@/features/dashboard/pages/SubcontractorActiveJobsPage';
 import SubcontractorJobDetailPage from "@/features/dashboard/pages/SubcontractorJobDetailPage";
+import SubcontractorProfileCapacityPage from '@/features/dashboard/pages/SubcontractorProfileCapacityPage';
+import SubcontractorProfileEditPage from '@/features/dashboard/pages/SubcontractorProfileEditPage';
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
         <Route path="/dashboard/agent/*" element={<AgentDashboardPage />} />
         <Route path="/dashboard/subcontractor/active-jobs/:id" element={<SubcontractorJobDetailPage />} />
         <Route path="/dashboard/subcontractor/active-jobs" element={<SubcontractorActiveJobsPage />} />
+        <Route path="/dashboard/subcontractor/profile-capacity" element={<SubcontractorProfileCapacityPage />} />
+        <Route path="/dashboard/subcontractor/profile-edit" element={<SubcontractorProfileEditPage />} />
         <Route path="/dashboard/subcontractor/*" element={<SubcontractorDashboardPage />} />
         <Route path="/dashboard/captain/*" element={<CaptainDashboardPage />} />
       </Routes>
