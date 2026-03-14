@@ -15,10 +15,10 @@ import PartnershipSelection from './pages/partnership/PartnershipSelection';
 import AgentDashboardPage from '@/features/dashboard/pages/AgentDashboardPage';
 import SubcontractorDashboardPage from '@/features/dashboard/pages/SubcontractorDashboardPage';
 import CaptainDashboardPage from '@/features/dashboard/pages/CaptainDashboardPage';
-import SubcontractorActiveJobsPage from '@/features/dashboard/pages/SubcontractorActiveJobsPage';
-import SubcontractorJobDetailPage from "@/features/dashboard/pages/SubcontractorJobDetailPage";
-import SubcontractorProfileCapacityPage from '@/features/dashboard/pages/SubcontractorProfileCapacityPage';
-import SubcontractorProfileEditPage from '@/features/dashboard/pages/SubcontractorProfileEditPage';
+import SubcontractorActiveJobsPage from '@/pages/subcontractor/SubcontractorActiveJobsPage';
+import SubcontractorJobDetailPage from "@/pages/subcontractor/SubcontractorJobDetailPage";
+import SubcontractorProfileCapacityPage from '@/pages/subcontractor/SubcontractorProfileCapacityPage';
+import SubcontractorProfileEditPage from '@/pages/subcontractor/SubcontractorProfileEditPage';
 
 function App() {
   return (
