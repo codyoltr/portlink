@@ -37,6 +37,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
   const agentNavItems = [
     ...baseNavItems,
     { label: 'Gelen Teklifler', path: `/dashboard/${role}/offers`, icon: 'receipt_long' },
+    { label: 'Devam Eden İşler', path: `/dashboard/${role}/assigned`, icon: 'autorenew' },
     { label: 'Aktif İlanlarım', path: `/dashboard/${role}/jobs`, icon: 'work' },
   ];
 
