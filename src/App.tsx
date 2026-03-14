@@ -15,6 +15,10 @@ import PartnershipSelection from './pages/partnership/PartnershipSelection';
 import AgentDashboardPage from '@/features/dashboard/pages/AgentDashboardPage';
 import SubcontractorDashboardPage from '@/features/dashboard/pages/SubcontractorDashboardPage';
 import CaptainDashboardPage from '@/features/dashboard/pages/CaptainDashboardPage';
+import SubcontractorJobSearchPage from '@/features/dashboard/pages/SubcontractorJobSearchPage';
+import SubcontractorWonJobsPage from '@/features/dashboard/pages/SubcontractorWonJobsPage';
+import SubcontractorOffersPage from '@/features/dashboard/pages/SubcontractorOffersPage';
+import SubcontractorWalletPage from '@/features/dashboard/pages/SubcontractorWalletPage';
 
 function App() {
   return (
@@ -36,7 +40,11 @@ function App() {
 
         {/* Dashboards */}
         <Route path="/dashboard/agent/*" element={<AgentDashboardPage />} />
-        <Route path="/dashboard/subcontractor/*" element={<SubcontractorDashboardPage />} />
+        <Route path="/dashboard/subcontractor/jobs" element={<SubcontractorJobSearchPage />} />
+        <Route path="/dashboard/subcontractor/offers" element={<SubcontractorOffersPage />} />
+        <Route path="/dashboard/subcontractor/won-jobs" element={<SubcontractorWonJobsPage />} />
+        <Route path="/dashboard/subcontractor" element={<SubcontractorDashboardPage />} />
+        <Route path="/dashboard/subcontractor/wallet" element={<SubcontractorWalletPage />} />
         <Route path="/dashboard/captain/*" element={<CaptainDashboardPage />} />
       </Routes>
     </Router>
