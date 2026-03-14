@@ -17,6 +17,10 @@ import DashboardLayout from '@/features/dashboard/components/DashboardLayout';
 import AgentDashboardPage from '@/features/dashboard/pages/AgentDashboardPage';
 import SubcontractorDashboardPage from '@/features/dashboard/pages/SubcontractorDashboardPage';
 import CaptainDashboardPage from '@/features/dashboard/pages/CaptainDashboardPage';
+import SubcontractorJobSearchPage from '@/pages/subcontractor/SubcontractorJobSearchPage';
+import SubcontractorWonJobsPage from '@/pages/subcontractor/SubcontractorWonJobsPage';
+import SubcontractorOffersPage from '@/pages/subcontractor/SubcontractorOffersPage';
+import SubcontractorWalletPage from '@/pages/subcontractor/SubcontractorWalletPage';
 
 // --- YENİ SAYFALAR ---
 import TaseronRehberi from './pages/local-agent/TaseronRehberi'; 
@@ -65,7 +69,13 @@ function App() {
         {/* --- DİĞER ROLLER --- */}
         <Route path="/dashboard/subcontractor/*" element={
           <DashboardLayout role="subcontractor">
-             <Routes><Route path="/" element={<SubcontractorDashboardPage />} /></Routes>
+             <Routes>
+               <Route path="/" element={<SubcontractorDashboardPage />} />
+               <Route path="jobs" element={<SubcontractorJobSearchPage />} />
+               <Route path="offers" element={<SubcontractorOffersPage />} />
+               <Route path="won-jobs" element={<SubcontractorWonJobsPage />} />
+               <Route path="wallet" element={<SubcontractorWalletPage />} />
+             </Routes>
           </DashboardLayout>
         } />
 

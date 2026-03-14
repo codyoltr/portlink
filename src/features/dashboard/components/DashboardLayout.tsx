@@ -39,8 +39,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
 
   const subNavItems = [
     { label: 'Özet (Dashboard)', path: `/dashboard/subcontractor`, icon: 'dashboard' },
+    { label: 'İş Ara', path: `/dashboard/subcontractor/jobs`, icon: 'search' },
     { label: 'Verilen Teklifler', path: `/dashboard/subcontractor/offers`, icon: 'send' },
-    { label: 'Kazanılan İşler', path: `/dashboard/subcontractor/jobs`, icon: 'verified' },
+    { label: 'Kazanılan İşler', path: `/dashboard/subcontractor/won-jobs`, icon: 'verified' },
+    { label: 'Cüzdan ve Kazanç', path: `/dashboard/subcontractor/wallet`, icon: 'account_balance_wallet' },
   ];
 
   const captainNavItems = [
