@@ -43,7 +43,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
   const subNavItems = [
     ...baseNavItems,
     { label: 'Verilen Teklifler', path: `/dashboard/${role}/offers`, icon: 'send' },
-    { label: 'Kazanılan İşler', path: `/dashboard/${role}/jobs`, icon: 'verified' },
+    { label: 'Aktif İşlerim', path: `/dashboard/${role}/active-jobs`, icon: 'verified' },
   ];
 
   const captainNavItems = [

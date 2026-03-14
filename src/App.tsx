@@ -15,6 +15,7 @@ import PartnershipSelection from './pages/partnership/PartnershipSelection';
 import AgentDashboardPage from '@/features/dashboard/pages/AgentDashboardPage';
 import SubcontractorDashboardPage from '@/features/dashboard/pages/SubcontractorDashboardPage';
 import CaptainDashboardPage from '@/features/dashboard/pages/CaptainDashboardPage';
+import SubcontractorActiveJobsPage from '@/features/dashboard/pages/SubcontractorActiveJobsPage';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
 
         {/* Dashboards */}
         <Route path="/dashboard/agent/*" element={<AgentDashboardPage />} />
+        <Route path="/dashboard/subcontractor/active-jobs" element={<SubcontractorActiveJobsPage />} />
         <Route path="/dashboard/subcontractor/*" element={<SubcontractorDashboardPage />} />
         <Route path="/dashboard/captain/*" element={<CaptainDashboardPage />} />
       </Routes>
