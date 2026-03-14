@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '@/features/dashboard/components/DashboardLayout';
 
@@ -46,6 +46,27 @@ const jobs = [
 
 const SubcontractorJobSearchPage: React.FC = () => {
   const navigate = useNavigate();
+const [selectedJob, setSelectedJob] = useState<(typeof jobs)[number] | null>(null);
+const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
+
+const openDetailModal = (job: (typeof jobs)[number]) => {
+  setSelectedJob(job);
+  setIsOfferModalOpen(false);
+  setIsDetailModalOpen(true);
+};
+
+const openOfferModal = (job: (typeof jobs)[number]) => {
+  setSelectedJob(job);
+  setIsDetailModalOpen(false);
+  setIsOfferModalOpen(true);
+};
+
+const closeModals = () => {
+  setIsDetailModalOpen(false);
+  setIsOfferModalOpen(false);
+  setSelectedJob(null);
+};
 
   return (
     <DashboardLayout role="subcontractor">
@@ -184,12 +205,18 @@ const SubcontractorJobSearchPage: React.FC = () => {
             </div>
 
             <div className="pt-4 border-t border-slate-100 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <button className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:border-primary/40 hover:text-primary transition-all">
+              <button
+                onClick={() => openDetailModal(job)}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:border-primary/40 hover:text-primary transition-all"
+              >
                 <span className="material-icons-round text-[18px]">visibility</span>
                 Detayları Gör
               </button>
 
-              <button className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all">
+              <button
+                onClick={() => openOfferModal(job)}
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all"
+              >
                 <span className="material-icons-round text-[18px]">send</span>
                 Teklif Ver
               </button>
@@ -197,6 +224,158 @@ const SubcontractorJobSearchPage: React.FC = () => {
           </div>
         ))}
       </div>
+{isDetailModalOpen && selectedJob && (
+  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-[2px] px-4">
+    <div className="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+      <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-700">
+        <div>
+          <h3 className="text-xl font-bold text-slate-800 dark:text-white">
+            İlan Detayı
+          </h3>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+            Seçilen ilana ait detay bilgiler
+          </p>
+        </div>
+
+        <button
+          onClick={closeModals}
+          className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all"
+        >
+          <span className="material-icons-round">close</span>
+        </button>
+      </div>
+
+      <div className="p-6">
+        <div className="flex items-start justify-between gap-3 mb-5">
+          <div>
+            <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+              {selectedJob.title}
+            </h4>
+            <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+              <span className="material-icons-round text-[16px] text-primary">apartment</span>
+              {selectedJob.company}
+            </div>
+          </div>
+
+          <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md whitespace-nowrap ${selectedJob.tagStyle}`}>
+            {selectedJob.tag}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+          <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Konum</p>
+            <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{selectedJob.location}</p>
+          </div>
+
+          <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Bütçe</p>
+            <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{selectedJob.budget}</p>
+          </div>
+
+          <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Son Tarih</p>
+            <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{selectedJob.deadline}</p>
+          </div>
+        </div>
+
+        <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-700/60 p-5 mb-6">
+          <h5 className="text-sm font-bold text-slate-800 dark:text-white mb-2">İş Açıklaması</h5>
+          <p className="text-sm leading-7 text-slate-600 dark:text-slate-300">
+            {selectedJob.description}
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row justify-end gap-3">
+          <button
+            onClick={closeModals}
+            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:border-primary/40 hover:text-primary transition-all"
+          >
+            Kapat
+          </button>
+
+          <button
+  onClick={() => {
+    if (selectedJob) {
+      openOfferModal(selectedJob);
+    }
+  }}
+  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all"
+>
+  <span className="material-icons-round text-[18px]">send</span>
+  Bu İlan İçin Teklif Ver
+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+      )}
+      {isOfferModalOpen && selectedJob && (
+  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-[2px] px-4">
+    <div className="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+      <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-700">
+        <div>
+          <h3 className="text-xl font-bold text-slate-800 dark:text-white">
+            Teklif Ver
+          </h3>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+            {selectedJob.title} ilanı için teklif oluşturun
+          </p>
+        </div>
+
+        <button
+          onClick={closeModals}
+          className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all"
+        >
+          <span className="material-icons-round">close</span>
+        </button>
+      </div>
+
+      <div className="p-6 space-y-5">
+        <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-700/60 p-4">
+          <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">İlan</p>
+          <p className="font-bold text-slate-800 dark:text-white">{selectedJob.title}</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{selectedJob.company}</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            type="text"
+            placeholder="Teklif Tutarı"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
+          />
+          <input
+            type="text"
+            placeholder="Tahmini Süre"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
+          />
+        </div>
+
+        <textarea
+          rows={5}
+          placeholder="Açıklama / Not"
+          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 resize-none"
+        />
+
+        <div className="flex justify-end gap-3">
+          <button
+            onClick={closeModals}
+            className="px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold"
+          >
+            Vazgeç
+          </button>
+
+          <button
+            onClick={closeModals}
+            className="px-5 py-3 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all"
+          >
+            Teklifi Gönder
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
     </DashboardLayout>
   );
 };
