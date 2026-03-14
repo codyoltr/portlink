@@ -1,5 +1,6 @@
 import React from 'react';
 import DashboardLayout from '@/features/dashboard/components/DashboardLayout';
+import { Link } from "react-router-dom";
 
 const activeJobs = [
   {
@@ -188,9 +189,12 @@ const SubcontractorActiveJobsPage: React.FC = () => {
                     </span>
                   </div>
 
-                  <button className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-xl transition-all">
+                  <Link
+                    to={`/dashboard/subcontractor/active-jobs/${job.id}`}
+                    className="block w-full text-center bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-xl transition-all"
+                  >
                     İş Detayını Gör
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
