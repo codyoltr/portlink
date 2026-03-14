@@ -12,11 +12,13 @@ import TechnicalExpertSelection from './pages/technical-expert/TechnicalExpertSe
 import TechnicalExpertJobDetails from './pages/technical-expert/TechnicalExpertJobDetails';
 import TechnicalExpertResults from './pages/technical-expert/TechnicalExpertResults';
 import PartnershipSelection from './pages/partnership/PartnershipSelection';
+import Signup from './pages/Signup';
+import SignupAgent from './pages/SignupAgent';
+import SignupSubcontractor from './pages/SignupSubcontractor';
 
 import DashboardLayout from '@/features/dashboard/components/LocalAgentDashboard/DashboardLayout';
 import AgentDashboardPage from '@/features/dashboard/pages/AgentDashboardPage';
 import SubcontractorDashboardPage from '@/features/dashboard/pages/SubcontractorDashboardPage';
-import CaptainDashboardPage from '@/features/dashboard/pages/CaptainDashboardPage';
 
 // --- YENİ SAYFALAR ---
 import TaseronRehberi from './pages/local-agent/TaseronRehberi'; 
@@ -41,6 +43,9 @@ function App() {
         <Route path="/technical-expert/details" element={<TechnicalExpertJobDetails />} />
         <Route path="/technical-expert/results" element={<TechnicalExpertResults />} />
         <Route path="/partnership" element={<PartnershipSelection />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup/agent" element={<SignupAgent />} />
+        <Route path="/signup/subcontractor" element={<SignupSubcontractor />} />
 
         {/* --- ACENTE DASHBOARD --- */}
         <Route path="/dashboard/agent/*" element={
@@ -60,12 +65,6 @@ function App() {
         <Route path="/dashboard/subcontractor/*" element={
           <DashboardLayout role="subcontractor">
              <Routes><Route path="/" element={<SubcontractorDashboardPage />} /></Routes>
-          </DashboardLayout>
-        } />
-
-        <Route path="/dashboard/captain/*" element={
-          <DashboardLayout role="captain">
-             <Routes><Route path="/" element={<CaptainDashboardPage />} /></Routes>
           </DashboardLayout>
         } />
       </Routes>
