@@ -15,6 +15,7 @@ import PartnershipSelection from './pages/partnership/PartnershipSelection';
 import AgentDashboardPage from '@/features/dashboard/pages/AgentDashboardPage';
 import SubcontractorDashboardPage from '@/features/dashboard/pages/SubcontractorDashboardPage';
 import CaptainDashboardPage from '@/features/dashboard/pages/CaptainDashboardPage';
+import CreateJob from './pages/CreateJob';
 
 function App() {
   return (
@@ -33,7 +34,7 @@ function App() {
         <Route path="/technical-expert/details" element={<TechnicalExpertJobDetails />} />
         <Route path="/technical-expert/results" element={<TechnicalExpertResults />} />
         <Route path="/partnership" element={<PartnershipSelection />} />
-
+        <Route path="/create-job" element={<CreateJob />} />
         {/* Dashboards */}
         <Route path="/dashboard/agent/*" element={<AgentDashboardPage />} />
         <Route path="/dashboard/subcontractor/*" element={<SubcontractorDashboardPage />} />
