@@ -10,10 +10,11 @@ const CreateJob: React.FC = () => {
   return (
     <DashboardLayout role="agent">
 
-      <div className="max-w-4xl mx-auto mt-10">
+      <div className="max-w-5xl mx-auto mt-10 px-6">
 
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/dashboard/agent")
+}
           className="text-sm text-primary mb-4"
         >
           ← Geri Dön
