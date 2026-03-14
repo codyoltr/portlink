@@ -55,13 +55,7 @@ const steps = [
   }
 ];
 
-// Harita bölümü için kullanılan eski kategori listesi (Güvende, dışarıda)
-const categories = [
-  { icon: 'anchor', title: 'Acentelik', color: 'text-blue-500', bg: 'bg-blue-500/10' },
-  { icon: 'build', title: 'Teknik Servis', color: 'text-orange-500', bg: 'bg-orange-500/10' },
-  { icon: 'inventory_2', title: 'Lojistik', color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
-  { icon: 'support_agent', title: 'Danışmanlık', color: 'text-purple-500', bg: 'bg-purple-500/10' },
-];
+
 
 // Yeni Bento Box (Neden Portlink) için güncellenmiş özellikler listesi
 const features = [

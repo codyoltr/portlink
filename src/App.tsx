@@ -23,6 +23,9 @@ import TaseronRehberi from './pages/local-agent/TaseronRehberi';
 import ArsivFinans from './pages/local-agent/ArsivFinans';
 import TaseronEkle from './pages/local-agent/TaseronEkle'; 
 import FinansEkle from './pages/local-agent/FinansEkle'; // <-- Burayı kontrol et
+import AgentJobs from '@/features/dashboard/pages/AgentJobs';
+import AgentAssignedJobs from '@/features/dashboard/pages/AgentAssignedJobs';
+import AgentJobDetails from '@/features/dashboard/pages/AgentJobDetails';
 
 function App() {
   return (
@@ -52,6 +55,9 @@ function App() {
               <Route path="taseron-ekle" element={<TaseronEkle />} /> 
               {/* ARŞİV'DEKİ BUTONUN GİDECEĞİ YER: */}
               <Route path="finans-ekle" element={<FinansEkle />} /> 
+              <Route path="jobs" element={<AgentJobs />} />
+              <Route path="assigned" element={<AgentAssignedJobs />} />
+              <Route path="jobs/:id" element={<AgentJobDetails />} />
             </Routes>
           </DashboardLayout>
         } />
