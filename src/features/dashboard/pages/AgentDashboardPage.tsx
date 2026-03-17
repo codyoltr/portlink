@@ -168,11 +168,13 @@ const AgentDashboardPage: React.FC = () => {
 
 
       {/* QUICK ACTIONS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
 
         <div
           onClick={() => navigate("/create-job")}
-          className="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700/50 hover:shadow-lg hover:-translate-y-1 cursor-pointer transition flex items-center gap-4"
+     className="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700/50 
+hover:shadow-lg hover:-translate-y-1 cursor-pointer transition 
+flex items-center justify-center gap-4 text-center"
         >
 
           <div className="w-10 h-10 bg-primary/10 text-primary flex items-center justify-center rounded-xl">
@@ -192,12 +194,14 @@ const AgentDashboardPage: React.FC = () => {
         </div>
 
 
-        <div className="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700/50 hover:shadow-lg hover:-translate-y-1 cursor-pointer transition flex items-center gap-4">
-
+        <div
+          onClick={() => navigate("/offers")}
+         className="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700/50 
+hover:shadow-lg hover:-translate-y-1 cursor-pointer transition 
+flex items-center justify-center gap-4 text-center">
           <div className="w-10 h-10 bg-primary/10 text-primary flex items-center justify-center rounded-xl">
             <span className="material-icons-round">mail</span>
           </div>
-
           <div>
             <h4 className="font-bold text-slate-800 dark:text-white">
               Gelen Teklifler
@@ -207,28 +211,10 @@ const AgentDashboardPage: React.FC = () => {
               Tüm teklifleri görüntüle
             </p>
           </div>
-
         </div>
 
 
-        <div className="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700/50 hover:shadow-lg hover:-translate-y-1 cursor-pointer transition flex items-center gap-4">
-
-          <div className="w-10 h-10 bg-primary/10 text-primary flex items-center justify-center rounded-xl">
-            <span className="material-icons-round">inventory</span>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-slate-800 dark:text-white">
-              Aktif İlanlar
-            </h4>
-
-            <p className="text-sm text-slate-500">
-              Açık ilanlarını yönet
-            </p>
-          </div>
-
-        </div>
-
+       
       </div>
 
 

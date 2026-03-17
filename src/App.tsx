@@ -16,6 +16,7 @@ import AgentDashboardPage from '@/features/dashboard/pages/AgentDashboardPage';
 import SubcontractorDashboardPage from '@/features/dashboard/pages/SubcontractorDashboardPage';
 import CaptainDashboardPage from '@/features/dashboard/pages/CaptainDashboardPage';
 import CreateJob from './pages/CreateJob';
+import OffersPage from "@/features/offers/components/OffersPage";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/technical-expert/results" element={<TechnicalExpertResults />} />
         <Route path="/partnership" element={<PartnershipSelection />} />
         <Route path="/create-job" element={<CreateJob />} />
+        <Route path="/offers" element={<OffersPage />} />
         {/* Dashboards */}
         <Route path="/dashboard/agent/*" element={<AgentDashboardPage />} />
         <Route path="/dashboard/subcontractor/*" element={<SubcontractorDashboardPage />} />

@@ -81,52 +81,55 @@ const JobForm = () => {
      Stepper
   ----------------------------------------- */
 
-  const Stepper = () => (
-    <div className="mb-10">
-      <div className="flex justify-between items-center">
-        {steps.map((s) => {
-          const Icon = s.icon;
+const Stepper = () => (
+  <div className="mb-10">
+    <div
+      className="grid items-center"
+      style={{ gridTemplateColumns: `repeat(${steps.length}, 1fr)` }}
+    >
+      {steps.map((s) => {
+        const Icon = s.icon;
 
-          const active = step === s.id;
-          const completed = step > s.id;
+        const active = step === s.id;
+        const completed = step > s.id;
 
-          return (
-            <div key={s.id} className="flex flex-col items-center flex-1">
-              <div
-                className={`
-                w-10 h-10 flex items-center justify-center rounded-full border
-                ${
-                  completed
-                    ? "bg-blue-600 border-blue-600 text-white"
-                    : active
-                    ? "border-blue-600 text-blue-600"
-                    : "border-slate-300 text-slate-400"
-                }
-              `}
-              >
-                <Icon size={18} />
-              </div>
-
-              <span
-                className={`text-xs mt-2 ${
-                  active ? "text-blue-600 font-medium" : "text-slate-400"
-                }`}
-              >
-                {s.title}
-              </span>
+        return (
+          <div key={s.id} className="flex flex-col items-center w-full">
+            <div
+              className={`
+              w-10 h-10 flex items-center justify-center rounded-full border
+              ${
+                completed
+                  ? "bg-blue-600 border-blue-600 text-white"
+                  : active
+                  ? "border-blue-600 text-blue-600"
+                  : "border-slate-300 text-slate-400"
+              }
+            `}
+            >
+              <Icon size={18} />
             </div>
-          );
-        })}
-      </div>
 
-      <div className="w-full h-2 bg-slate-200 rounded-full mt-6 overflow-hidden">
-        <div
-          className="h-full bg-blue-600 transition-all duration-300"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
+            <span
+              className={`text-xs mt-2 ${
+                active ? "text-blue-600 font-medium" : "text-slate-400"
+              }`}
+            >
+              {s.title}
+            </span>
+          </div>
+        );
+      })}
     </div>
-  );
+
+    <div className="w-full h-2 bg-slate-200 rounded-full mt-6 overflow-hidden">
+      <div
+        className="h-full bg-blue-600 transition-all duration-300"
+        style={{ width: `${progress}%` }}
+      />
+    </div>
+  </div>
+);
 
   /* -----------------------------------------
      Layout
