@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import LocalAgentSelection from './pages/local-agent/LocalAgentSelection';
 import LocalAgentDetails from './pages/local-agent/LocalAgentDetails';
 import LocalAgentResults from './pages/local-agent/LocalAgentResults';
+import AgentOfferView from './pages/local-agent/AgentOfferView';
 import SubcontractorSelection from './pages/subcontractor/SubcontractorSelection';
 import SubcontractorJobDetails from './pages/subcontractor/SubcontractorJobDetails';
 import SubcontractorResults from './pages/subcontractor/SubcontractorResults';
@@ -18,7 +19,6 @@ import AgentDashboardPage from '@/features/dashboard/pages/AgentDashboardPage';
 import SubcontractorDashboardPage from '@/features/dashboard/pages/SubcontractorDashboardPage';
 import CaptainDashboardPage from '@/features/dashboard/pages/CaptainDashboardPage';
 import SubcontractorJobSearchPage from '@/pages/subcontractor/SubcontractorJobSearchPage';
-import SubcontractorWonJobsPage from '@/pages/subcontractor/SubcontractorWonJobsPage';
 import SubcontractorOffersPage from '@/pages/subcontractor/SubcontractorOffersPage';
 import SubcontractorWalletPage from '@/pages/subcontractor/SubcontractorWalletPage';
 import SubcontractorActiveJobsPage from '@/pages/subcontractor/SubcontractorActiveJobsPage';
@@ -52,6 +52,7 @@ function App() {
         <Route path="/technical-expert/details" element={<TechnicalExpertJobDetails />} />
         <Route path="/technical-expert/results" element={<TechnicalExpertResults />} />
         <Route path="/partnership" element={<PartnershipSelection />} />
+        <Route path="/dashboard/agent/offers" element={<AgentOfferView />} />
 
         {/* --- ACENTE DASHBOARD --- */}
         <Route path="/dashboard/agent/*" element={
@@ -77,7 +78,6 @@ function App() {
                <Route path="/" element={<SubcontractorDashboardPage />} />
                <Route path="jobs" element={<SubcontractorJobSearchPage />} />
                <Route path="offers" element={<SubcontractorOffersPage />} />
-               <Route path="won-jobs" element={<SubcontractorWonJobsPage />} />
                <Route path="wallet" element={<SubcontractorWalletPage />} />
                <Route path="active-jobs/:id" element={<SubcontractorJobDetailPage />} />
                <Route path="active-jobs" element={<SubcontractorActiveJobsPage />} />
