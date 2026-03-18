@@ -1,4 +1,14 @@
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// --- BİLEŞENLER ---
+import ChatBot from './components/ChatBot'; // 🚀 ChatBot import edildi
+
+// --- SAYFA IMPORTLARI (DOKUNULMADI) ---
+import HowItWorks from './pages/HowItWorks';
+import Services from './pages/Services';
+import About from './pages/About';
+import Contact from './pages/Contact';
 import Welcome from './pages/Welcome';
 import Login from './pages/Login';
 import Home from './pages/Home';
@@ -26,11 +36,10 @@ import SubcontractorJobDetailPage from "@/pages/subcontractor/SubcontractorJobDe
 import SubcontractorProfileCapacityPage from '@/pages/subcontractor/SubcontractorProfileCapacityPage';
 import SubcontractorProfileEditPage from '@/pages/subcontractor/SubcontractorProfileEditPage';
 
-// --- YENİ SAYFALAR ---
 import TaseronRehberi from './pages/local-agent/TaseronRehberi'; 
 import ArsivFinans from './pages/local-agent/ArsivFinans';
 import TaseronEkle from './pages/local-agent/TaseronEkle'; 
-import FinansEkle from './pages/local-agent/FinansEkle'; // <-- Burayı kontrol et
+import FinansEkle from './pages/local-agent/FinansEkle';
 import AgentJobs from '@/features/dashboard/pages/AgentJobs';
 import AgentAssignedJobs from '@/features/dashboard/pages/AgentAssignedJobs';
 import AgentJobDetails from '@/features/dashboard/pages/AgentJobDetails';
@@ -38,7 +47,14 @@ import AgentJobDetails from '@/features/dashboard/pages/AgentJobDetails';
 function App() {
   return (
     <Router>
+      {/* 🤖 TÜM SİTEDE GÖRÜNECEK CHATBOT BURADA */}
+      <ChatBot />
+
       <Routes>
+        <Route path="/nasil-calisir" element={<HowItWorks />} />
+        <Route path="/hizmetler" element={<Services />} />
+        <Route path="/neden-portlink" element={<About />} />
+        <Route path="/iletisim" element={<Contact />} />
         <Route path="/" element={<Welcome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
@@ -61,7 +77,6 @@ function App() {
               <Route path="taseron-rehberi" element={<TaseronRehberi />} />
               <Route path="arsiv-finans" element={<ArsivFinans />} />
               <Route path="taseron-ekle" element={<TaseronEkle />} /> 
-              {/* ARŞİV'DEKİ BUTONUN GİDECEĞİ YER: */}
               <Route path="finans-ekle" element={<FinansEkle />} /> 
               <Route path="jobs" element={<AgentJobs />} />
               <Route path="assigned" element={<AgentAssignedJobs />} />
