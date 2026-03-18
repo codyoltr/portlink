@@ -33,8 +33,8 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
     { label: 'Gelen Teklifler', path: `/dashboard/agent/offers`, icon: 'receipt_long' },
     { label: 'Devam Eden İşler', path: `/dashboard/agent/assigned`, icon: 'autorenew' },
     { label: 'Aktif İlanlarım', path: `/dashboard/agent/jobs`, icon: 'work' },
-    { label: 'Taşeron Rehberi', path: `/dashboard/agent/taseron-rehberi`, icon: 'contact_page' },
-    { label: 'Arşiv ve Finans', path: `/dashboard/agent/arsiv-finans`, icon: 'account_balance_wallet' },
+    { label: 'Taşeron Rehberi', path: `/dashboard/agent/subcontractor-directory`, icon: 'contact_page' },
+    { label: 'Arşiv ve Finans', path: `/dashboard/agent/archive-finance`, icon: 'account_balance_wallet' },
   ];
 
   const subNavItems = [

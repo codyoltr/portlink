@@ -1,17 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// --- COMPONENTS ---
+// COMPONENTS
 import ChatBot from './components/ChatBot';
 import Gatekeeper from './components/Gatekeeper';
 
-// --- PAGES ---
-
+// GENERAL
 import Welcome from './pages/Welcome';
 import Login from './pages/Login';
 import Home from './pages/Home';
 
-
-// --- FLOWS ---
+// FLOWS
 import LocalAgentSelection from './pages/local-agent/LocalAgentSelection';
 import LocalAgentDetails from './pages/local-agent/LocalAgentDetails';
 import LocalAgentResults from './pages/local-agent/LocalAgentResults';
@@ -25,33 +23,34 @@ import TechnicalExpertSelection from './pages/technical-expert/TechnicalExpertSe
 import TechnicalExpertJobDetails from './pages/technical-expert/TechnicalExpertJobDetails';
 import TechnicalExpertResults from './pages/technical-expert/TechnicalExpertResults';
 
-// --- AUTH ---
+// AUTH
 import Signup from './pages/Signup';
 import SignupAgent from './pages/SignupAgent';
 import SignupSubcontractor from './pages/SignupSubcontractor';
 
-// --- DASHBOARD ---
+// DASHBOARD
 import DashboardLayout from './features/dashboard/components/LocalAgentDashboard/DashboardLayout';
 import AgentDashboardPage from './features/dashboard/pages/AgentDashboardPage';
 import SubcontractorDashboardPage from './features/dashboard/pages/SubcontractorDashboardPage';
 import CaptainDashboardPage from './features/dashboard/pages/CaptainDashboardPage';
 
-// --- AGENT ---
-import TaseronRehberi from './pages/local-agent/TaseronRehberi';
-import ArsivFinans from './pages/local-agent/ArsivFinans';
-import TaseronEkle from './pages/local-agent/TaseronEkle';
-import FinansEkle from './pages/local-agent/FinansEkle';
+// AGENT
+import SubcontractorDirectory from './pages/local-agent/SubcontractorDirectory';
+import SubcontractorDirectoryDetail from './pages/local-agent/SubcontractorDirectoryDetail';
+import ArchiveFinance from './pages/local-agent/ArchiveFinance';
+import ArchiveFinanceDetail from './pages/local-agent/ArchiveFinanceDetail';
+import AddFinance from './pages/local-agent/FinansEkle';
+
 import AgentJobs from './features/dashboard/pages/AgentJobs';
 import AgentAssignedJobs from './features/dashboard/pages/AgentAssignedJobs';
-import AgentAssignedJobDetail from './features/dashboard/pages/AgentAssignedJobDetail';
 import AgentJobDetails from './features/dashboard/pages/AgentJobDetails';
 
-// --- SUBCONTRACTOR ---
+// SUBCONTRACTOR
 import SubcontractorJobSearchPage from './pages/subcontractor/SubcontractorJobSearchPage';
 import SubcontractorOffersPage from './pages/subcontractor/SubcontractorOffersPage';
 import SubcontractorWalletPage from './pages/subcontractor/SubcontractorWalletPage';
-import SubcontractorJobDetailPage from './pages/subcontractor/SubcontractorJobDetailPage';
 import SubcontractorActiveJobsPage from './pages/subcontractor/SubcontractorActiveJobsPage';
+import SubcontractorJobDetailPage from './pages/subcontractor/SubcontractorJobDetailPage';
 import SubcontractorProfileCapacityPage from './pages/subcontractor/SubcontractorProfileCapacityPage';
 import SubcontractorProfileEditPage from './pages/subcontractor/SubcontractorProfileEditPage';
 
@@ -66,6 +65,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
 
+        {/* FLOWS */}
         <Route path="/local-agent" element={<LocalAgentSelection />} />
         <Route path="/local-agent/details" element={<LocalAgentDetails />} />
         <Route path="/local-agent/results" element={<LocalAgentResults />} />
@@ -90,14 +90,20 @@ function App() {
             <DashboardLayout role="agent">
               <Routes>
                 <Route path="/" element={<AgentDashboardPage />} />
-                <Route path="taseron-rehberi" element={<TaseronRehberi />} />
-                <Route path="arsiv-finans" element={<ArsivFinans />} />
-                <Route path="taseron-ekle" element={<TaseronEkle />} />
-                <Route path="finans-ekle" element={<FinansEkle />} />
+
+                <Route path="subcontractor-directory" element={<SubcontractorDirectory />} />
+                <Route path="subcontractor-directory/:id" element={<SubcontractorDirectoryDetail />} />
+
+                <Route path="archive-finance" element={<ArchiveFinance />} />
+                <Route path="archive-finance/:id" element={<ArchiveFinanceDetail />} />
+
+                <Route path="add-finance" element={<AddFinance />} />
+
                 <Route path="jobs" element={<AgentJobs />} />
                 <Route path="assigned" element={<AgentAssignedJobs />} />
-                <Route path="assigned/:id" element={<AgentAssignedJobDetail />} />
                 <Route path="jobs/:id" element={<AgentJobDetails />} />
+
+                <Route path="add-subcontractor" element={<SubcontractorDirectory />} />
               </Routes>
             </DashboardLayout>
           } />
@@ -118,7 +124,7 @@ function App() {
             </DashboardLayout>
           } />
 
-          {/* CAPTAIN DASHBOARD */}
+          {/* CAPTAIN */}
           <Route path="/dashboard/captain/*" element={
             <DashboardLayout role="captain">
               <Routes>
