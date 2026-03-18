@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// --- BİLEŞENLER ---
-import ChatBot from './components/ChatBot'; // 🚀 ChatBot import edildi
+// --- COMPONENTS ---
+import ChatBot from './components/ChatBot';
+import Gatekeeper from './components/Gatekeeper';
 
-// --- SAYFA IMPORTLARI (DOKUNULMADI) ---
+// --- PAGES ---
 import HowItWorks from './pages/HowItWorks';
 import Services from './pages/Services';
 import About from './pages/About';
@@ -12,31 +13,33 @@ import Welcome from './pages/Welcome';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import StaticLogin from './pages/StaticLogin';
-import Gatekeeper from './components/Gatekeeper';
 
-
-// --- Local Agent Selection Flow ---
+// --- FLOWS ---
 import LocalAgentSelection from './pages/local-agent/LocalAgentSelection';
 import LocalAgentDetails from './pages/local-agent/LocalAgentDetails';
 import LocalAgentResults from './pages/local-agent/LocalAgentResults';
+import AgentOfferView from './pages/local-agent/AgentOfferView';
+
 import SubcontractorSelection from './pages/subcontractor/SubcontractorSelection';
 import SubcontractorJobDetails from './pages/subcontractor/SubcontractorJobDetails';
 import SubcontractorResults from './pages/subcontractor/SubcontractorResults';
 
-// --- Technical Expert Flow ---
 import TechnicalExpertSelection from './pages/technical-expert/TechnicalExpertSelection';
 import TechnicalExpertJobDetails from './pages/technical-expert/TechnicalExpertJobDetails';
 import TechnicalExpertResults from './pages/technical-expert/TechnicalExpertResults';
 
-// --- Partnership ---
-import PartnershipSelection from './pages/partnership/PartnershipSelection';
+// --- AUTH ---
 import Signup from './pages/Signup';
 import SignupAgent from './pages/SignupAgent';
 import SignupSubcontractor from './pages/SignupSubcontractor';
 
-import DashboardLayout from './features/dashboard/components/LocalAgentDashboard/DashboardLayout';
+// --- DASHBOARD ---
+import DashboardLayout from './features/dashboard/components/DashboardLayout';
 import AgentDashboardPage from './features/dashboard/pages/AgentDashboardPage';
 import SubcontractorDashboardPage from './features/dashboard/pages/SubcontractorDashboardPage';
+import CaptainDashboardPage from './features/dashboard/pages/CaptainDashboardPage';
+
+// --- AGENT ---
 import TaseronRehberi from './pages/local-agent/TaseronRehberi';
 import ArsivFinans from './pages/local-agent/ArsivFinans';
 import TaseronEkle from './pages/local-agent/TaseronEkle';
@@ -46,6 +49,7 @@ import AgentAssignedJobs from './features/dashboard/pages/AgentAssignedJobs';
 import AgentAssignedJobDetail from './features/dashboard/pages/AgentAssignedJobDetail';
 import AgentJobDetails from './features/dashboard/pages/AgentJobDetails';
 
+// --- SUBCONTRACTOR ---
 import SubcontractorJobSearchPage from './pages/subcontractor/SubcontractorJobSearchPage';
 import SubcontractorOffersPage from './pages/subcontractor/SubcontractorOffersPage';
 import SubcontractorWalletPage from './pages/subcontractor/SubcontractorWalletPage';
@@ -54,39 +58,38 @@ import SubcontractorActiveJobsPage from './pages/subcontractor/SubcontractorActi
 import SubcontractorWonJobsPage from './pages/subcontractor/SubcontractorWonJobsPage';
 import SubcontractorProfileCapacityPage from './pages/subcontractor/SubcontractorProfileCapacityPage';
 import SubcontractorProfileEditPage from './pages/subcontractor/SubcontractorProfileEditPage';
-import CaptainDashboardPage from './features/dashboard/pages/CaptainDashboardPage';
 
 function App() {
   return (
     <Router>
-      {/* 🤖 TÜM SİTEDE GÖRÜNECEK CHATBOT BURADA */}
       <ChatBot />
 
-      <Gatekeeper>
-        <Routes>
-          <Route path="/" element={<StaticLogin />} />
-          <Route path="/nasil-calisir" element={<HowItWorks />} />
-          <Route path="/hizmetler" element={<Services />} />
-          <Route path="/neden-portlink" element={<About />} />
-          <Route path="/iletisim" element={<Contact />} />
-          <Route path="/welcome" element={<Welcome />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/local-agent" element={<LocalAgentSelection />} />
-          <Route path="/local-agent/details" element={<LocalAgentDetails />} />
-          <Route path="/local-agent/results" element={<LocalAgentResults />} />
-          <Route path="/subcontractor" element={<SubcontractorSelection />} />
-          <Route path="/subcontractor/details" element={<SubcontractorJobDetails />} />
-          <Route path="/subcontractor/results" element={<SubcontractorResults />} />
-          <Route path="/technical-expert" element={<TechnicalExpertSelection />} />
-          <Route path="/technical-expert/details" element={<TechnicalExpertJobDetails />} />
-          <Route path="/technical-expert/results" element={<TechnicalExpertResults />} />
-          <Route path="/partnership" element={<PartnershipSelection />} />
+      <Routes>
+        {/* PUBLIC */}
+        <Route path="/" element={<Welcome />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+
+        <Route path="/local-agent" element={<LocalAgentSelection />} />
+        <Route path="/local-agent/details" element={<LocalAgentDetails />} />
+        <Route path="/local-agent/results" element={<LocalAgentResults />} />
+        <Route path="/dashboard/agent/offers" element={<AgentOfferView />} />
+
+        <Route path="/subcontractor" element={<SubcontractorSelection />} />
+        <Route path="/subcontractor/details" element={<SubcontractorJobDetails />} />
+        <Route path="/subcontractor/results" element={<SubcontractorResults />} />
+
+        <Route path="/technical-expert" element={<TechnicalExpertSelection />} />
+        <Route path="/technical-expert/details" element={<TechnicalExpertJobDetails />} />
+        <Route path="/technical-expert/results" element={<TechnicalExpertResults />} />
+
+        {/* PROTECTED */}
+        <Route element={<Gatekeeper />}>
           <Route path="/signup" element={<Signup />} />
           <Route path="/signup/agent" element={<SignupAgent />} />
           <Route path="/signup/subcontractor" element={<SignupSubcontractor />} />
 
-          {/* --- AGENT DASHBOARD --- */}
+          {/* AGENT */}
           <Route path="/dashboard/agent/*" element={
             <DashboardLayout role="agent">
               <Routes>
@@ -99,39 +102,37 @@ function App() {
                 <Route path="assigned" element={<AgentAssignedJobs />} />
                 <Route path="assigned/:id" element={<AgentAssignedJobDetail />} />
                 <Route path="jobs/:id" element={<AgentJobDetails />} />
-                <Route path="add-subcontractor" element={<TaseronEkle />} />
               </Routes>
             </DashboardLayout>
           } />
 
-          {/* --- SUBCONTRACTOR DASHBOARD --- */}
+          {/* SUBCONTRACTOR */}
           <Route path="/dashboard/subcontractor/*" element={
             <DashboardLayout role="subcontractor">
-               <Routes>
-                 <Route path="/" element={<SubcontractorDashboardPage />} />
-                 <Route path="jobs" element={<SubcontractorJobSearchPage />} />
-                 <Route path="offers" element={<SubcontractorOffersPage />} />
-                 <Route path="wallet" element={<SubcontractorWalletPage />} />
-                 <Route path="active-jobs/:id" element={<SubcontractorJobDetailPage />} />
-                 <Route path="active-jobs" element={<SubcontractorActiveJobsPage />} />
-                 <Route path="won-jobs" element={<SubcontractorWonJobsPage />} />
-                 <Route path="profile-capacity" element={<SubcontractorProfileCapacityPage />} />
-                 <Route path="profile-edit" element={<SubcontractorProfileEditPage />} />
-               </Routes>
+              <Routes>
+                <Route path="/" element={<SubcontractorDashboardPage />} />
+                <Route path="jobs" element={<SubcontractorJobSearchPage />} />
+                <Route path="offers" element={<SubcontractorOffersPage />} />
+                <Route path="wallet" element={<SubcontractorWalletPage />} />
+                <Route path="active-jobs" element={<SubcontractorActiveJobsPage />} />
+                <Route path="active-jobs/:id" element={<SubcontractorJobDetailPage />} />
+                <Route path="won-jobs" element={<SubcontractorWonJobsPage />} />
+                <Route path="profile-capacity" element={<SubcontractorProfileCapacityPage />} />
+                <Route path="profile-edit" element={<SubcontractorProfileEditPage />} />
+              </Routes>
             </DashboardLayout>
           } />
 
-          {/* --- CAPTAIN DASHBOARD --- */}
+          {/* CAPTAIN */}
           <Route path="/dashboard/captain/*" element={
             <DashboardLayout role="captain">
-               <Routes>
-                 <Route path="/" element={<CaptainDashboardPage />} />
-               </Routes>
+              <Routes>
+                <Route path="/" element={<CaptainDashboardPage />} />
+              </Routes>
             </DashboardLayout>
           } />
-        </Routes>
-      </Gatekeeper>
-
+        </Route>
+      </Routes>
     </Router>
   );
 }
