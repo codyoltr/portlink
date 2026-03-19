@@ -1,27 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import DashboardLayout from '@/features/dashboard/components/DashboardLayout';
+import React from 'react';
 
-const SubcontractorWalletPage: React.FC = () => {
-  const navigate = useNavigate();
-
-  const [isStatementModalOpen, setIsStatementModalOpen] = useState(false);
-  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
-
-  const openStatementModal = () => {
-    setIsHistoryModalOpen(false);
-    setIsStatementModalOpen(true);
-  };
-
-  const openHistoryModal = () => {
-    setIsStatementModalOpen(false);
-    setIsHistoryModalOpen(true);
-  };
-
-  const closeModals = () => {
-    setIsStatementModalOpen(false);
-    setIsHistoryModalOpen(false);
-  };
 
 const transactions = [
   {
@@ -53,19 +31,11 @@ const transactions = [
   },
 ];
 
+const SubcontractorWalletPage: React.FC = () => {
   return (
     <>
       <div className="mb-8 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 mb-2">
-            <button
-              onClick={() => navigate('/dashboard/subcontractor')}
-              className="inline-flex items-center gap-1 text-sm font-semibold text-slate-500 hover:text-primary transition-colors">
-              <span className="material-icons-round text-[18px]">arrow_back</span>
-              Geri Dön
-            </button>
-          </div>
-
           <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">
             Cüzdan ve Kazanç
           </h2>
@@ -74,9 +44,7 @@ const transactions = [
           </p>
         </div>
 
-        <button
-          onClick={openStatementModal}
-          className="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2">
+        <button className="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2">
           <span className="material-icons-round text-sm">download</span>
           Ekstre İndir
         </button>
@@ -185,155 +153,13 @@ const transactions = [
           </div>
 
           <div className="mt-6 pt-5 border-t border-slate-100 dark:border-slate-700">
-            <button
-              onClick={openHistoryModal}
-              className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all">
+            <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all">
               <span className="material-icons-round text-[18px]">account_balance</span>
               Ödeme Geçmişi
             </button>
           </div>
         </div>
       </div>
-      {isStatementModalOpen && (
-  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-[2px] px-4">
-    <div className="w-full max-w-xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
-      <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-700">
-        <div>
-          <h3 className="text-xl font-bold text-slate-800 dark:text-white">
-            Ekstre İndir
-          </h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            İndirmek istediğiniz ekstre ayarlarını seçin
-          </p>
-        </div>
-
-        <button
-          onClick={closeModals}
-          className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all"
-        >
-          <span className="material-icons-round">close</span>
-        </button>
-      </div>
-
-      <div className="p-6 space-y-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
-              Başlangıç Tarihi
-            </label>
-            <input
-              type="date"
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
-              Bitiş Tarihi
-            </label>
-            <input
-              type="date"
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
-            Dosya Formatı
-          </label>
-          <select className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
-            <option>PDF</option>
-            <option>Excel</option>
-            <option>CSV</option>
-          </select>
-        </div>
-
-        <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-700/60 p-4">
-          <p className="text-sm text-slate-600 dark:text-slate-300">
-            Seçtiğiniz tarih aralığındaki ödeme hareketleri indirilebilir ekstre olarak hazırlanacaktır.
-          </p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row justify-end gap-3 pt-2">
-          <button
-            onClick={closeModals}
-            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:border-primary/40 hover:text-primary transition-all"
-          >
-            Vazgeç
-          </button>
-
-          <button
-            onClick={closeModals}
-            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all"
-          >
-            <span className="material-icons-round text-[18px]">download</span>
-            İndirmeyi Başlat
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-      )}
-      {isHistoryModalOpen && (
-  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-[2px] px-4">
-    <div className="w-full max-w-3xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
-      <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-700">
-        <div>
-          <h3 className="text-xl font-bold text-slate-800 dark:text-white">
-            Ödeme Geçmişi
-          </h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Son ödeme hareketlerinizi detaylı olarak görüntüleyin
-          </p>
-        </div>
-
-        <button
-          onClick={closeModals}
-          className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all"
-        >
-          <span className="material-icons-round">close</span>
-        </button>
-      </div>
-
-      <div className="p-6">
-        <div className="space-y-4">
-          {transactions.map((item) => (
-            <div
-              key={item.id}
-              className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4 hover:border-primary/40 transition-all"
-            >
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div>
-                  <h4 className="font-bold text-slate-900 dark:text-white mb-1">{item.title}</h4>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">{item.company}</p>
-                  <p className="text-xs text-slate-400 mt-2">{item.date}</p>
-                </div>
-
-                <div className="flex flex-col items-start md:items-end gap-2">
-                  <p className="text-lg font-extrabold text-slate-800 dark:text-white">{item.amount}</p>
-                  <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md ${item.statusStyle}`}>
-                    {item.status}
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex justify-end pt-6">
-          <button
-            onClick={closeModals}
-            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all"
-          >
-            Kapat
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-      )}
-      
     </>
   );
 };

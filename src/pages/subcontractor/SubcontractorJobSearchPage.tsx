@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -13,7 +13,6 @@ const jobs = [
     description:
       'Kuru yük gemisi için makine dairesi genel bakım, ekipman kontrolü ve raporlama hizmeti verecek deneyimli taşeron ekip aranmaktadır.',
     tag: 'Yeni İlan',
-    category: 'Makine Bakımı',
     tagStyle:
       'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
   },
@@ -27,7 +26,6 @@ const jobs = [
     description:
       'Genel kargo gemisi dış yüzey kumlama ve boya operasyonu için uzman taşeron ekipler değerlendirilecektir.',
     tag: 'Popüler',
-    category: 'Boya / Kumlama',
     tagStyle:
       'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300',
   },
@@ -41,7 +39,6 @@ const jobs = [
     description:
       'Gemi elektrik hatlarının kontrolü, arıza tespiti ve bakım işlemleri için sertifikalı teknik ekip ihtiyacı bulunmaktadır.',
     tag: 'Acil',
-    category: 'Elektrik',
     tagStyle:
       'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300',
   },
@@ -70,38 +67,6 @@ const closeModals = () => {
   setIsOfferModalOpen(false);
   setSelectedJob(null);
 };
-  const [keyword, setKeyword] = useState('');
-const [locationFilter, setLocationFilter] = useState('Tüm Lokasyonlar');
-const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
-  const [budgetFilter, setBudgetFilter] = useState('Tüm Bütçeler');
-  
-  const filteredJobs = useMemo(() => {
-  return jobs.filter((job) => {
-    const matchesKeyword =
-      job.title.toLowerCase().includes(keyword.toLowerCase()) ||
-      job.company.toLowerCase().includes(keyword.toLowerCase()) ||
-      job.description.toLowerCase().includes(keyword.toLowerCase());
-
-    const matchesLocation =
-      locationFilter === 'Tüm Lokasyonlar' ||
-      job.location.toLowerCase().includes(locationFilter.toLowerCase());
-
-    const matchesJobType =
-      jobTypeFilter === 'Tüm Kategoriler' ||
-      job.category === jobTypeFilter;
-
-    const matchesBudget =
-      budgetFilter === 'Tüm Bütçeler' ||
-      (budgetFilter === '₺0 - ₺50.000' && false) ||
-      (budgetFilter === '₺50.000 - ₺100.000' &&
-        ['₺75.000 - ₺95.000', '₺60.000 - ₺80.000'].includes(job.budget)) ||
-      (budgetFilter === '₺100.000 - ₺150.000' &&
-        ['₺110.000 - ₺145.000'].includes(job.budget)) ||
-      (budgetFilter === '₺150.000+' && false);
-
-    return matchesKeyword && matchesLocation && matchesJobType && matchesBudget;
-  });
-}, [keyword, locationFilter, jobTypeFilter, budgetFilter]);
 
   return (
     <>
@@ -122,17 +87,9 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
           </p>
         </div>
 
-        <button
-          onClick={() => {
-            setKeyword('');
-            setLocationFilter('Tüm Lokasyonlar');
-            setJobTypeFilter('Tüm Kategoriler');
-            setBudgetFilter('Tüm Bütçeler');
-          }}
-          className="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2"
-        >
-          <span className="material-icons-round text-sm">restart_alt</span>
-          Filtreleri Sıfırla
+        <button className="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2">
+          <span className="material-icons-round text-sm">tune</span>
+          Filtreleri Uygula
         </button>
       </div>
 
@@ -148,8 +105,6 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
               </span>
               <input
                 type="text"
-                value={keyword}
-                onChange={(e) => setKeyword(e.target.value)}
                 placeholder="Örn. bakım, boya, elektrik"
                 className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
               />
@@ -160,10 +115,7 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
             <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
               Konum
             </label>
-            <select
-              value={locationFilter}
-              onChange={(e) => setLocationFilter(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
+            <select className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
               <option>Tüm Lokasyonlar</option>
               <option>Tuzla</option>
               <option>Yalova</option>
@@ -176,10 +128,7 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
             <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
               İş Türü
             </label>
-            <select
-              value={jobTypeFilter}
-              onChange={(e) => setJobTypeFilter(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
+            <select className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
               <option>Tüm Kategoriler</option>
               <option>Makine Bakımı</option>
               <option>Boya / Kumlama</option>
@@ -192,10 +141,7 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
             <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
               Bütçe Aralığı
             </label>
-            <select
-              value={budgetFilter}
-              onChange={(e) => setBudgetFilter(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
+            <select className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
               <option>Tüm Bütçeler</option>
               <option>₺0 - ₺50.000</option>
               <option>₺50.000 - ₺100.000</option>
@@ -210,13 +156,13 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
         <div>
           <h3 className="text-lg font-bold text-slate-800 dark:text-white">Uygun İlanlar</h3>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Toplam {filteredJobs.length} ilan bulundu
+            Toplam 12 ilan bulundu
           </p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
-        {filteredJobs.map((job) => (
+        {jobs.map((job) => (
           <div
             key={job.id}
             className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 md:p-6 shadow-sm hover:border-primary/40 hover:shadow-md transition-all"
