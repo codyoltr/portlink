@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 interface DashboardLayoutProps {
@@ -31,6 +31,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
   const agentNavItems = [
     { label: 'Özet (Dashboard)', path: `/dashboard/agent`, icon: 'dashboard' },
     { label: 'Gelen Teklifler', path: `/dashboard/agent/offers`, icon: 'receipt_long' },
+    { label: 'Devam Eden İşler', path: `/dashboard/agent/assigned`, icon: 'autorenew' },
     { label: 'Aktif İlanlarım', path: `/dashboard/agent/jobs`, icon: 'work' },
     { label: 'Taşeron Rehberi', path: `/dashboard/agent/taseron-rehberi`, icon: 'contact_page' },
     { label: 'Arşiv ve Finans', path: `/dashboard/agent/arsiv-finans`, icon: 'account_balance_wallet' },
@@ -38,8 +39,12 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
 
   const subNavItems = [
     { label: 'Özet (Dashboard)', path: `/dashboard/subcontractor`, icon: 'dashboard' },
+    { label: 'İş Ara', path: `/dashboard/subcontractor/jobs`, icon: 'search' },
     { label: 'Verilen Teklifler', path: `/dashboard/subcontractor/offers`, icon: 'send' },
-    { label: 'Kazanılan İşler', path: `/dashboard/subcontractor/jobs`, icon: 'verified' },
+    { label: 'Kazanılan İşler', path: `/dashboard/subcontractor/won-jobs`, icon: 'verified' },
+    { label: 'Aktif İşlerim', path: `/dashboard/subcontractor/active-jobs`, icon: 'autorenew' },
+    { label: 'Cüzdan ve Kazanç', path: `/dashboard/subcontractor/wallet`, icon: 'account_balance_wallet' },
+    { label: 'Profil ve Kapasite', path: `/dashboard/subcontractor/profile-capacity`, icon: 'badge' },
   ];
 
   const captainNavItems = [

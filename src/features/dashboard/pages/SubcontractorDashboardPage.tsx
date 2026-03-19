@@ -1,15 +1,20 @@
 import React from 'react';
 import DashboardLayout from '@/features/dashboard/components/LocalAgentDashboard/DashboardLayout';
+import { useNavigate } from 'react-router-dom';
 
 const SubcontractorDashboardPage: React.FC = () => {
+  const navigate = useNavigate();
   return (
-    <DashboardLayout role="subcontractor">
+    <>
       <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">Taşeron Özeti</h2>
           <p className="text-slate-500 dark:text-slate-400">Piyasadaki aktif işler, teklif performansınız ve kazançlarınız.</p>
         </div>
-        <button className="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-md shadow-primary/20 flex items-center gap-2">
+        <button
+          onClick={() => navigate('/dashboard/subcontractor/jobs')}
+          className="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-md shadow-primary/20 flex items-center gap-2"
+        >
           <span className="material-icons-round text-sm">search</span>
           Yeni İş Ara
         </button>
@@ -97,7 +102,7 @@ const SubcontractorDashboardPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    </>
   );
 };
 

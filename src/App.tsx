@@ -19,12 +19,16 @@ import SignupSubcontractor from './pages/SignupSubcontractor';
 import DashboardLayout from '@/features/dashboard/components/LocalAgentDashboard/DashboardLayout';
 import AgentDashboardPage from '@/features/dashboard/pages/AgentDashboardPage';
 import SubcontractorDashboardPage from '@/features/dashboard/pages/SubcontractorDashboardPage';
+import CaptainDashboardPage from '@/features/dashboard/pages/CaptainDashboardPage';
 
 // --- YENİ SAYFALAR ---
 import TaseronRehberi from './pages/local-agent/TaseronRehberi'; 
 import ArsivFinans from './pages/local-agent/ArsivFinans';
 import TaseronEkle from './pages/local-agent/TaseronEkle'; 
 import FinansEkle from './pages/local-agent/FinansEkle'; // <-- Burayı kontrol et
+import AgentJobs from '@/features/dashboard/pages/AgentJobs';
+import AgentAssignedJobs from '@/features/dashboard/pages/AgentAssignedJobs';
+import AgentJobDetails from '@/features/dashboard/pages/AgentJobDetails';
 
 function App() {
   return (
@@ -57,6 +61,9 @@ function App() {
               <Route path="taseron-ekle" element={<TaseronEkle />} /> 
               {/* ARŞİV'DEKİ BUTONUN GİDECEĞİ YER: */}
               <Route path="finans-ekle" element={<FinansEkle />} /> 
+              <Route path="jobs" element={<AgentJobs />} />
+              <Route path="assigned" element={<AgentAssignedJobs />} />
+              <Route path="jobs/:id" element={<AgentJobDetails />} />
             </Routes>
           </DashboardLayout>
         } />
@@ -64,7 +71,17 @@ function App() {
         {/* --- DİĞER ROLLER --- */}
         <Route path="/dashboard/subcontractor/*" element={
           <DashboardLayout role="subcontractor">
-             <Routes><Route path="/" element={<SubcontractorDashboardPage />} /></Routes>
+             <Routes>
+               <Route path="/" element={<SubcontractorDashboardPage />} />
+               <Route path="jobs" element={<SubcontractorJobSearchPage />} />
+               <Route path="offers" element={<SubcontractorOffersPage />} />
+               <Route path="won-jobs" element={<SubcontractorWonJobsPage />} />
+               <Route path="wallet" element={<SubcontractorWalletPage />} />
+               <Route path="active-jobs/:id" element={<SubcontractorJobDetailPage />} />
+               <Route path="active-jobs" element={<SubcontractorActiveJobsPage />} />
+               <Route path="profile-capacity" element={<SubcontractorProfileCapacityPage />} />
+               <Route path="profile-edit" element={<SubcontractorProfileEditPage />} />
+             </Routes>
           </DashboardLayout>
         } />
       </Routes>
