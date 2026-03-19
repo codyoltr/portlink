@@ -12,8 +12,6 @@ import Contact from './pages/Contact';
 import Welcome from './pages/Welcome';
 import Login from './pages/Login';
 import Home from './pages/Home';
-
-// --- Local Agent Selection Flow ---
 import LocalAgentSelection from './pages/local-agent/LocalAgentSelection';
 import LocalAgentDetails from './pages/local-agent/LocalAgentDetails';
 import LocalAgentResults from './pages/local-agent/LocalAgentResults';
@@ -21,13 +19,9 @@ import AgentOfferView from './pages/local-agent/AgentOfferView';
 import SubcontractorSelection from './pages/subcontractor/SubcontractorSelection';
 import SubcontractorJobDetails from './pages/subcontractor/SubcontractorJobDetails';
 import SubcontractorResults from './pages/subcontractor/SubcontractorResults';
-
-// --- Technical Expert Flow ---
 import TechnicalExpertSelection from './pages/technical-expert/TechnicalExpertSelection';
 import TechnicalExpertJobDetails from './pages/technical-expert/TechnicalExpertJobDetails';
 import TechnicalExpertResults from './pages/technical-expert/TechnicalExpertResults';
-
-// --- Partnership ---
 import PartnershipSelection from './pages/partnership/PartnershipSelection';
 import Signup from './pages/Signup';
 import SignupAgent from './pages/SignupAgent';
@@ -51,8 +45,6 @@ import SubcontractorJobDetailPage from './pages/subcontractor/SubcontractorJobDe
 import SubcontractorActiveJobsPage from './pages/subcontractor/SubcontractorActiveJobsPage';
 import SubcontractorProfileCapacityPage from './pages/subcontractor/SubcontractorProfileCapacityPage';
 import SubcontractorProfileEditPage from './pages/subcontractor/SubcontractorProfileEditPage';
-import CaptainDashboardPage from './features/dashboard/pages/CaptainDashboardPage';
-import SubcontractorDirectory from './pages/local-agent/SubcontractorDirectory';
 
 function App() {
   return (
@@ -82,7 +74,7 @@ function App() {
         <Route path="/signup/agent" element={<SignupAgent />} />
         <Route path="/signup/subcontractor" element={<SignupSubcontractor />} />
 
-        {/* --- AGENT DASHBOARD --- */}
+        {/* --- ACENTE DASHBOARD --- */}
         <Route path="/dashboard/agent/*" element={
           <DashboardLayout role="agent">
             <Routes>
@@ -94,14 +86,11 @@ function App() {
               <Route path="jobs" element={<AgentJobs />} />
               <Route path="assigned" element={<AgentAssignedJobs />} />
               <Route path="jobs/:id" element={<AgentJobDetails />} />
-              
-              {/* Not: TaseronEkle.tsx olmadığı için Directory'ye yönlendiriyoruz */}
-              <Route path="add-subcontractor" element={<SubcontractorDirectory />} /> 
             </Routes>
           </DashboardLayout>
         } />
 
-        {/* --- SUBCONTRACTOR DASHBOARD --- */}
+        {/* --- DİĞER ROLLER --- */}
         <Route path="/dashboard/subcontractor/*" element={
           <DashboardLayout role="subcontractor">
              <Routes>
@@ -113,15 +102,6 @@ function App() {
                <Route path="active-jobs" element={<SubcontractorActiveJobsPage />} />
                <Route path="profile-capacity" element={<SubcontractorProfileCapacityPage />} />
                <Route path="profile-edit" element={<SubcontractorProfileEditPage />} />
-             </Routes>
-          </DashboardLayout>
-        } />
-
-        {/* --- CAPTAIN DASHBOARD --- */}
-        <Route path="/dashboard/captain/*" element={
-          <DashboardLayout role="captain">
-             <Routes>
-               <Route path="/" element={<CaptainDashboardPage />} />
              </Routes>
           </DashboardLayout>
         } />
