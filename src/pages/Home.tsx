@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import DashboardLayout from '@/features/dashboard/components/LocalAgentDashboard/DashboardLayout';
 
+=======
+import DashboardLayout from '@/features/dashboard/components/DashboardLayout';
+import { useNavigate } from "react-router-dom"
+>>>>>>> origin/feature/acente-dashboard-job-post
 const Home: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'agent' | 'subcontractor'>('all');
   const [searchTerm, setSearchTerm] = useState('');
-
+  const navigate = useNavigate()
   // Dummy İlan Verileri
   const jobs = [
     {
@@ -58,9 +63,23 @@ const Home: React.FC = () => {
 
   return (
     <DashboardLayout role="agent"> {/* Varsayılan rol olarak agent geçiyoruz, header/sidebar yapısal tamlığı için */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight">İş İlanları Panosu</h1>
-        <p className="text-slate-600 dark:text-slate-400 text-lg">Platformdaki tüm güncel hizmet taleplerini ve iş fırsatlarını inceleyin.</p>
+      <div className="flex items-start justify-between mb-8">
+        <div>
+          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight">
+            İş İlanları Panosu
+          </h1>
+
+          <p className="text-slate-600 dark:text-slate-400 text-lg">
+            Platformdaki tüm güncel hizmet taleplerini ve iş fırsatlarını inceleyin.
+          </p>
+        </div>
+
+        <button
+          onClick={() => navigate("/create-job")}
+          className="bg-primary text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition"
+        >
+          + Yeni İlan Oluştur
+        </button>
       </div>
 
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
@@ -106,8 +125,8 @@ const Home: React.FC = () => {
                   <span className="material-icons-round">{job.type === 'agent' ? 'support_agent' : 'engineering'}</span>
                 </div>
                 <span className={`text-[10px] uppercase font-bold px-2.5 py-1 rounded-md tracking-wider ${job.status === 'Yeni' ? 'bg-primary/10 text-primary' :
-                    job.status === 'Acil' ? 'bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400' :
-                      'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
+                  job.status === 'Acil' ? 'bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400' :
+                    'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
                   }`}>
                   {job.status}
                 </span>
