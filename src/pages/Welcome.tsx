@@ -1,9 +1,11 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useRef } from 'react';
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import { useNavigate, useLocation } from 'react-router-dom';
 import FullPageLayout from '@/features/shell/components/FullPageLayout';
 import heroImage from '@/assets/hero-image.png';
 
-// --- BÜTÜN VERİ LİSTELERİ (Karmaşayı önlemek için en üste taşıdık) ---
+// --- BÜTÜN VERİ LİSTELERİ ---
 
 const services = [
   { id: 1, title: 'Acentelik', image: '/images/acentelik.jpg' },
@@ -54,8 +56,6 @@ const steps = [
     ),
   }
 ];
-
-
 
 // Yeni Bento Box (Neden Portlink) için güncellenmiş özellikler listesi
 const features = [
@@ -108,64 +108,11 @@ const features = [
 
 const Welcome: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <FullPageLayout>
-    {/* --- GÜNCELLENMİŞ SIRALAMALI HEADER --- */}
-      <header className="w-full py-5 px-4 sm:px-6 lg:px-8 flex items-center justify-between bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200/50 dark:border-slate-700/50 transition-all duration-300 shadow-sm">
-        
-        {/* 1. Logo (En Sol) */}
-        <div className="flex items-center gap-3 group cursor-pointer shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <div className="bg-blue-600 p-2 rounded-xl shadow-lg shadow-blue-600/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
-            <span className="material-icons-round text-white text-2xl">directions_boat</span>
-          </div>
-          <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-400 dark:to-blue-600 bg-clip-text text-transparent">
-            Portlink
-          </span>
-        </div>
-
-        {/* 2. Menü (Sıralama: Nasıl Çalışır -> Hizmetler -> Neden Portlink -> İletişim) */}
-        <nav className="hidden md:flex items-center justify-center flex-1 max-w-2xl mx-auto gap-8 lg:gap-12">
-          <button
-            onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-all relative group">
-            Portlink Nasıl Çalışır?
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-          </button>
-
-          <button
-            onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-all relative group">
-            Hizmetler
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-          </button>
-
-          <button
-            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-all relative group">
-            Neden Portlink?
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-          </button>
-
-          <button
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-all relative group">
-            İletişim
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-          </button>
-        </nav>
-
-        {/* 3. Buton (En Sağ) */}
-        <div className="shrink-0">
-          <button
-            onClick={() => navigate('/login')}
-            className="px-6 py-2.5 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-md hover:shadow-blue-600/40 transform hover:-translate-y-0.5 flex items-center gap-2"
-          >
-            Giriş Yap
-            <span className="material-icons-round text-sm">login</span>
-          </button>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Ana İçerik */}
       <main className="flex-1 w-full">
@@ -303,7 +250,7 @@ const Welcome: React.FC = () => {
           </div>
         </section>
 
-        {/* --- PREMIUM GLOBAL MARITIME NETWORK SECTION --- */}
+       {/* --- PREMIUM GLOBAL MARITIME NETWORK SECTION --- */}
         <section className="w-full py-24 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 relative overflow-hidden">
           <div className="text-center mb-12">
             <h2 className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-4">Türkiye'nin Stratejik Limanları</h2>
@@ -315,120 +262,88 @@ const Welcome: React.FC = () => {
                 <span className="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_#3b82f6] animate-pulse"></span>
                 <span className="text-slate-800 dark:text-slate-200 font-bold">Istanbul (Merkez)</span>
               </div>
-              <div className="flex gap-12 mt-2">
-                <span className="relative before:absolute before:w-px before:h-6 before:bg-slate-300 dark:before:bg-slate-700 before:-top-8 before:left-1/2 before:-rotate-[30deg]">Avrupa</span>
-                <span className="relative before:absolute before:w-px before:h-6 before:bg-slate-300 dark:before:bg-slate-700 before:-top-8 before:left-1/2">Asya</span>
-                <span className="relative before:absolute before:w-px before:h-6 before:bg-slate-300 dark:before:bg-slate-700 before:-top-8 before:left-1/2 before:rotate-[30deg]">Orta Doğu</span>
-              </div>
             </div>
           </div>
 
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="relative w-full aspect-[21/9] md:aspect-[24/10] rounded-[2.5rem] bg-gradient-to-br from-[#020b18] via-[#061836] to-[#020b18] border border-[#1e3a8a]/40 shadow-[0_30px_80px_rgba(2,11,24,0.7)] overflow-hidden group">
-              <div className="absolute inset-0 opacity-40 mix-blend-screen pointer-events-none">
-                <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[150%] bg-[radial-gradient(ellipse_at_center,_rgba(29,78,216,0.15)_0%,_transparent_70%)] animate-[pulse_8s_ease-in-out_infinite]"></div>
-                <div className="absolute top-[10%] right-[-10%] w-[50%] h-[120%] bg-[radial-gradient(ellipse_at_center,_rgba(14,165,233,0.1)_0%,_transparent_70%)] animate-[pulse_10s_ease-in-out_infinite_2s]"></div>
-              </div>
-              <div className="absolute top-[30%] left-[20%] w-1 h-1 bg-blue-300 rounded-full opacity-30 animate-ping" style={{ animationDuration: '4s' }}></div>
-              <div className="absolute top-[70%] left-[60%] w-1.5 h-1.5 bg-blue-400 rounded-full opacity-20 animate-ping" style={{ animationDuration: '6s', animationDelay: '1s' }}></div>
-              <div className="absolute top-[40%] right-[20%] w-1 h-1 bg-cyan-300 rounded-full opacity-40 animate-ping" style={{ animationDuration: '5s', animationDelay: '2s' }}></div>
+            <div className="relative w-full aspect-[21/9] md:aspect-[24/10] rounded-[2.5rem] bg-[#020b18] border border-[#1e3a8a]/40 shadow-[0_30px_80px_rgba(2,11,24,0.7)] overflow-hidden group">
+              
+              {/* --- TÜRKİYE HARİTASI (KÜÇÜLTÜLMÜŞ VE ORTALANMIŞ) --- */}
+              <div 
+                className="absolute inset-0 opacity-25 pointer-events-none bg-center bg-no-repeat bg-[length:65%] z-0"
+                style={{ backgroundImage: "url('/world-map.svg')" }}
+              ></div>
 
-              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1000 450" preserveAspectRatio="xMidYMid slice">
+              {/* Gradyan Işık Efektleri */}
+              <div className="absolute inset-0 opacity-30 mix-blend-screen pointer-events-none z-10">
+                <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[150%] bg-[radial-gradient(ellipse_at_center,_rgba(29,78,216,0.15)_0%,_transparent_70%)]"></div>
+              </div>
+
+              <svg className="absolute inset-0 w-full h-full z-20" viewBox="0 0 1000 450" preserveAspectRatio="xMidYMid slice">
                 <defs>
-                  <linearGradient id="route-glow" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="rgba(56, 189, 248, 0.1)" />
-                    <stop offset="50%" stopColor="rgba(56, 189, 248, 0.6)" />
-                    <stop offset="100%" stopColor="rgba(56, 189, 248, 0.1)" />
-                  </linearGradient>
                   <linearGradient id="wake-gradient" x1="1" y1="0" x2="0" y2="0">
-                    <stop offset="0%" stopColor="rgba(224, 242, 254, 0.5)" />
+                    <stop offset="0%" stopColor="rgba(224, 242, 254, 0.4)" />
                     <stop offset="100%" stopColor="rgba(224, 242, 254, 0)" />
                   </linearGradient>
-                  <g id="premium-ship" transform="scale(0.85)">
-                    <path d="M -18 -6 L -45 -16 L -45 16 L -18 6 Z" fill="url(#wake-gradient)" opacity="0.7"/>
-                    <rect x="-24" y="-8" width="52" height="16" rx="3" fill="#0f172a" stroke="#38bdf8" strokeWidth="0.7"/>
-                    <path d="M 28 -8 L 40 0 L 28 8 Z" fill="#0f172a" stroke="#38bdf8" strokeWidth="0.7" strokeLinejoin="round"/>
-                    <rect x="-18" y="-7" width="7" height="14" rx="1.5" fill="#94a3b8" />
-                    <rect x="-16" y="-6" width="3" height="12" fill="#334155" />
+                  
+                  {/* Gemi Tasarımı */}
+                  <g id="premium-ship" transform="scale(0.7)">
+                    <path d="M -18 -6 L -45 -16 L -45 16 L -18 6 Z" fill="url(#wake-gradient)" opacity="0.6"/>
+                    <rect x="-24" y="-8" width="52" height="16" rx="3" fill="#0f172a" stroke="#38bdf8" strokeWidth="0.8"/>
+                    <path d="M 28 -8 L 40 0 L 28 8 Z" fill="#0f172a" stroke="#38bdf8" strokeWidth="0.8"/>
+                    {/* Konteynerler */}
                     <rect x="-8" y="-6" width="6" height="5" fill="#ef4444" rx="0.5"/>
-                    <rect x="-8" y="1" width="6" height="5" fill="#3b82f6" rx="0.5"/>
                     <rect x="0" y="-6" width="6" height="5" fill="#10b981" rx="0.5"/>
-                    <rect x="0" y="1" width="6" height="5" fill="#f59e0b" rx="0.5"/>
-                    <rect x="8" y="-6" width="6" height="5" fill="#8b5cf6" rx="0.5"/>
-                    <rect x="8" y="1" width="6" height="5" fill="#0ea5e9" rx="0.5"/>
-                    <rect x="16" y="-6" width="6" height="5" fill="#f59e0b" rx="0.5"/>
-                    <rect x="16" y="1" width="6" height="5" fill="#ef4444" rx="0.5"/>
-                    <rect x="24" y="-6" width="6" height="5" fill="#3b82f6" rx="0.5"/>
-                    <rect x="24" y="1" width="6" height="5" fill="#10b981" rx="0.5"/>
+                    <rect x="8" y="-6" width="6" height="5" fill="#3b82f6" rx="0.5"/>
+                    <rect x="-8" y="1" width="6" height="5" fill="#f59e0b" rx="0.5"/>
+                    <rect x="0" y="1" width="6" height="5" fill="#ef4444" rx="0.5"/>
+                    <rect x="8" y="1" width="6" height="5" fill="#3b82f6" rx="0.5"/>
                   </g>
-                  <path id="route-europe" d="M 480 200 C 350 220, 250 120, 100 150" />
-                  <path id="route-europe-return" d="M 100 150 C 250 120, 350 220, 480 200" />
-                  <path id="route-asia" d="M 480 200 C 600 280, 750 350, 950 250" />
-                  <path id="route-asia-return" d="M 950 250 C 750 350, 600 280, 480 200" />
-                  <path id="route-middle-east" d="M 480 200 C 500 280, 480 380, 600 420" />
-                  <path id="route-middle-east-return" d="M 600 420 C 480 380, 500 280, 480 200" />
-                  <path id="route-americas" d="M 480 200 C 300 260, 150 300, -50 220" />
-                  <path id="route-americas-return" d="M -50 220 C 150 300, 300 260, 480 200" />
+
+                  {/* KIYILARA DOĞRU HAREKET EDEN YENİ ROTALAR */}
+                  {/* 1. Batıdan Marmara'ya Giriş */}
+                  <path id="route-marmara" d="M 50 150 Q 250 160 450 195" />
+                  {/* 2. Güneyden Akdeniz/Ege'ye Giriş */}
+                  <path id="route-ege" d="M 200 400 Q 280 300 350 240" />
+                  {/* 3. Doğudan Karadeniz Kıyılarına */}
+                  <path id="route-blacksea" d="M 950 150 Q 750 140 600 165" />
+                  {/* 4. Güneyden Mersin/İskenderun'a */}
+                  <path id="route-med" d="M 800 420 Q 700 350 580 260" />
                 </defs>
-                <g fill="rgba(30, 64, 175, 0.15)" stroke="rgba(56, 189, 248, 0.1)" strokeWidth="1">
-                  <path d="M 450 180 C 400 140, 300 150, 250 100 C 300 50, 500 80, 700 100 C 900 120, 950 200, 850 300 C 750 400, 650 350, 600 300 C 550 380, 480 400, 400 350 C 380 300, 420 250, 450 230 Z" />
-                  <path d="M 150 150 C 100 120, 50 150, 20 200 C 50 300, 100 350, 150 300 C 120 250, 180 200, 150 150 Z" />
-                </g>
-                <g fill="none" stroke="url(#route-glow)" strokeWidth="2.5" strokeDasharray="6 8" className="opacity-60">
-                  <path d="M 480 200 C 350 220, 250 120, 100 150" />
-                  <path d="M 480 200 C 600 280, 750 350, 950 250" />
-                  <path d="M 480 200 C 500 280, 480 380, 600 420" />
-                  <path d="M 480 200 C 300 260, 150 300, -50 220" />
-                </g>
+
+                {/* Gemi Hareketleri */}
                 <use href="#premium-ship">
-                  <animateMotion dur="18s" repeatCount="indefinite" rotate="auto">
-                    <mpath href="#route-europe" />
-                  </animateMotion>
-                </use>
-                <use href="#premium-ship">
-                  <animateMotion dur="20s" repeatCount="indefinite" rotate="auto" begin="8s">
-                    <mpath href="#route-europe-return" />
-                  </animateMotion>
-                </use>
-                <use href="#premium-ship">
-                  <animateMotion dur="25s" repeatCount="indefinite" rotate="auto" begin="2s">
-                    <mpath href="#route-asia" />
-                  </animateMotion>
-                </use>
-                <use href="#premium-ship">
-                  <animateMotion dur="22s" repeatCount="indefinite" rotate="auto" begin="12s">
-                    <mpath href="#route-asia-return" />
-                  </animateMotion>
-                </use>
-                <use href="#premium-ship">
-                  <animateMotion dur="15s" repeatCount="indefinite" rotate="auto" begin="5s">
-                    <mpath href="#route-middle-east" />
-                  </animateMotion>
-                </use>
-                <use href="#premium-ship">
-                  <animateMotion dur="16s" repeatCount="indefinite" rotate="auto" begin="1s">
-                    <mpath href="#route-middle-east-return" />
+                  <animateMotion dur="22s" repeatCount="indefinite" rotate="auto">
+                    <mpath href="#route-marmara" />
                   </animateMotion>
                 </use>
                 <use href="#premium-ship">
                   <animateMotion dur="28s" repeatCount="indefinite" rotate="auto" begin="4s">
-                    <mpath href="#route-americas" />
+                    <mpath href="#route-ege" />
                   </animateMotion>
                 </use>
-                <g transform="translate(480, 200)">
-                  <circle cx="0" cy="0" r="40" fill="none" stroke="#38bdf8" strokeWidth="1" className="animate-[ping_3s_ease-out_infinite]" opacity="0.5"/>
-                  <circle cx="0" cy="0" r="60" fill="none" stroke="#38bdf8" strokeWidth="0.5" className="animate-[ping_3s_ease-out_infinite]" style={{ animationDelay: '1s' }} opacity="0.3"/>
-                  <circle cx="0" cy="0" r="12" fill="rgba(56, 189, 248, 0.3)" className="animate-pulse" />
-                  <circle cx="0" cy="0" r="6" fill="#38bdf8" style={{ filter: 'drop-shadow(0 0 20px #38bdf8)' }}/>
-                  <circle cx="0" cy="0" r="2" fill="#ffffff" />
+                <use href="#premium-ship">
+                  <animateMotion dur="25s" repeatCount="indefinite" rotate="auto" begin="8s">
+                    <mpath href="#route-blacksea" />
+                  </animateMotion>
+                </use>
+                <use href="#premium-ship">
+                  <animateMotion dur="30s" repeatCount="indefinite" rotate="auto" begin="2s">
+                    <mpath href="#route-med" />
+                  </animateMotion>
+                </use>
+
+                {/* İstanbul Merkez Noktası */}
+                <g transform="translate(485, 190)">
+                  <circle cx="0" cy="0" r="30" fill="none" stroke="#38bdf8" strokeWidth="1" className="animate-[ping_4s_ease-out_infinite]" opacity="0.4"/>
+                  <circle cx="0" cy="0" r="8" fill="rgba(56, 189, 248, 0.4)" className="animate-pulse" />
+                  <circle cx="0" cy="0" r="4" fill="#38bdf8" style={{ filter: 'drop-shadow(0 0 10px #38bdf8)' }}/>
                 </g>
-                <circle cx="100" cy="150" r="4" fill="#38bdf8" opacity="0.8" className="animate-pulse"/>
-                <circle cx="950" cy="250" r="4" fill="#38bdf8" opacity="0.8" className="animate-pulse"/>
-                <circle cx="600" cy="420" r="4" fill="#38bdf8" opacity="0.8" className="animate-pulse"/>
               </svg>
             </div>
           </div>
         </section>
+
 
         {/* --- YENİ BENTO BOX: NEDEN PORTLİNK BÖLÜMÜ --- */}
         <section id="about" className="w-full py-24 bg-white dark:bg-slate-950 scroll-mt-24">
@@ -597,127 +512,7 @@ const Welcome: React.FC = () => {
         </section>
 
       </main>
- 
-      {/* --- FOOTER BÖLÜMÜ --- */}
-      <footer id="contact" className="w-full bg-slate-900 border-t border-slate-800 text-slate-400 py-16 mt-auto flex-shrink-0 relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-            
-            <div className="space-y-6">
-              <div className="flex items-center gap-3 cursor-pointer group" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                <div className="bg-primary/10 p-2.5 rounded-xl border border-primary/20 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
-                  <span className="material-icons-round text-primary group-hover:text-white text-2xl transition-colors">directions_boat</span>
-                </div>
-                <span className="text-2xl font-bold text-white tracking-tight">Portlink</span>
-              </div>
-              <p className="text-sm text-slate-400 leading-relaxed max-w-xs">
-                Denizcilik sektöründe güvenilir bağlantılar kuran, operasyonlarınızı hızlandıran dijital pazar yeri.
-              </p>
-
-              <div className="flex gap-4 pt-2">
-                <a href="#" aria-label="Instagram" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-pink-600 hover:text-white transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-pink-500/25">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clipRule="evenodd" />
-                  </svg>
-                </a>
-                <a href="#" aria-label="LinkedIn" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-blue-500/25">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path fillRule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clipRule="evenodd" />
-                  </svg>
-                </a>
-                <a href="#" aria-label="X (Twitter)" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-slate-900 hover:text-white transition-all duration-300 hover:-translate-y-1 shadow-lg border border-transparent hover:border-slate-700">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.005 4.15H5.059z" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-6 flex items-center gap-2">
-                <span className="w-3 h-px bg-primary"></span> Hızlı Linkler
-              </h4>
-              <ul className="space-y-4 text-sm">
-                <li>
-                  <button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-primary transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-primary transition-colors"></span> Hakkımızda
-                  </button>
-                </li>
-                <li>
-                  <span className="text-slate-500 cursor-not-allowed flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-700"></span> Hizmetler 
-                    <span className="text-[10px] font-medium bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full ml-1 border border-slate-700">Yakında</span>
-                  </span>
-                </li>
-                <li>
-                  <span className="text-slate-500 cursor-not-allowed flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-700"></span> Fiyatlandırma 
-                    <span className="text-[10px] font-medium bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full ml-1 border border-slate-700">Yakında</span>
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-6 flex items-center gap-2">
-                <span className="w-3 h-px bg-primary"></span> Destek
-              </h4>
-              <ul className="space-y-4 text-sm">
-                <li>
-                  <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-primary transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-primary transition-colors"></span> İletişim
-                  </button>
-                </li>
-                <li>
-                  <span className="text-slate-500 cursor-not-allowed flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-700"></span> Yardım Merkezi
-                  </span>
-                </li>
-                <li>
-                  <span className="text-slate-500 cursor-not-allowed flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-700"></span> SSS
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-6 flex items-center gap-2">
-                <span className="w-3 h-px bg-primary"></span> İletişim Bilgileri
-              </h4>
-              <ul className="space-y-5 text-sm">
-                <li className="flex items-start gap-3 group cursor-pointer">
-                  <div className="mt-0.5 w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center group-hover:bg-primary/20 group-hover:text-primary transition-colors flex-shrink-0">
-                    <span className="material-icons-round text-[18px]">email</span>
-                  </div>
-                  <div>
-                    <p className="text-slate-500 text-xs mb-0.5 font-medium">E-Posta</p>
-                    <a href="mailto:info@portlink.com" className="text-slate-300 hover:text-white transition-colors">info@portlink.com</a>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3 group cursor-pointer">
-                  <div className="mt-0.5 w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center group-hover:bg-primary/20 group-hover:text-primary transition-colors flex-shrink-0">
-                    <span className="material-icons-round text-[18px]">phone</span>
-                  </div>
-                  <div>
-                    <p className="text-slate-500 text-xs mb-0.5 font-medium">Müşteri Hizmetleri</p>
-                    <a href="tel:+902121234567" className="text-slate-300 hover:text-white transition-colors">+90 (212) 123 45 67</a>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-slate-800/60 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
-            <p>© Copyright |  Portlink Maritime Marketplace. | © 2026 all rights reserved. Made by Codyol </p>
-            <div className="flex gap-6">
-              <span className="hover:text-white cursor-pointer transition-colors">Gizlilik Politikası</span>
-              <span className="hover:text-white cursor-pointer transition-colors">Kullanım Koşulları</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+     <Footer />
     </FullPageLayout>
   );
 };
