@@ -19,6 +19,7 @@ import SignupSubcontractor from './pages/SignupSubcontractor';
 import DashboardLayout from '@/features/dashboard/components/LocalAgentDashboard/DashboardLayout';
 import AgentDashboardPage from '@/features/dashboard/pages/AgentDashboardPage';
 import SubcontractorDashboardPage from '@/features/dashboard/pages/SubcontractorDashboardPage';
+import CaptainDashboardPage from '@/features/dashboard/pages/CaptainDashboardPage';
 
 // --- YENİ SAYFALAR ---
 import TaseronRehberi from './pages/local-agent/TaseronRehberi'; 
@@ -28,14 +29,6 @@ import FinansEkle from './pages/local-agent/FinansEkle'; // <-- Burayı kontrol 
 import AgentJobs from '@/features/dashboard/pages/AgentJobs';
 import AgentAssignedJobs from '@/features/dashboard/pages/AgentAssignedJobs';
 import AgentJobDetails from '@/features/dashboard/pages/AgentJobDetails';
-import SubcontractorJobSearchPage from './pages/subcontractor/SubcontractorJobSearchPage';
-import SubcontractorOffersPage from './pages/subcontractor/SubcontractorOffersPage';
-import SubcontractorWonJobsPage from './pages/subcontractor/SubcontractorWonJobsPage';
-import SubcontractorWalletPage from './pages/subcontractor/SubcontractorWalletPage';
-import SubcontractorJobDetailPage from './pages/subcontractor/SubcontractorJobDetailPage';
-import SubcontractorActiveJobsPage from './pages/subcontractor/SubcontractorActiveJobsPage';
-import SubcontractorProfileCapacityPage from './pages/subcontractor/SubcontractorProfileCapacityPage';
-import SubcontractorProfileEditPage from './pages/subcontractor/SubcontractorProfileEditPage';
 
 function App() {
   return (
