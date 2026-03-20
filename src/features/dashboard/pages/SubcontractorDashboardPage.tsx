@@ -1,5 +1,4 @@
 import React from 'react';
-import DashboardLayout from '@/features/dashboard/components/LocalAgentDashboard/DashboardLayout';
 import { useNavigate } from 'react-router-dom';
 
 const SubcontractorDashboardPage: React.FC = () => {
