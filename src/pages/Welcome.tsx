@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import FullPageLayout from '@/features/shell/components/FullPageLayout';
 import heroImage from '@/assets/hero-image.png';
 
@@ -108,7 +108,6 @@ const features = [
 
 const Welcome: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   return (
     <FullPageLayout>
