@@ -31,6 +31,7 @@ import FinansEkle from './pages/local-agent/FinansEkle';
 import TaseronEkle from './pages/local-agent/TaseronEkle';
 import AgentJobs from './features/dashboard/pages/AgentJobs';
 import AgentAssignedJobs from './features/dashboard/pages/AgentAssignedJobs';
+import AgentAssignedJobDetail from './features/dashboard/pages/AgentAssignedJobDetail';
 import AgentJobDetails from './features/dashboard/pages/AgentJobDetails';
 import SubcontractorJobSearchPage from './pages/subcontractor/SubcontractorJobSearchPage';
 import SubcontractorOffersPage from './pages/subcontractor/SubcontractorOffersPage';
@@ -74,6 +75,7 @@ function App() {
               <Route path="finans-ekle" element={<FinansEkle />} />
               <Route path="jobs" element={<AgentJobs />} />
               <Route path="assigned" element={<AgentAssignedJobs />} />
+              <Route path="assigned/:id" element={<AgentAssignedJobDetail />} />
               <Route path="jobs/:id" element={<AgentJobDetails />} />
               <Route path="add-subcontractor" element={<TaseronEkle />} />
             </Routes>

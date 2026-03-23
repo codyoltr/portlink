@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface AssignedJob {
   id: string;
@@ -62,6 +63,7 @@ const mockAssignedJobs: AssignedJob[] = [
 const AgentAssignedJobs: React.FC = () => {
   const [filter, setFilter] = useState<'all' | 'planning' | 'in_progress' | 'review' | 'completed'>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const filteredJobs = mockAssignedJobs.filter(job => {
     const matchesFilter = filter === 'all' ? true : job.status === filter;
@@ -220,7 +222,10 @@ const AgentAssignedJobs: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <button className="w-10 h-10 rounded-xl bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-all shrink-0">
+                  <button 
+                    onClick={() => navigate(`/dashboard/agent/assigned/${job.id}`)}
+                    className="w-10 h-10 rounded-xl bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-all shrink-0"
+                  >
                     <span className="material-icons-round">keyboard_arrow_right</span>
                   </button>
                 </div>
