@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-
 
 const timelineItems = [
   {
@@ -84,8 +83,77 @@ const infoCards = [
   { label: "Öncelik", value: "Yüksek", icon: "priority_high" },
 ];
 
+const reportContent = {
+  reportNo: "RPT-2026-001",
+  preparedAt: "14 Mart 2026",
+  approvedBy: "Kuzey Denizcilik Operasyon Birimi",
+  summary:
+    "Ana makine bakım operasyonu planlanan takvime uygun şekilde ilerlemektedir. Kritik arıza tespit edilmemiş, ara kontroller başarıyla tamamlanmıştır.",
+  completedWorks: [
+    "Ana makine genel görsel kontrolü tamamlandı",
+    "Bağlantı ve montaj noktaları kontrol edildi",
+    "Sızdırmazlık testleri uygulandı",
+    "Parça performans ölçümleri raporlandı",
+  ],
+  nextSteps: [
+    "Son titreşim testi yapılacak",
+    "Nihai kontrol formu hazırlanacak",
+    "Kapanış raporu sisteme yüklenecek",
+  ],
+};
+
 const SubcontractorJobDetailPage: React.FC = () => {
   const { id } = useParams();
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [contactMessage, setContactMessage] = useState("");
+  const [contactSubject, setContactSubject] = useState("İş Süreci Hakkında Bilgi Talebi");
+
+  const handleDownloadReport = () => {
+    const content = `
+PORTLINK CRM - İŞ RAPORU
+
+Rapor No: ${reportContent.reportNo}
+İş No: #${id}
+İş Adı: Ana Makine Bakımı
+Firma: Kuzey Denizcilik
+Konum: Tuzla
+Hazırlanma Tarihi: ${reportContent.preparedAt}
+Onaylayan: ${reportContent.approvedBy}
+Genel İlerleme: %65
+Toplam Hakediş: ₺48.000
+Tahmini Tamamlanma: 18 Mart 2026
+
+ÖZET
+${reportContent.summary}
+
+TAMAMLANAN İŞLER
+- ${reportContent.completedWorks.join("\n- ")}
+
+SONRAKİ ADIMLAR
+- ${reportContent.nextSteps.join("\n- ")}
+
+OPERASYON NOTU
+Saha ekibi tarafından iletilen son bilgiye göre planlanan bakım adımları zamanında ilerlemektedir.
+`.trim();
+
+    const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `is-raporu-${id}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleSendMessage = () => {
+    alert("Mesaj gönderildi. (Demo)");
+    setIsContactModalOpen(false);
+    setContactMessage("");
+    setContactSubject("İş Süreci Hakkında Bilgi Talebi");
+  };
 
   return (
     <>
@@ -117,7 +185,10 @@ const SubcontractorJobDetailPage: React.FC = () => {
           >
             Geri Dön
           </Link>
-          <button className="px-4 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-white font-semibold transition shadow-md shadow-primary/20">
+          <button
+            onClick={handleDownloadReport}
+            className="px-4 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-white font-semibold transition shadow-md shadow-primary/20"
+          >
             Rapor İndir
           </button>
         </div>
@@ -192,10 +263,16 @@ const SubcontractorJobDetailPage: React.FC = () => {
           </div>
 
           <div className="mt-6 space-y-3">
-            <button className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-xl transition">
+            <button
+              onClick={() => setIsReportModalOpen(true)}
+              className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-xl transition"
+            >
               İş Raporu Gör
             </button>
-            <button className="w-full bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-white font-bold py-3 rounded-xl transition">
+            <button
+              onClick={() => setIsContactModalOpen(true)}
+              className="w-full bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-white font-bold py-3 rounded-xl transition"
+            >
               Acente ile İletişim
             </button>
           </div>
@@ -306,6 +383,180 @@ const SubcontractorJobDetailPage: React.FC = () => {
           </p>
         </div>
       </div>
+
+      {/* İş Raporu Modal */}
+      {isReportModalOpen && (
+        <div className="fixed inset-0 z-[999] flex items-center justify-center bg-slate-900/60 p-4">
+          <div className="w-full max-w-3xl rounded-3xl bg-white dark:bg-slate-800 shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div className="flex items-center justify-between px-6 py-5 border-b border-slate-200 dark:border-slate-700">
+              <div>
+                <h3 className="text-xl font-bold text-slate-800 dark:text-white">İş Raporu</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  İş No: #{id} • Rapor No: {reportContent.reportNo}
+                </p>
+              </div>
+
+              <button
+                onClick={() => setIsReportModalOpen(false)}
+                className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-200 flex items-center justify-center"
+              >
+                <span className="material-icons-round">close</span>
+              </button>
+            </div>
+
+            <div className="p-6 max-h-[75vh] overflow-y-auto space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/50 p-4">
+                  <p className="text-sm text-slate-400 mb-1">İş Adı</p>
+                  <p className="font-bold text-slate-800 dark:text-white">Ana Makine Bakımı</p>
+                </div>
+                <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/50 p-4">
+                  <p className="text-sm text-slate-400 mb-1">Firma</p>
+                  <p className="font-bold text-slate-800 dark:text-white">Kuzey Denizcilik</p>
+                </div>
+                <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/50 p-4">
+                  <p className="text-sm text-slate-400 mb-1">Hazırlanma Tarihi</p>
+                  <p className="font-bold text-slate-800 dark:text-white">{reportContent.preparedAt}</p>
+                </div>
+                <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/50 p-4">
+                  <p className="text-sm text-slate-400 mb-1">Onaylayan</p>
+                  <p className="font-bold text-slate-800 dark:text-white">{reportContent.approvedBy}</p>
+                </div>
+              </div>
+
+              <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/50 p-5">
+                <h4 className="font-bold text-slate-800 dark:text-white mb-3">Rapor Özeti</h4>
+                <p className="text-slate-600 dark:text-slate-300 leading-7">{reportContent.summary}</p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/50 p-5">
+                  <h4 className="font-bold text-slate-800 dark:text-white mb-3">Tamamlanan İşler</h4>
+                  <ul className="space-y-2">
+                    {reportContent.completedWorks.map((item) => (
+                      <li key={item} className="flex items-start gap-2 text-slate-600 dark:text-slate-300">
+                        <span className="material-icons-round text-primary text-[18px] mt-0.5">check_circle</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/50 p-5">
+                  <h4 className="font-bold text-slate-800 dark:text-white mb-3">Sonraki Adımlar</h4>
+                  <ul className="space-y-2">
+                    {reportContent.nextSteps.map((item) => (
+                      <li key={item} className="flex items-start gap-2 text-slate-600 dark:text-slate-300">
+                        <span className="material-icons-round text-amber-500 text-[18px] mt-0.5">schedule</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row justify-end gap-3 px-6 py-5 border-t border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900/30">
+              <button
+                onClick={() => setIsReportModalOpen(false)}
+                className="px-5 py-3 rounded-xl bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-white font-semibold transition"
+              >
+                Kapat
+              </button>
+              <button
+                onClick={handleDownloadReport}
+                className="px-5 py-3 rounded-xl bg-primary hover:bg-primary/90 text-white font-semibold transition shadow-md shadow-primary/20"
+              >
+                Raporu İndir
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Acente İletişim Modal */}
+      {isContactModalOpen && (
+        <div className="fixed inset-0 z-[999] flex items-center justify-center bg-slate-900/60 p-4">
+          <div className="w-full max-w-2xl rounded-3xl bg-white dark:bg-slate-800 shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div className="flex items-center justify-between px-6 py-5 border-b border-slate-200 dark:border-slate-700">
+              <div>
+                <h3 className="text-xl font-bold text-slate-800 dark:text-white">Acente ile İletişim</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  İş süreciyle ilgili mesaj gönderebilirsiniz.
+                </p>
+              </div>
+
+              <button
+                onClick={() => setIsContactModalOpen(false)}
+                className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-200 flex items-center justify-center"
+              >
+                <span className="material-icons-round">close</span>
+              </button>
+            </div>
+
+            <div className="p-6 space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/50 p-4">
+                  <p className="text-sm text-slate-400 mb-1">Acente Yetkilisi</p>
+                  <p className="font-bold text-slate-800 dark:text-white">Ayşe Demir</p>
+                </div>
+                <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/50 p-4">
+                  <p className="text-sm text-slate-400 mb-1">Firma</p>
+                  <p className="font-bold text-slate-800 dark:text-white">Kuzey Denizcilik</p>
+                </div>
+                <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/50 p-4">
+                  <p className="text-sm text-slate-400 mb-1">Telefon</p>
+                  <p className="font-bold text-slate-800 dark:text-white">+90 555 333 44 55</p>
+                </div>
+                <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/50 p-4">
+                  <p className="text-sm text-slate-400 mb-1">E-posta</p>
+                  <p className="font-bold text-slate-800 dark:text-white">operasyon@kuzeydenizcilik.com</p>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
+                  Konu
+                </label>
+                <input
+                  type="text"
+                  value={contactSubject}
+                  onChange={(e) => setContactSubject(e.target.value)}
+                  className="w-full rounded-2xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900/50 px-4 py-3 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-primary/30"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
+                  Mesaj
+                </label>
+                <textarea
+                  rows={6}
+                  value={contactMessage}
+                  onChange={(e) => setContactMessage(e.target.value)}
+                  placeholder="Acente yetkilisine iletmek istediğiniz mesajı yazın..."
+                  className="w-full rounded-2xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900/50 px-4 py-3 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-primary/30 resize-none"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row justify-end gap-3 px-6 py-5 border-t border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900/30">
+              <button
+                onClick={() => setIsContactModalOpen(false)}
+                className="px-5 py-3 rounded-xl bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-white font-semibold transition"
+              >
+                Kapat
+              </button>
+              <button
+                onClick={handleSendMessage}
+                className="px-5 py-3 rounded-xl bg-primary hover:bg-primary/90 text-white font-semibold transition shadow-md shadow-primary/20"
+              >
+                Mesaj Gönder
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
