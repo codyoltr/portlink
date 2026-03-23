@@ -13,7 +13,7 @@ const StaticLogin: React.FC = () => {
     e.preventDefault();
 
     // Static credentials provided by the user
-    if (username === 'ömerkaya7761' && password === '75564756588421774ömer@') {
+    if (username === 'ömerkaya7761' && password === '') {
       localStorage.setItem('is_authenticated', 'true');
       navigate('/welcome');
     } else {
@@ -105,3 +105,4 @@ const StaticLogin: React.FC = () => {
 };
 
 export default StaticLogin;
+
