@@ -21,38 +21,53 @@ const Navbar = () => {
         <nav className="hidden md:flex items-center gap-8 lg:gap-12">
           
           <button
-            onClick={() => navigate('/')}
+            onClick={() => {
+              if (location.pathname !== '/') navigate('/');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
             className={`text-sm font-bold transition-all relative group ${location.pathname === '/' ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}>
             Ana Sayfa
             <span className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 ${location.pathname === '/' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
           </button>
 
           <button
-            onClick={() => navigate('/nasil-calisir')}
-            className={`text-sm font-bold transition-all relative group ${location.pathname === '/nasil-calisir' ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}>
+            onClick={() => {
+              if (location.pathname !== '/') navigate('/');
+              setTimeout(() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' }), 100);
+            }}
+            className="text-sm font-bold transition-all relative group text-slate-600 hover:text-blue-600">
             Portlink Nasıl Çalışır?
-            <span className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 ${location.pathname === '/nasil-calisir' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+            <span className="absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 w-0 group-hover:w-full"></span>
           </button>
 
           <button
-            onClick={() => navigate('/hizmetler')}
-            className={`text-sm font-bold transition-all relative group ${location.pathname === '/hizmetler' ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}>
+            onClick={() => {
+              if (location.pathname !== '/') navigate('/');
+              setTimeout(() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }), 100);
+            }}
+            className="text-sm font-bold transition-all relative group text-slate-600 hover:text-blue-600">
             Hizmetler
-            <span className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 ${location.pathname === '/hizmetler' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+            <span className="absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 w-0 group-hover:w-full"></span>
           </button>
 
           <button
-            onClick={() => navigate('/neden-portlink')}
-            className={`text-sm font-bold transition-all relative group ${location.pathname === '/neden-portlink' ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}>
+            onClick={() => {
+              if (location.pathname !== '/') navigate('/');
+              setTimeout(() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }), 100);
+            }}
+            className="text-sm font-bold transition-all relative group text-slate-600 hover:text-blue-600">
             Neden Portlink?
-            <span className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 ${location.pathname === '/neden-portlink' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+            <span className="absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 w-0 group-hover:w-full"></span>
           </button>
 
           <button
-            onClick={() => navigate('/iletisim')}
-            className={`text-sm font-bold transition-all relative group ${location.pathname === '/iletisim' ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}>
+            onClick={() => {
+              if (location.pathname !== '/') navigate('/');
+              setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 100);
+            }}
+            className="text-sm font-bold transition-all relative group text-slate-600 hover:text-blue-600">
             İletişim
-            <span className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 ${location.pathname === '/iletisim' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+            <span className="absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 w-0 group-hover:w-full"></span>
           </button>
         </nav>
 
