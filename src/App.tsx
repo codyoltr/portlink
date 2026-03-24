@@ -5,14 +5,11 @@ import ChatBot from './components/ChatBot';
 import Gatekeeper from './components/Gatekeeper';
 
 // --- PAGES ---
-import HowItWorks from './pages/HowItWorks';
-import Services from './pages/Services';
-import About from './pages/About';
-import Contact from './pages/Contact';
+
 import Welcome from './pages/Welcome';
 import Login from './pages/Login';
 import Home from './pages/Home';
-import StaticLogin from './pages/StaticLogin';
+
 
 // --- FLOWS ---
 import LocalAgentSelection from './pages/local-agent/LocalAgentSelection';
@@ -34,7 +31,7 @@ import SignupAgent from './pages/SignupAgent';
 import SignupSubcontractor from './pages/SignupSubcontractor';
 
 // --- DASHBOARD ---
-import DashboardLayout from './features/dashboard/components/DashboardLayout';
+import DashboardLayout from './features/dashboard/components/LocalAgentDashboard/DashboardLayout';
 import AgentDashboardPage from './features/dashboard/pages/AgentDashboardPage';
 import SubcontractorDashboardPage from './features/dashboard/pages/SubcontractorDashboardPage';
 import CaptainDashboardPage from './features/dashboard/pages/CaptainDashboardPage';
@@ -55,7 +52,6 @@ import SubcontractorOffersPage from './pages/subcontractor/SubcontractorOffersPa
 import SubcontractorWalletPage from './pages/subcontractor/SubcontractorWalletPage';
 import SubcontractorJobDetailPage from './pages/subcontractor/SubcontractorJobDetailPage';
 import SubcontractorActiveJobsPage from './pages/subcontractor/SubcontractorActiveJobsPage';
-import SubcontractorWonJobsPage from './pages/subcontractor/SubcontractorWonJobsPage';
 import SubcontractorProfileCapacityPage from './pages/subcontractor/SubcontractorProfileCapacityPage';
 import SubcontractorProfileEditPage from './pages/subcontractor/SubcontractorProfileEditPage';
 
@@ -89,7 +85,7 @@ function App() {
           <Route path="/signup/agent" element={<SignupAgent />} />
           <Route path="/signup/subcontractor" element={<SignupSubcontractor />} />
 
-          {/* AGENT */}
+          {/* AGENT DASHBOARD */}
           <Route path="/dashboard/agent/*" element={
             <DashboardLayout role="agent">
               <Routes>
@@ -106,7 +102,7 @@ function App() {
             </DashboardLayout>
           } />
 
-          {/* SUBCONTRACTOR */}
+          {/* SUBCONTRACTOR DASHBOARD */}
           <Route path="/dashboard/subcontractor/*" element={
             <DashboardLayout role="subcontractor">
               <Routes>
@@ -116,14 +112,13 @@ function App() {
                 <Route path="wallet" element={<SubcontractorWalletPage />} />
                 <Route path="active-jobs" element={<SubcontractorActiveJobsPage />} />
                 <Route path="active-jobs/:id" element={<SubcontractorJobDetailPage />} />
-                <Route path="won-jobs" element={<SubcontractorWonJobsPage />} />
                 <Route path="profile-capacity" element={<SubcontractorProfileCapacityPage />} />
                 <Route path="profile-edit" element={<SubcontractorProfileEditPage />} />
               </Routes>
             </DashboardLayout>
           } />
 
-          {/* CAPTAIN */}
+          {/* CAPTAIN DASHBOARD */}
           <Route path="/dashboard/captain/*" element={
             <DashboardLayout role="captain">
               <Routes>

@@ -1,11 +1,7 @@
 import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, Outlet } from 'react-router-dom';
 
-interface GatekeeperProps {
-  children: React.ReactNode;
-}
-
-const Gatekeeper: React.FC<GatekeeperProps> = ({ children }) => {
+const Gatekeeper: React.FC = () => {
   const location = useLocation();
   const isAuthenticated = localStorage.getItem('is_authenticated') === 'true';
 
@@ -13,7 +9,7 @@ const Gatekeeper: React.FC<GatekeeperProps> = ({ children }) => {
     return <Navigate to="/" replace />;
   }
 
-  return <>{children}</>;
+  return <Outlet />;
 };
 
 export default Gatekeeper;

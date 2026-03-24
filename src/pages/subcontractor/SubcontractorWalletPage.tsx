@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DashboardLayout from '@/features/dashboard/components/DashboardLayout';
 
 const SubcontractorWalletPage: React.FC = () => {
   const navigate = useNavigate();

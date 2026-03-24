@@ -14,6 +14,8 @@ const Login: React.FC = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
+      localStorage.setItem('is_authenticated', 'true');
+      localStorage.setItem('role', role);
       if (role === 'agent') navigate('/dashboard/agent');
       else navigate('/dashboard/subcontractor');
     }, 600);

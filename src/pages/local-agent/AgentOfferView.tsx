@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DashboardLayout from '@/features/dashboard/components/DashboardLayout';
+import DashboardLayout from '../../features/dashboard/components/LocalAgentDashboard/DashboardLayout';
 
 const incomingOffers = [
   {
