@@ -40,7 +40,7 @@ import SubcontractorDirectoryDetail from './pages/local-agent/SubcontractorDirec
 import ArchiveFinance from './pages/local-agent/ArchiveFinance';
 import ArchiveFinanceDetail from './pages/local-agent/ArchiveFinanceDetail';
 import AddFinance from './pages/local-agent/FinansEkle';
-
+import AgentAssignedJobDetail from './features/dashboard/pages/AgentAssignedJobDetail'; // Dosya yolunu klasör yapına göre kontrol et
 import AgentJobs from './features/dashboard/pages/AgentJobs';
 import AgentAssignedJobs from './features/dashboard/pages/AgentAssignedJobs';
 import AgentJobDetails from './features/dashboard/pages/AgentJobDetails';
@@ -92,7 +92,7 @@ function App() {
           <Route path="/signup/agent" element={<SignupAgent />} />
           <Route path="/signup/subcontractor" element={<SignupSubcontractor />} />
 
-          {/* AGENT DASHBOARD */}
+                    {/* AGENT DASHBOARD */}
           <Route path="/dashboard/agent/*" element={
             <DashboardLayout role="agent">
               <Routes>
@@ -107,7 +107,12 @@ function App() {
                 <Route path="add-finance" element={<AddFinance />} />
 
                 <Route path="jobs" element={<AgentJobs />} />
+                
+                {/* Atanan İşler Listesi */}
                 <Route path="assigned" element={<AgentAssignedJobs />} />
+                {/* Atanan İşin Detay Sayfası - Yeni Eklenen Satır */}
+                <Route path="assigned/:id" element={<AgentAssignedJobDetail />} />
+
                 <Route path="jobs/:id" element={<AgentJobDetails />} />
 
                 <Route path="add-subcontractor" element={<SubcontractorDirectory />} />
