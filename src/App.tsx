@@ -22,6 +22,7 @@ import SubcontractorResults from './pages/subcontractor/SubcontractorResults';
 import TechnicalExpertSelection from './pages/technical-expert/TechnicalExpertSelection';
 import TechnicalExpertJobDetails from './pages/technical-expert/TechnicalExpertJobDetails';
 import TechnicalExpertResults from './pages/technical-expert/TechnicalExpertResults';
+<<<<<<< HEAD
 
 // AUTH
 import Signup from './pages/Signup';
@@ -53,6 +54,13 @@ import SubcontractorActiveJobsPage from './pages/subcontractor/SubcontractorActi
 import SubcontractorJobDetailPage from './pages/subcontractor/SubcontractorJobDetailPage';
 import SubcontractorProfileCapacityPage from './pages/subcontractor/SubcontractorProfileCapacityPage';
 import SubcontractorProfileEditPage from './pages/subcontractor/SubcontractorProfileEditPage';
+=======
+import PartnershipSelection from './pages/partnership/PartnershipSelection';
+import AgentDashboardPage from '@/features/dashboard/pages/AgentDashboardPage';
+import SubcontractorDashboardPage from '@/features/dashboard/pages/SubcontractorDashboardPage';
+import CaptainDashboardPage from '@/features/dashboard/pages/CaptainDashboardPage';
+import SubcontractorActiveJobsPage from '@/features/dashboard/pages/SubcontractorActiveJobsPage';
+>>>>>>> 30e7e89 (add subcontractor active jobs page)
 
 function App() {
   return (
@@ -79,6 +87,7 @@ function App() {
         <Route path="/technical-expert/details" element={<TechnicalExpertJobDetails />} />
         <Route path="/technical-expert/results" element={<TechnicalExpertResults />} />
 
+<<<<<<< HEAD
         {/* PROTECTED */}
         <Route element={<Gatekeeper />}>
           <Route path="/signup" element={<Signup />} />
@@ -133,6 +142,13 @@ function App() {
             </DashboardLayout>
           } />
         </Route>
+=======
+        {/* Dashboards */}
+        <Route path="/dashboard/agent/*" element={<AgentDashboardPage />} />
+        <Route path="/dashboard/subcontractor/active-jobs" element={<SubcontractorActiveJobsPage />} />
+        <Route path="/dashboard/subcontractor/*" element={<SubcontractorDashboardPage />} />
+        <Route path="/dashboard/captain/*" element={<CaptainDashboardPage />} />
+>>>>>>> 30e7e89 (add subcontractor active jobs page)
       </Routes>
     </Router>
   );
