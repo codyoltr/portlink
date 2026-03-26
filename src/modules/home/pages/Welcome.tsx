@@ -1,6 +1,6 @@
 import React from 'react';
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import { useNavigate } from 'react-router-dom';
 import FullPageLayout from '@/features/shell/components/FullPageLayout';
 import heroImage from '@/assets/hero-image.png';

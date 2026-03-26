@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Toast from '../../components/Toast';
+import Toast from '@/components/Toast';
 import CreateOfferModal from '@/features/offers/components/CreateOfferModal';
 
 const LocalAgentResults: React.FC = () => {

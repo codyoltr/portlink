@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import Navbar from "../components/Navbar"; 
-import Footer from "../components/Footer";
+import Navbar from '@/components/Navbar'; 
+import Footer from '@/components/Footer';
 import { motion, useScroll, useTransform } from "framer-motion";
 import { 
   ClipboardCheck, 

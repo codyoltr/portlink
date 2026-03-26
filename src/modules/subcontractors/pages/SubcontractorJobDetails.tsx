@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Toast from '../../components/Toast';
+import Toast from '@/components/Toast';
 
 const SubcontractorJobDetails: React.FC = () => {
   const navigate = useNavigate();

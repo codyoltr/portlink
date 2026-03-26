@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Toast from '../../components/Toast';
+import Toast from '@/components/Toast';
 
 const SubcontractorResults: React.FC = () => {
   const [newsletterEmail, setNewsletterEmail] = useState('');
