@@ -16,6 +16,8 @@ import SubcontractorDirectoryDetail from './pages/SubcontractorDirectoryDetail';
 import ArchiveFinance from './pages/ArchiveFinance';
 import ArchiveFinanceDetail from './pages/ArchiveFinanceDetail';
 import AddFinance from './pages/FinansEkle'; // Was FinansEkle
+import AgentProfilePage from './pages/AgentProfilePage';
+import AgentProfileEditPage from './pages/AgentProfileEditPage';
 
 // AGENT DASHBOARD PAGES
 import AgentAssignedJobDetail from './dashboard/AgentAssignedJobDetail';
@@ -43,6 +45,8 @@ export default function AgentRoutes() {
               <Route path="archive-finance" element={<ArchiveFinance />} />
               <Route path="archive-finance/:id" element={<ArchiveFinanceDetail />} />
               <Route path="add-finance" element={<AddFinance />} />
+              <Route path="profile" element={<AgentProfilePage />} />
+              <Route path="profile-edit" element={<AgentProfileEditPage />} />
               <Route path="jobs" element={<AgentJobs />} />
               <Route path="assigned" element={<AgentAssignedJobs />} />
               <Route path="assigned/:id" element={<AgentAssignedJobDetail />} />

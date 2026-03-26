@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -73,6 +73,44 @@ const SubcontractorProfileEditPage: React.FC = () => {
   const [newDocumentStatus, setNewDocumentStatus] =
     useState<DocumentItem['status']>('Geçerli');
   const [newDocumentExpiry, setNewDocumentExpiry] = useState('');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('subcontractorProfileData');
+    if (saved) {
+      const data = JSON.parse(saved);
+      if (data.info) {
+        setCompanyName(data.info.companyName || '');
+        setPhone(data.info.phone || '');
+        setEmail(data.info.email || '');
+        setDescription(data.info.bio || '');
+      }
+      if (data.expertiseAreas) setExpertiseAreas(data.expertiseAreas);
+      if (data.serviceRegions) setServiceRegions(data.serviceRegions);
+      if (data.team) setTeamStructure(data.team);
+      if (data.references) setReferences(data.references);
+    }
+  }, []);
+
+  const [references, setReferences] = useState<{id: number, name: string, year: string}[]>([
+    { id: 1, name: 'Akdeniz Gemi İşletmeciliği', year: '2026' },
+    { id: 2, name: 'Yıldız Tersanesi A.Ş', year: '2025' },
+    { id: 3, name: 'Deniz Yıldızı Lojistik', year: '2025' },
+  ]);
+  const [newRefName, setNewRefName] = useState('');
+  const [newRefYear, setNewRefYear] = useState('');
+
+  const addReference = () => {
+    const name = newRefName.trim();
+    const year = newRefYear.trim();
+    if (!name || !year) return;
+    setReferences([...references, { id: Date.now(), name, year }]);
+    setNewRefName('');
+    setNewRefYear('');
+  };
+
+  const removeReference = (id: number) => {
+    setReferences(references.filter(r => r.id !== id));
+  };
 
   const addExpertise = () => {
     const value = newExpertise.trim();
@@ -175,22 +213,26 @@ const SubcontractorProfileEditPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log({
-      companyName,
-      companyType,
-      phone,
-      email,
-      foundedYear,
-      experience,
-      description,
+    const dataToSave = {
+      info: {
+        companyName,
+        phone,
+        email,
+        bio: description,
+        logo: 'engineering',
+        score: 4.7,
+        reviewsCount: 128
+      },
       expertiseAreas,
       serviceRegions,
-      teamStructure,
-      documents,
-    });
+      team: teamStructure,
+      references
+    };
 
-    alert('Profil bilgileri güncellendi. (Demo kayıt)');
-    navigate('/dashboard/subcontractor/profile-capacity');
+    localStorage.setItem('subcontractorProfileData', JSON.stringify(dataToSave));
+
+    alert('Profil bilgileri başarıyla güncellendi.');
+    navigate('/dashboard/subcontractor/profile');
   };
 
   return (
@@ -496,6 +538,37 @@ const SubcontractorProfileEditPage: React.FC = () => {
               >
                 Rol Ekle
               </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Referanslar */}
+        <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-sm">
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-white">Referanslar</h3>
+            <span className="text-sm text-slate-400">{references.length} referans</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            {references.map((ref) => (
+              <div key={ref.id} className="rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700/50 p-4 flex items-center justify-between gap-4">
+                <div>
+                  <p className="font-semibold text-slate-800 dark:text-white">{ref.name}</p>
+                  <p className="text-sm text-slate-400">Yıl: {ref.year}</p>
+                </div>
+                <button type="button" onClick={() => removeReference(ref.id)} className="text-rose-500 hover:text-rose-600 transition p-2">
+                  <span className="material-icons-round">delete</span>
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700/50 p-4">
+            <h4 className="font-semibold text-slate-800 dark:text-white mb-4">Yeni Referans Ekle</h4>
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_140px_120px] gap-3">
+              <input type="text" value={newRefName} onChange={e => setNewRefName(e.target.value)} placeholder="Firma Adı (Örn: Yıldız Tersanesi)" className="rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 px-4 py-3 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-primary/30" />
+              <input type="text" value={newRefYear} onChange={e => setNewRefYear(e.target.value)} placeholder="Yıl (Örn: 2026)" className="rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 px-4 py-3 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-primary/30" />
+              <button type="button" onClick={addReference} className="bg-primary hover:bg-primary/90 text-white font-semibold px-5 py-3 rounded-xl transition">Ekle</button>
             </div>
           </div>
         </div>

@@ -17,6 +17,7 @@ import SubcontractorActiveJobsPage from './pages/SubcontractorActiveJobsPage';
 import SubcontractorJobDetailPage from './pages/SubcontractorJobDetailPage';
 import SubcontractorProfileCapacityPage from './pages/SubcontractorProfileCapacityPage';
 import SubcontractorProfileEditPage from './pages/SubcontractorProfileEditPage';
+import SubcontractorProfilePage from './pages/SubcontractorProfilePage';
 
 import Gatekeeper from '@/components/Gatekeeper';
 
@@ -39,6 +40,7 @@ export default function SubcontractorRoutes() {
               <Route path="active-jobs/:id" element={<SubcontractorJobDetailPage />} />
               <Route path="profile-capacity" element={<SubcontractorProfileCapacityPage />} />
               <Route path="profile-edit" element={<SubcontractorProfileEditPage />} />
+              <Route path="profile" element={<SubcontractorProfilePage />} />
             </Routes>
           </DashboardLayout>
         } />

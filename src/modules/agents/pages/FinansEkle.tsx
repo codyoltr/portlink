@@ -42,7 +42,7 @@ const FinansEkle: React.FC = () => {
     }
 
     localStorage.setItem('finans_kayitlari', JSON.stringify(records));
-    navigate('/dashboard/agent/arsiv-finans');
+    navigate('/dashboard/agent/archive-finance');
   };
 
   const typeOptions = [
