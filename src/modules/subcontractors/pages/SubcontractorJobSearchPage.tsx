@@ -70,38 +70,47 @@ const closeModals = () => {
   setIsOfferModalOpen(false);
   setSelectedJob(null);
 };
-  const [keyword, setKeyword] = useState('');
-const [locationFilter, setLocationFilter] = useState('Tüm Lokasyonlar');
-const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
-  const [budgetFilter, setBudgetFilter] = useState('Tüm Bütçeler');
+  const [keywordInput, setKeywordInput] = useState('');
+  const [locationInput, setLocationInput] = useState('Tüm Lokasyonlar');
+  const [jobTypeInput, setJobTypeInput] = useState('Tüm Kategoriler');
+  const [budgetInput, setBudgetInput] = useState('Tüm Bütçeler');
+
+  const [appliedKeyword, setAppliedKeyword] = useState('');
+  const [appliedLocation, setAppliedLocation] = useState('Tüm Lokasyonlar');
+  const [appliedJobType, setAppliedJobType] = useState('Tüm Kategoriler');
+  const [appliedBudget, setAppliedBudget] = useState('Tüm Bütçeler');
   
   const filteredJobs = useMemo(() => {
-  return jobs.filter((job) => {
-    const matchesKeyword =
-      job.title.toLowerCase().includes(keyword.toLowerCase()) ||
-      job.company.toLowerCase().includes(keyword.toLowerCase()) ||
-      job.description.toLowerCase().includes(keyword.toLowerCase());
-
-    const matchesLocation =
-      locationFilter === 'Tüm Lokasyonlar' ||
-      job.location.toLowerCase().includes(locationFilter.toLowerCase());
-
-    const matchesJobType =
-      jobTypeFilter === 'Tüm Kategoriler' ||
-      job.category === jobTypeFilter;
-
-    const matchesBudget =
-      budgetFilter === 'Tüm Bütçeler' ||
-      (budgetFilter === '₺0 - ₺50.000' && false) ||
-      (budgetFilter === '₺50.000 - ₺100.000' &&
-        ['₺75.000 - ₺95.000', '₺60.000 - ₺80.000'].includes(job.budget)) ||
-      (budgetFilter === '₺100.000 - ₺150.000' &&
-        ['₺110.000 - ₺145.000'].includes(job.budget)) ||
-      (budgetFilter === '₺150.000+' && false);
-
-    return matchesKeyword && matchesLocation && matchesJobType && matchesBudget;
+    return jobs.filter((job) => {
+      const matchesKeyword =
+        job.title.toLowerCase().includes(appliedKeyword.toLowerCase()) ||
+        job.company.toLowerCase().includes(appliedKeyword.toLowerCase()) ||
+        job.description.toLowerCase().includes(appliedKeyword.toLowerCase());
+  
+      const matchesLocation =
+        appliedLocation === 'Tüm Lokasyonlar' ||
+        job.location.toLowerCase().includes(appliedLocation.toLowerCase());
+  
+      const matchesJobType =
+        appliedJobType === 'Tüm Kategoriler' ||
+        job.category === appliedJobType;
+  
+      const matchesBudget =
+        appliedBudget === 'Tüm Bütçeler' ||
+        (appliedBudget === '₺50.000 - ₺100.000' &&
+          ['₺75.000 - ₺95.000', '₺60.000 - ₺80.000'].includes(job.budget)) ||
+        (appliedBudget === '₺100.000 - ₺150.000' &&
+          ['₺110.000 - ₺145.000'].includes(job.budget));
+  
+      return matchesKeyword && matchesLocation && matchesJobType && matchesBudget;
+    });
+  }, [appliedKeyword, appliedLocation, appliedJobType, appliedBudget]);
+  
+  const sortedJobs = [...filteredJobs].sort((a, b) => {
+    if (a.tag === 'Acil' && b.tag !== 'Acil') return -1;
+    if (a.tag !== 'Acil' && b.tag === 'Acil') return 1;
+    return 0;
   });
-}, [keyword, locationFilter, jobTypeFilter, budgetFilter]);
 
   return (
     <>
@@ -116,28 +125,23 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
               Geri Dön
             </button>
           </div>
-          <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">Yeni İş Ara</h2>
+          <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">Bana Uygun İlanlar</h2>
           <p className="text-slate-500 dark:text-slate-400">
             Size uygun ilanları inceleyin, filtreleyin ve hızlıca teklif verin.
           </p>
         </div>
 
         <button
-          onClick={() => {
-            setKeyword('');
-            setLocationFilter('Tüm Lokasyonlar');
-            setJobTypeFilter('Tüm Kategoriler');
-            setBudgetFilter('Tüm Bütçeler');
-          }}
-          className="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2"
+          onClick={() => navigate('/dashboard/subcontractor/active-jobs')}
+          className="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-md shadow-primary/20 flex items-center gap-2"
         >
-          <span className="material-icons-round text-sm">restart_alt</span>
-          Filtreleri Sıfırla
+          <span className="material-icons-round text-[18px]">receipt_long</span>
+          Aktif İşlerim
         </button>
       </div>
 
       <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700/50 rounded-2xl p-5 md:p-6 shadow-sm mb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
           <div>
             <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
               Anahtar Kelime
@@ -148,8 +152,8 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
               </span>
               <input
                 type="text"
-                value={keyword}
-                onChange={(e) => setKeyword(e.target.value)}
+                value={keywordInput}
+                onChange={(e) => setKeywordInput(e.target.value)}
                 placeholder="Örn. bakım, boya, elektrik"
                 className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
               />
@@ -161,8 +165,8 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
               Konum
             </label>
             <select
-              value={locationFilter}
-              onChange={(e) => setLocationFilter(e.target.value)}
+              value={locationInput}
+              onChange={(e) => setLocationInput(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
               <option>Tüm Lokasyonlar</option>
               <option>Tuzla</option>
@@ -177,8 +181,8 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
               İş Türü
             </label>
             <select
-              value={jobTypeFilter}
-              onChange={(e) => setJobTypeFilter(e.target.value)}
+              value={jobTypeInput}
+              onChange={(e) => setJobTypeInput(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
               <option>Tüm Kategoriler</option>
               <option>Makine Bakımı</option>
@@ -193,8 +197,8 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
               Bütçe Aralığı
             </label>
             <select
-              value={budgetFilter}
-              onChange={(e) => setBudgetFilter(e.target.value)}
+              value={budgetInput}
+              onChange={(e) => setBudgetInput(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
               <option>Tüm Bütçeler</option>
               <option>₺0 - ₺50.000</option>
@@ -202,6 +206,39 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
               <option>₺100.000 - ₺150.000</option>
               <option>₺150.000+</option>
             </select>
+          </div>
+          <div className="flex items-end gap-2">
+            {/* Filtreleri Sıfırla */}
+            <button
+              onClick={() => {
+                setKeywordInput('');
+                setLocationInput('Tüm Lokasyonlar');
+                setJobTypeInput('Tüm Kategoriler');
+                setBudgetInput('Tüm Bütçeler');
+          
+                setAppliedKeyword('');
+                setAppliedLocation('Tüm Lokasyonlar');
+                setAppliedJobType('Tüm Kategoriler');
+                setAppliedBudget('Tüm Bütçeler');
+              }}
+              className="px-3 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-red-500 hover:border-red-300 dark:hover:border-red-600 transition-all flex items-center justify-center"
+            >
+              <span className="material-icons-round text-[18px]">restart_alt</span>
+            </button>
+          
+            {/* Filtreleri Uygula */}
+            <button
+              onClick={() => {
+                setAppliedKeyword(keywordInput);
+                setAppliedLocation(locationInput);
+                setAppliedJobType(jobTypeInput);
+                setAppliedBudget(budgetInput);
+              }}
+              className="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-3 px-5 rounded-xl transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2"
+            >
+              <span className="material-icons-round text-sm">filter_alt</span>
+              Filtreleri Uygula
+            </button>
           </div>
         </div>
       </div>
@@ -216,14 +253,27 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
-        {filteredJobs.map((job) => (
+        {sortedJobs.map((job) => (
           <div
             key={job.id}
-            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 md:p-6 shadow-sm hover:border-primary/40 hover:shadow-md transition-all"
-          >
+            className={`
+            rounded-2xl p-5 md:p-6 shadow-sm transition-all border
+            ${
+              job.tag === 'Acil'
+                ? 'bg-red-50/60 dark:bg-red-900/10 border-red-200 dark:border-red-800/40 hover:border-red-300 dark:hover:border-red-700/50'
+                : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-primary/40 hover:shadow-md'
+            }
+          `}
+>
             <div className="flex items-start justify-between gap-3 mb-4">
               <div>
-                <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-1">
+                <h4
+                  className={`text-lg font-bold mb-1 ${
+                    job.tag === 'Acil'
+                      ? 'text-red-700 dark:text-red-300'
+                      : 'text-slate-900 dark:text-white'
+                  }`}
+                >
                   {job.title}
                 </h4>
                 <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
@@ -232,9 +282,16 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
                 </div>
               </div>
 
-              <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md whitespace-nowrap ${job.tagStyle}`}>
-                {job.tag}
-              </span>
+              {job.tag === 'Acil' ? (
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-md whitespace-nowrap bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300">
+                  <span className="material-icons-round text-[14px]">warning</span>
+                  Acil
+                </span>
+              ) : (
+                <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md whitespace-nowrap ${job.tagStyle}`}>
+                  {job.tag}
+                </span>
+              )}
             </div>
 
             <p className="text-sm leading-6 text-slate-500 dark:text-slate-400 mb-5">
@@ -366,7 +423,9 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
       )}
       {isOfferModalOpen && selectedJob && (
   <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-[2px] px-4">
-    <div className="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+    <div className="w-full max-w-3xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+      
+      {/* HEADER */}
       <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-700">
         <div>
           <h3 className="text-xl font-bold text-slate-800 dark:text-white">
@@ -385,33 +444,88 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
         </button>
       </div>
 
-      <div className="p-6 space-y-5">
-        <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-700/60 p-4">
-          <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">İlan</p>
-          <p className="font-bold text-slate-800 dark:text-white">{selectedJob.title}</p>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{selectedJob.company}</p>
+      <div className="p-6 space-y-6">
+
+        {/* İLAN BİLGİ */}
+        <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-700/60 p-4 space-y-2">
+          <p className="font-bold text-slate-800 dark:text-white">
+            {selectedJob.title}
+          </p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            {selectedJob.company}
+          </p>
+
+          {/* ⭐ ACENTE PUANI */}
+          <div className="flex items-center gap-1 text-sm mt-2">
+            <span className="material-icons-round text-yellow-400 text-[18px]">star</span>
+            <span className="font-semibold text-slate-700 dark:text-slate-200">
+              4.6 / 5
+            </span>
+            <span className="text-slate-400 text-xs">(Acenta puanı)</span>
+          </div>
         </div>
 
+        {/* DETAY BİLGİLER */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <input
+            type="text"
+            placeholder="Liman (örn: Tuzla)"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
+          />
+
+          <input
+            type="text"
+            placeholder="Gemi Tipi (opsiyonel)"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
+          />
+
+          <input
+            type="text"
+            placeholder="İş Kategorisi (örn: Elektrik, Boya)"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
+          />
+
+          <input
+            type="date"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
+          />
+        </div>
+
+        {/* TEKLİF BİLGİLERİ */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
             type="text"
-            placeholder="Teklif Tutarı"
+            placeholder="Teklif Tutarı (₺)"
             className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
           />
+
           <input
             type="text"
-            placeholder="Tahmini Süre"
+            placeholder="Tahmini Süre (örn: 5 gün)"
             className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
           />
         </div>
 
+        {/* AÇIKLAMA */}
         <textarea
-          rows={5}
-          placeholder="Açıklama / Not"
+          rows={4}
+          placeholder="Kısa açıklama / teklif notu"
           className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 resize-none"
         />
 
-        <div className="flex justify-end gap-3">
+        {/* FOTO / VİDEO */}
+        <div className="border border-dashed border-slate-300 dark:border-slate-600 rounded-xl p-5 text-center cursor-pointer hover:border-primary transition-all">
+          <span className="material-icons-round text-3xl text-slate-400 mb-2 block">
+            upload
+          </span>
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Fotoğraf / video yükle (opsiyonel)
+          </p>
+        </div>
+
+        {/* BUTTONS */}
+        <div className="flex justify-end gap-3 pt-2">
           <button
             onClick={closeModals}
             className="px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold"
@@ -426,6 +540,7 @@ const [jobTypeFilter, setJobTypeFilter] = useState('Tüm Kategoriler');
             Teklifi Gönder
           </button>
         </div>
+
       </div>
     </div>
   </div>
