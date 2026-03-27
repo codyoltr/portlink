@@ -42,6 +42,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
   const agentNavItems = [
     { label: 'Özet (Dashboard)', path: `/dashboard/agent`, icon: 'dashboard' },
     { label: 'Gelen Teklifler', path: `/dashboard/agent/offers`, icon: 'receipt_long' },
+    { label: 'İş Listesi', path: `/dashboard/agent/job-list`, icon: 'receipt_long' },
     { label: 'Devam Eden İşler', path: `/dashboard/agent/assigned`, icon: 'autorenew' },
     { label: 'Aktif İlanlarım', path: `/dashboard/agent/jobs`, icon: 'work' },
     { label: 'Taşeron Rehberi', path: `/dashboard/agent/subcontractor-directory`, icon: 'contact_page' },
@@ -67,20 +68,18 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
     role === 'agent'
       ? agentNavItems
       : role === 'subcontractor'
-      ? subNavItems
-      : captainNavItems;
+        ? subNavItems
+        : captainNavItems;
 
   return (
     <div className="flex h-screen w-full bg-slate-50 dark:bg-slate-900 font-display overflow-hidden">
       <aside
-        className={`${
-          isSidebarCollapsed ? 'w-24' : 'w-80'
-        } transition-all duration-300 h-full bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col flex-shrink-0 z-40 hidden lg:flex`}
+        className={`${isSidebarCollapsed ? 'w-24' : 'w-80'
+          } transition-all duration-300 h-full bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col flex-shrink-0 z-40 hidden lg:flex`}
       >
         <div
-          className={`h-20 flex flex-shrink-0 items-center border-b border-slate-100 dark:border-slate-700/50 ${
-            isSidebarCollapsed ? 'justify-center px-0' : 'px-6'
-          }`}
+          className={`h-20 flex flex-shrink-0 items-center border-b border-slate-100 dark:border-slate-700/50 ${isSidebarCollapsed ? 'justify-center px-0' : 'px-6'
+            }`}
         >
           <Link to="/" className="flex items-center gap-3">
             <div className="bg-primary p-2.5 rounded-xl flex-shrink-0">
@@ -102,13 +101,11 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center ${
-                    isSidebarCollapsed ? 'justify-center px-0' : 'gap-3 px-4'
-                  } py-3.5 rounded-xl font-semibold transition-all ${
-                    isActive
+                  className={`flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3 px-4'
+                    } py-3.5 rounded-xl font-semibold transition-all ${isActive
                       ? 'bg-primary text-white shadow-lg shadow-primary/20'
                       : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white'
-                  }`}
+                    }`}
                   title={isSidebarCollapsed ? item.label : undefined}
                 >
                   <span className="material-icons-round text-[20px]">{item.icon}</span>
@@ -120,15 +117,13 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
         </div>
 
         <div
-          className={`p-6 border-t border-slate-100 dark:border-slate-700/50 flex flex-shrink-0 ${
-            isSidebarCollapsed ? 'justify-center p-3' : ''
-          }`}
+          className={`p-6 border-t border-slate-100 dark:border-slate-700/50 flex flex-shrink-0 ${isSidebarCollapsed ? 'justify-center p-3' : ''
+            }`}
         >
           <button
             onClick={() => navigate('/login')}
-            className={`flex items-center ${
-              isSidebarCollapsed ? 'justify-center px-0 w-12 h-12' : 'gap-3 px-4 w-full'
-            } py-3 rounded-xl font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors`}
+            className={`flex items-center ${isSidebarCollapsed ? 'justify-center px-0 w-12 h-12' : 'gap-3 px-4 w-full'
+              } py-3 rounded-xl font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors`}
             title={isSidebarCollapsed ? 'Çıkış Yap' : undefined}
           >
             <span className="material-icons-round text-[20px]">logout</span>

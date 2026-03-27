@@ -24,7 +24,7 @@ import AgentAssignedJobDetail from './dashboard/AgentAssignedJobDetail';
 import AgentJobs from './dashboard/AgentJobs';
 import AgentAssignedJobs from './dashboard/AgentAssignedJobs';
 import AgentJobDetails from './dashboard/AgentJobDetails';
-
+import AgentJobList from './dashboard/AgentJobList';
 import Gatekeeper from '@/components/Gatekeeper';
 import QuickPostPage from './pages/QuickPostPage';
 
@@ -44,6 +44,7 @@ export default function AgentRoutes() {
               <Route path="subcontractor-directory" element={<SubcontractorDirectory />} />
               <Route path="subcontractor-directory/:id" element={<SubcontractorDirectoryDetail />} />
               <Route path="archive-finance" element={<ArchiveFinance />} />
+              <Route path="job-list" element={<AgentJobList />} />
               <Route path="archive-finance/:id" element={<ArchiveFinanceDetail />} />
               <Route path="add-finance" element={<AddFinance />} />
               <Route path="profile" element={<AgentProfilePage />} />

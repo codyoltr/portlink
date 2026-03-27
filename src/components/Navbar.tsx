@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <header className="w-full bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
       <div className="w-full px-6 md:px-8 lg:px-16 h-20 flex items-center justify-between">
-        
+
         {/* Logo Alanı */}
         <div onClick={() => navigate('/')} className="flex items-center gap-3 cursor-pointer">
           <div className="bg-blue-600 text-white p-2.5 rounded-xl shadow-sm">
@@ -19,7 +19,7 @@ const Navbar = () => {
 
         {/* Menü Linkleri */}
         <nav className="hidden md:flex items-center gap-8 lg:gap-12">
-          
+
           <button
             onClick={() => {
               if (location.pathname !== '/') navigate('/');
@@ -60,7 +60,7 @@ const Navbar = () => {
         </nav>
 
         {/* Giriş Yap Butonu */}
-        <button 
+        <button
           onClick={() => navigate('/login')}
           className="hidden md:flex items-center gap-2 bg-blue-600 text-white px-7 py-2.5 rounded-xl font-semibold hover:bg-blue-700 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
           Giriş Yap <ArrowRight size={18} />

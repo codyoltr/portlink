@@ -33,6 +33,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
 
   const agentNavItems = [
     { label: 'Özet (Dashboard)', path: `/dashboard/agent`, icon: 'dashboard' },
+    { label: 'İş Listesi', path: `/dashboard/agent/job-list`, icon: 'receipt_long' },
     { label: 'Gelen Teklifler', path: `/dashboard/agent/offers`, icon: 'receipt_long' },
     { label: 'Devam Eden İşler', path: `/dashboard/agent/assigned`, icon: 'autorenew' },
     { label: 'Aktif İlanlarım', path: `/dashboard/agent/jobs`, icon: 'work' },
@@ -58,7 +59,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
 
   return (
     <div className="flex h-screen w-full bg-slate-50 dark:bg-slate-900 font-display overflow-hidden">
-      
+
       {/* SIDEBAR */}
       <aside className={`${isSidebarCollapsed ? 'w-24' : 'w-80'} transition-all duration-300 h-full bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col flex-shrink-0 z-40 hidden lg:flex`}>
         <div className={`h-20 flex flex-shrink-0 items-center border-b border-slate-100 dark:border-slate-700/50 ${isSidebarCollapsed ? 'justify-center px-0' : 'px-6'}`}>
@@ -78,11 +79,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3 px-4'} py-3.5 rounded-xl font-semibold transition-all ${
-                    isActive
-                      ? 'bg-primary text-white shadow-lg shadow-primary/20'
-                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white'
-                  }`}
+                  className={`flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3 px-4'} py-3.5 rounded-xl font-semibold transition-all ${isActive
+                    ? 'bg-primary text-white shadow-lg shadow-primary/20'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white'
+                    }`}
                   title={isSidebarCollapsed ? item.label : undefined}
                 >
                   <span className="material-icons-round text-[20px]">{item.icon}</span>
@@ -109,10 +109,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
       {/* ANA İÇERİK ALANI */}
       <main className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
         <header className="h-20 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between px-8 flex-shrink-0 z-30 shadow-sm relative">
-          
+
           {/* HEADER SOL KISIM - HEADER BAŞLIĞI VE COLLAPSE BUTTON */}
           <div className="flex items-center gap-4">
-            <button 
+            <button
               onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
               className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 border border-slate-100 dark:border-slate-700 dark:bg-slate-800 text-slate-500 hover:text-primary hover:bg-white transition-colors"
             >
@@ -125,10 +125,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
 
           {/* HEADER SAĞ KISIM - AYARLAR VE PROFİL */}
           <div className="flex items-center gap-4 relative">
-            
+
             {/* AYARLAR BUTONU VE DROPDOWN */}
             <div className="relative">
-              <button 
+              <button
                 onClick={() => setIsSettingsMenuOpen(!isSettingsMenuOpen)}
                 className="w-10 h-10 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-primary hover:bg-slate-50 dark:hover:bg-slate-800 transition-all font-bold"
                 onBlur={() => setTimeout(() => setIsSettingsMenuOpen(false), 200)}
@@ -136,7 +136,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
               >
                 <span className="material-icons-round">settings</span>
               </button>
-              
+
               {isSettingsMenuOpen && (
                 <div className="absolute right-0 top-14 mt-1 w-56 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 py-2 z-50 animate-in fade-in slide-in-from-top-2">
                   <div className="px-4 py-2 border-b border-slate-50 dark:border-slate-700/50 mb-1">
@@ -160,7 +160,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
 
             {/* PROFİL WIDGET */}
             <div className="relative">
-              <button 
+              <button
                 onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
                 className="flex items-center gap-3 p-1.5 pr-3 rounded-full border border-transparent hover:border-slate-200 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
                 onBlur={() => setTimeout(() => setIsProfileMenuOpen(false), 200)}
@@ -180,7 +180,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
               {/* DROPDOWN OPTIONS */}
               {isProfileMenuOpen && (
                 <div className="absolute right-0 top-14 mt-1 w-56 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 py-2 z-50 animate-in fade-in slide-in-from-top-2">
-                  <button 
+                  <button
                     onClick={() => {
                       setIsProfileMenuOpen(false);
                       navigate(role === 'agent' ? '/dashboard/agent/profile' : '/dashboard/subcontractor/profile');
@@ -195,7 +195,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
                     Yardım & Destek
                   </button>
                   <div className="h-px bg-slate-100 dark:bg-slate-700/50 my-1"></div>
-                  <button 
+                  <button
                     onClick={() => navigate('/login')}
                     className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors"
                   >
@@ -205,14 +205,14 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
                 </div>
               )}
             </div>
-            
+
           </div>
         </header>
 
         {/* --- GENİŞLİK AYARI YAPILAN YER --- */}
         <div className="flex-1 overflow-auto bg-slate-50 dark:bg-slate-900 p-4 md:p-8 lg:p-12">
           <div className="mx-auto w-full max-w-full 2xl:max-w-[1600px]">
-             {children}
+            {children}
           </div>
         </div>
       </main>

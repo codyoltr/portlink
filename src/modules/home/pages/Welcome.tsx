@@ -144,16 +144,17 @@ const Welcome: React.FC = () => {
                 
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <button
-                    onClick={() => navigate('/signup')}
+                    onClick={() => navigate('/login')}
                     className="group px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold text-base hover:bg-blue-700 transition-all duration-300 shadow-[0_8px_20px_rgba(37,99,235,0.25)] hover:shadow-[0_12px_25px_rgba(37,99,235,0.35)] transform hover:-translate-y-1 flex items-center justify-center gap-2"
                   >
-                    Ücretsiz Katıl
-                    <span className="material-icons-round group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    Acenta Arıyorum
+                    <span className="material-icons-round group-hover:translate-x-1 transition-transform">handshake</span>
                   </button>
                   <button 
-                    onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="px-8 py-4 bg-white text-slate-700 rounded-2xl font-bold text-base border border-slate-200 hover:border-blue-300 hover:bg-slate-50 transition-all duration-300 hover:shadow-lg flex items-center justify-center">
-                    Nasıl Çalışıyor?
+                    onClick={() => navigate('/login')}
+                    className="group px-8 py-4 bg-white text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-50 transition-all duration-300 shadow-[0_8px_20px_rgba(37,99,235,0.05)] hover:shadow-[0_12px_25px_rgba(37,99,235,0.15)] transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                    Taşeron Arıyorum
+                    <span className="material-icons-round group-hover:translate-x-1 transition-transform">engineering</span>
                   </button>
                 </div>
                 
