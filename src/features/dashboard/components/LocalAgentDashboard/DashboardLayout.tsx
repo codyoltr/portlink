@@ -30,7 +30,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
 
   const agentNavItems = [
     { label: 'Özet (Dashboard)', path: `/dashboard/agent`, icon: 'dashboard' },
-    { label: 'Gelen Teklifler', path: `/dashboard/agent/offers`, icon: 'receipt_long' },
+    { label: 'Hızlı İlan Ver', path: `/dashboard/agent/quick-post`, icon: 'rocket_launch' },    { label: 'Gelen Teklifler', path: `/dashboard/agent/offers`, icon: 'receipt_long' },
     { label: 'Devam Eden İşler', path: `/dashboard/agent/assigned`, icon: 'autorenew' },
     { label: 'Aktif İlanlarım', path: `/dashboard/agent/jobs`, icon: 'work' },
     { label: 'Taşeron Rehberi', path: `/dashboard/agent/subcontractor-directory`, icon: 'contact_page' },
@@ -44,6 +44,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
     { label: 'Aktif İşlerim', path: `/dashboard/subcontractor/active-jobs`, icon: 'autorenew' },
     { label: 'Cüzdan ve Kazanç', path: `/dashboard/subcontractor/wallet`, icon: 'account_balance_wallet' },
     { label: 'Profil ve Kapasite', path: `/dashboard/subcontractor/profile-capacity`, icon: 'badge' },
+    
   ];
 
   const captainNavItems = [

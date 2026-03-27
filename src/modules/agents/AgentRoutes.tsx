@@ -24,6 +24,7 @@ import AgentAssignedJobs from './dashboard/AgentAssignedJobs';
 import AgentJobDetails from './dashboard/AgentJobDetails';
 
 import Gatekeeper from '@/components/Gatekeeper';
+import QuickPostPage from './pages/QuickPostPage';
 
 export default function AgentRoutes() {
   return (
@@ -48,6 +49,9 @@ export default function AgentRoutes() {
               <Route path="assigned/:id" element={<AgentAssignedJobDetail />} />
               <Route path="jobs/:id" element={<AgentJobDetails />} />
               <Route path="add-subcontractor" element={<SubcontractorDirectory />} />
+              <Route path="quick-post" element={<QuickPostPage />} />
+              <Route path="quick-post/:id" element={<QuickPostPage />} />
+
             </Routes>
           </DashboardLayout>
         } />
