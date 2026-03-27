@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, Briefcase, CheckCircle2 } from 'lucide-react';
 import FullPageLayout from '@/features/shell/components/FullPageLayout';
 
 const SignupAgent: React.FC = () => {
@@ -35,55 +36,92 @@ const SignupAgent: React.FC = () => {
 
   return (
     <FullPageLayout>
-      <div className="min-h-screen bg-gradient-to-br from-sky-900 via-blue-800 to-indigo-900 text-white flex items-center justify-center px-4 py-10">
-        <div className="w-full max-w-2xl bg-white/10 border border-white/20 backdrop-blur rounded-3xl p-6 md:p-8 shadow-2xl">
-          <div className="mb-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-sky-200/80">Acente Kayıt</p>
-            <h1 className="mt-2 text-3xl font-bold">Acente Hesabı Oluştur</h1>
-            <p className="text-slate-200/80 mt-1">Aşağıdaki adımları doldurun ve kaydınızı tamamlayın.</p>
-          </div>
+      <div className="min-h-screen bg-slate-50 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100 via-slate-50 to-white text-slate-800 flex flex-col items-center justify-center px-4 py-8 relative">
+        
+        {/* Dynamic Background Elements */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute top-[20%] left-[-10%] w-[30%] h-[30%] rounded-full bg-blue-400/10 blur-[120px]" />
+          <div className="absolute bottom-[20%] right-[-10%] w-[30%] h-[30%] rounded-full bg-sky-400/10 blur-[120px]" />
+        </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4 text-slate-100">
-            <div className="rounded-2xl bg-sky-900/30 border border-white/20 p-4">
-              <h2 className="text-lg font-semibold">👤 Kullanıcı Bilgileri</h2>
-              <div className="mt-2 grid gap-2 md:grid-cols-2">
-                <input placeholder="Ad Soyad" value={name} onChange={(e) => setName(e.target.value)} className="rounded-xl border border-white/20 bg-slate-900/50 px-3 py-2 outline-none" required />
-                <input placeholder="Telefon" value={phone} onChange={(e) => setPhone(e.target.value)} className="rounded-xl border border-white/20 bg-slate-900/50 px-3 py-2 outline-none" required />
-                <input type="email" placeholder="E-posta" value={email} onChange={(e) => setEmail(e.target.value)} className="rounded-xl border border-white/20 bg-slate-900/50 px-3 py-2 outline-none" required />
-                <input type="password" placeholder="Şifre" value={password} onChange={(e) => setPassword(e.target.value)} className="rounded-xl border border-white/20 bg-slate-900/50 px-3 py-2 outline-none" required />
+        <div className="w-full max-w-[640px] z-10 flex flex-col pt-8 pb-12">
+          
+          {/* Back Button */}
+          <button 
+            onClick={() => navigate('/signup')} 
+            className="group self-start flex items-center gap-2 text-slate-500 hover:text-blue-700 mb-6 transition-colors duration-200"
+          >
+            <div className="p-2 rounded-full bg-white shadow-sm border border-slate-200 group-hover:bg-blue-50 transition-colors">
+              <ArrowLeft size={16} />
+            </div>
+            <span className="text-sm font-semibold tracking-wide">Geri Dön</span>
+          </button>
+
+          {/* Main Card */}
+          <div className="rounded-[2.5rem] p-8 md:p-10 bg-white/90 backdrop-blur-xl border border-slate-200 shadow-[0_8px_32px_0_rgba(30,58,138,0.05)] relative overflow-hidden">
+            
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 via-sky-500 to-blue-600" />
+
+            <div className="mb-8 border-b border-slate-100 pb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-xs font-bold uppercase tracking-wide text-blue-700 mb-4">
+                <Briefcase size={14} />
+                Acente Kayıt
               </div>
+              <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Kayıt Formu</h1>
+              <p className="text-slate-500 text-sm mt-2 font-medium">Aşağıdaki bilgileri eksiksiz doldurarak acente profilinizi oluşturun.</p>
             </div>
 
-            <div className="rounded-2xl bg-sky-900/30 border border-white/20 p-4">
-              <h2 className="text-lg font-semibold">🏢 Firma Bilgileri</h2>
-              <div className="mt-2 grid gap-2 md:grid-cols-2">
-                <input placeholder="Firma Adı" value={company} onChange={(e) => setCompany(e.target.value)} className="rounded-xl border border-white/20 bg-slate-900/50 px-3 py-2 outline-none" required />
-                <input placeholder="Ülke" value={country} onChange={(e) => setCountry(e.target.value)} className="rounded-xl border border-white/20 bg-slate-900/50 px-3 py-2 outline-none" required />
-                <input placeholder="Şehir" value={city} onChange={(e) => setCity(e.target.value)} className="rounded-xl border border-white/20 bg-slate-900/50 px-3 py-2 outline-none" required />
-                <input placeholder="Vergi No" value={taxNumber} onChange={(e) => setTaxNumber(e.target.value)} className="rounded-xl border border-white/20 bg-slate-900/50 px-3 py-2 outline-none" required />
+            <form onSubmit={handleSubmit} className="space-y-6">
+              
+              <div className="space-y-4">
+                <h2 className="text-sm font-extrabold text-slate-600 uppercase tracking-widest flex items-center gap-2">
+                  <span className="w-6 h-1 bg-blue-600 rounded-full"></span> 
+                  Kullanıcı Bilgileri
+                </h2>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <input placeholder="Ad Soyad" value={name} onChange={(e) => setName(e.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none shadow-sm" required />
+                  <input placeholder="Telefon" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none shadow-sm" required />
+                  <input type="email" placeholder="E-posta" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none shadow-sm" required />
+                  <input type="password" placeholder="Şifre" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none shadow-sm" required />
+                </div>
               </div>
-            </div>
 
-            <div className="rounded-2xl bg-sky-900/30 border border-white/20 p-4">
-              <h2 className="text-lg font-semibold">📄 Onay</h2>
-              <div className="mt-2 flex items-start gap-2">
-                <input type="checkbox" checked={acceptedTerms} onChange={(e) => setAcceptedTerms(e.target.checked)} className="mt-1 h-4 w-4 rounded border-white/50 text-sky-500 focus:ring-2 focus:ring-sky-300" />
-                <label className="text-sm">
-                  Kullanım Şartları'nı ve Gizlilik Politikası'nı okudum, kabul ediyorum.
+              <div className="space-y-4 pt-4 border-t border-slate-100">
+                <h2 className="text-sm font-extrabold text-slate-600 uppercase tracking-widest flex items-center gap-2">
+                  <span className="w-6 h-1 bg-blue-600 rounded-full"></span> 
+                  Firma Bilgileri
+                </h2>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <input placeholder="Firma Adı" value={company} onChange={(e) => setCompany(e.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none shadow-sm" required />
+                  <input placeholder="Ülke" value={country} onChange={(e) => setCountry(e.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none shadow-sm" required />
+                  <input placeholder="Şehir" value={city} onChange={(e) => setCity(e.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none shadow-sm" required />
+                  <input placeholder="Vergi No" value={taxNumber} onChange={(e) => setTaxNumber(e.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none shadow-sm" required />
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-slate-100">
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <div className="relative flex items-center justify-center mt-1">
+                    <input type="checkbox" checked={acceptedTerms} onChange={(e) => setAcceptedTerms(e.target.checked)} className="peer appearance-none w-5 h-5 rounded border border-slate-300 bg-white checked:bg-blue-600 checked:border-blue-600 transition-colors shadow-sm" />
+                    <CheckCircle2 size={14} className="absolute text-white opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" strokeWidth={3} />
+                  </div>
+                  <span className="text-sm text-slate-600 font-medium leading-relaxed">
+                    <a href="#" className="text-blue-600 hover:text-blue-800 hover:underline underline-offset-2">Kullanım Şartları</a>'nı ve <a href="#" className="text-blue-600 hover:text-blue-800 hover:underline underline-offset-2">Gizlilik Politikası</a>'nı okudum, kabul ediyorum.
+                  </span>
                 </label>
               </div>
-            </div>
 
-            <button type="submit" disabled={loading} className="w-full rounded-xl py-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold hover:opacity-90">
-              {loading ? 'Kaydediliyor...' : 'Kaydet ve Girişe Dön'}
-            </button>
+              <button type="submit" disabled={loading} className="w-full mt-4 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5">
+                {loading ? 'Kaydediliyor...' : 'Kaydet ve İlerle'}
+              </button>
 
-            {message && <p className="text-rose-200 text-sm">{message}</p>}
-          </form>
+              {message && (
+                <div className="mt-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 text-sm text-center font-bold">
+                  {message}
+                </div>
+              )}
+            </form>
 
-          <div className="mt-3 flex gap-2 text-xs text-sky-200">
-            <button onClick={() => navigate('/signup')} className="hover:text-white">Rol seçimine dön</button>
-            <button onClick={() => navigate('/login')} className="hover:text-white">Giriş sayfasına dön</button>
           </div>
         </div>
       </div>

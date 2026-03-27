@@ -31,43 +31,31 @@ const Navbar = () => {
           </button>
 
           <button
-            onClick={() => {
-              if (location.pathname !== '/') navigate('/');
-              setTimeout(() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' }), 100);
-            }}
-            className="text-sm font-bold transition-all relative group text-slate-600 hover:text-blue-600">
+            onClick={() => navigate('/how-it-works')}
+            className={`text-sm font-bold transition-all relative group ${location.pathname === '/how-it-works' ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}>
             Portlink Nasıl Çalışır?
-            <span className="absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 w-0 group-hover:w-full"></span>
+            <span className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 ${location.pathname === '/how-it-works' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
           </button>
 
           <button
-            onClick={() => {
-              if (location.pathname !== '/') navigate('/');
-              setTimeout(() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }), 100);
-            }}
-            className="text-sm font-bold transition-all relative group text-slate-600 hover:text-blue-600">
+            onClick={() => navigate('/services')}
+            className={`text-sm font-bold transition-all relative group ${location.pathname === '/services' ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}>
             Hizmetler
-            <span className="absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 w-0 group-hover:w-full"></span>
+            <span className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 ${location.pathname === '/services' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
           </button>
 
           <button
-            onClick={() => {
-              if (location.pathname !== '/') navigate('/');
-              setTimeout(() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }), 100);
-            }}
-            className="text-sm font-bold transition-all relative group text-slate-600 hover:text-blue-600">
+            onClick={() => navigate('/about')}
+            className={`text-sm font-bold transition-all relative group ${location.pathname === '/about' ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}>
             Neden Portlink?
-            <span className="absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 w-0 group-hover:w-full"></span>
+            <span className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 ${location.pathname === '/about' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
           </button>
 
           <button
-            onClick={() => {
-              if (location.pathname !== '/') navigate('/');
-              setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 100);
-            }}
-            className="text-sm font-bold transition-all relative group text-slate-600 hover:text-blue-600">
+            onClick={() => navigate('/contact')}
+            className={`text-sm font-bold transition-all relative group ${location.pathname === '/contact' ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}>
             İletişim
-            <span className="absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 w-0 group-hover:w-full"></span>
+            <span className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 ${location.pathname === '/contact' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
           </button>
         </nav>
 

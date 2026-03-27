@@ -18,7 +18,7 @@ const steps = [
   {
     id: 1,
     title: 'İhtiyacını Belirle',
-    description: 'Aradığınız hizmeti, lokasyonu ve detayları sisteme girerek talebinizi oluşturun.',
+    description: 'Aradığınız hizmeti, lokasyonu ve detayları sisteme girerek hızla talebinizi oluşturun.',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -27,8 +27,8 @@ const steps = [
   },
   {
     id: 2,
-    title: 'Uzmanlarla Eşleş',
-    description: 'İhtiyacınıza en uygun, doğrulanmış profesyonel hizmet sağlayıcılarıyla anında eşleşin.',
+    title: 'Hemen Eşleş',
+    description: 'Sistemimiz sizi en uygun, doğrulanmış profesyonel hizmet sağlayıcılarıyla saniyeler içinde eşleştirsin.',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -37,8 +37,8 @@ const steps = [
   },
   {
     id: 3,
-    title: 'Teklifleri Değerlendir',
-    description: 'Gelen teklifleri karşılaştırın, kullanıcı profillerini ve referansları inceleyin.',
+    title: 'Teklifleri Karşılaştır',
+    description: 'Farklı sağlayıcılardan gelen teklifleri, referansları ve puanları şeffaf bir şekilde kıyaslayın.',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -48,7 +48,7 @@ const steps = [
   {
     id: 4,
     title: 'Güvenle Anlaş',
-    description: 'En uygun çözüm ortağınızı seçin ve Portlink güvencesiyle iş birliğine başlayın.',
+    description: 'En uygun çözüm ortağınızı seçerek projelerinizi global Portlink güvencesiyle başlatın.',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -57,54 +57,56 @@ const steps = [
   }
 ];
 
-// Yeni Bento Box (Neden Portlink) için güncellenmiş özellikler listesi
 const features = [
   {
     id: 'guvenilir',
     title: 'Güvenilir Ağ',
-    description: 'Denizcilik sektöründe güvenilir ve profesyonel hizmet sağlayıcıları ile bağlantı kurun.',
+    description: 'Sadece doğrulanmış, lisanslı ve sektörde bilinen premium hizmet sağlayıcılarıyla çalışıyoruz.',
     icon: (
       <svg className="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
       </svg>
     ),
-    bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+    bgColor: 'bg-blue-50/80',
+    borderColor: 'border-blue-100',
   },
   {
     id: 'global',
     title: 'Global Kapsam',
-    description: 'Dünya çapında limanlar ve denizcilik hizmetlerine kesintisiz erişim sağlayın.',
+    description: 'Dünya çapındaki limanlar ve uluslararası sularda denizcilik operasyonlarınızı kesintisiz yürütün.',
     icon: (
-      <svg className="w-8 h-8 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg className="w-8 h-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     ),
-    bgColor: 'bg-indigo-50 dark:bg-indigo-900/20',
+    bgColor: 'bg-indigo-50/80',
+    borderColor: 'border-indigo-100',
   },
   {
     id: 'hizli',
-    title: 'Hızlı Eşleştirme',
-    description: 'İhtiyaçlarınıza en uygun çözüm ortağını hızlı ve kolay bir şekilde bulun.',
+    title: 'Hızlı Teklif Sistemi',
+    description: 'Zaman kayıplarını minimuma indirin. İhtiyacınıza en hızlı cevap veren tedarikçilerden anında teklif alın.',
     icon: (
-      <svg className="w-8 h-8 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg className="w-8 h-8 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
       </svg>
     ),
-    bgColor: 'bg-amber-50 dark:bg-amber-900/20',
+    bgColor: 'bg-sky-50/80',
+    borderColor: 'border-sky-100',
   },
   {
     id: 'dogrulanmis',
-    title: 'Doğrulanmış Profiller',
-    description: 'Tüm hizmet sağlayıcıları titizlikle incelenmiş profesyonellerdir.',
+    title: 'Kalite Kontrolü',
+    description: 'Hizmet sonrasında detaylı raporlama ve puanlama sistemiyle tüm süreci güvence altına alıyoruz.',
     icon: (
-      <svg className="w-8 h-8 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg className="w-8 h-8 text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     ),
-    bgColor: 'bg-emerald-50 dark:bg-emerald-900/20',
+    bgColor: 'bg-cyan-50/80',
+    borderColor: 'border-cyan-100',
   }
 ];
-
 
 const Welcome: React.FC = () => {
   const navigate = useNavigate();
@@ -114,398 +116,286 @@ const Welcome: React.FC = () => {
       <Navbar />
 
       {/* Ana İçerik */}
-      <main className="flex-1 w-full">
+      <main className="flex-1 w-full bg-slate-50 text-slate-800">
         
-        {/* Hero Section */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-8">
-            <div className="space-y-8 animate-[fade-in-up_1s_ease-out]">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 dark:bg-primary/20 rounded-full text-primary font-semibold text-sm hover:bg-primary/20 transition-colors cursor-default">
-                <span className="material-icons-round text-base animate-pulse">rocket_launch</span>
-                Denizcilik Sektörünün Dijital Platformu
-              </div>
-              <h1 className="text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white leading-tight">
-                Denizcilik Hizmetlerinde
-                <span className="block bg-gradient-to-r from-primary via-blue-500 to-blue-700 bg-clip-text text-transparent bg-300% animate-gradient">
-                  Doğru Eşleştirme
-                </span>
-              </h1>
-              <p className="text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-lg">
-                Taşeron, yerel acente, teknik uzman ve iş ortaklığı ihtiyaçlarınız için profesyonel çözüm ortağı bulun.
-                Portlink ile denizcilik sektöründe güvenilir bağlantılar kurun.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  onClick={() => navigate('/login')}
-                  className="group px-8 py-4 bg-primary text-white rounded-xl font-bold text-lg hover:bg-blue-600 transition-all duration-300 shadow-xl shadow-primary/25 hover:shadow-2xl hover:shadow-blue-500/40 transform hover:-translate-y-1 flex items-center justify-center gap-2"
-                >
-                  Hemen Başla
-                  <span className="material-icons-round group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                </button>
-                <button 
-                  onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="px-8 py-4 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-xl font-semibold text-lg border-2 border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary transition-all duration-300 hover:shadow-lg">
-                  Daha Fazla Bilgi
-                </button>
-              </div>
-              
-              {/* İstatistikler */}
-              <div className="flex flex-wrap items-center gap-8 pt-6 border-t border-slate-100 dark:border-slate-800 mt-8">
-                <div className="group hover:-translate-y-1 transition-transform">
-                  <div className="text-3xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">500+</div>
-                  <div className="text-sm text-slate-500 dark:text-slate-400 font-medium">Aktif Kullanıcı</div>
-                </div>
-                <div className="w-px h-12 bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
-                <div className="group hover:-translate-y-1 transition-transform">
-                  <div className="text-3xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">1000+</div>
-                  <div className="text-sm text-slate-500 dark:text-slate-400 font-medium">Tamamlanan Proje</div>
-                </div>
-                <div className="w-px h-12 bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
-                <div className="group hover:-translate-y-1 transition-transform">
-                  <div className="text-3xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">50+</div>
-                  <div className="text-sm text-slate-500 dark:text-slate-400 font-medium">Ülke</div>
-                </div>
-              </div>
-            </div>
+        {/* --- PREMIUM HERO SECTION --- */}
+        <section className="relative overflow-hidden w-full bg-white border-b border-slate-100">
+          {/* Subtle Dynamic Backgrounds */}
+          <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[70%] bg-blue-50/50 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute bottom-[-10%] left-[-5%] w-[30%] h-[50%] bg-sky-50/50 rounded-full blur-3xl pointer-events-none"></div>
 
-            {/* Sağdaki Görsel Alanı */}
-            <div className="relative group perspective-1000">
-              <div className="relative z-10 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/50 dark:border-slate-700/50 transform transition-transform duration-700 group-hover:scale-[1.02] animate-[float_6s_ease-in-out_infinite]">
-                <div className="aspect-square rounded-2xl relative overflow-hidden group-hover:shadow-inner transition-shadow flex items-center justify-center">
-                  <img
-                    src={heroImage}
-                    alt="Denizcilik lojistik operasyonları"
-                    className="w-full h-full object-cover rounded-2xl shadow-inner group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative z-10">
+            <div className="grid xl:grid-cols-2 gap-16 items-center">
+              
+              <div className="space-y-8 animate-[fade-in-up_1s_ease-out]">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-100 rounded-full text-blue-700 font-bold text-xs tracking-wide uppercase hover:bg-blue-100 transition-colors cursor-default shadow-sm">
+                  <span className="material-icons-round text-base text-blue-500 animate-pulse">rocket_launch</span>
+                  Liman Operasyonlarının Geleceği
+                </div>
+                
+                <h1 className="text-5xl lg:text-[4rem] font-extrabold text-slate-900 leading-[1.1] tracking-tight">
+                  Denizcilik Ağı İçin <br/>
+                  <span className="bg-gradient-to-r from-blue-700 via-sky-600 to-blue-500 bg-clip-text text-transparent">Doğru Bağlantı</span>
+                </h1>
+                
+                <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-xl font-medium">
+                  Uluslararası standartlarda hizmet arayan gemiler ile güvenilir acente ve taşeronları bir araya getiren yegane premium platform. Ticaretinizi hızlandırın, maliyetinizi optimize edin.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                  <button
+                    onClick={() => navigate('/signup')}
+                    className="group px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold text-base hover:bg-blue-700 transition-all duration-300 shadow-[0_8px_20px_rgba(37,99,235,0.25)] hover:shadow-[0_12px_25px_rgba(37,99,235,0.35)] transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                  >
+                    Ücretsiz Katıl
+                    <span className="material-icons-round group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                  </button>
+                  <button 
+                    onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="px-8 py-4 bg-white text-slate-700 rounded-2xl font-bold text-base border border-slate-200 hover:border-blue-300 hover:bg-slate-50 transition-all duration-300 hover:shadow-lg flex items-center justify-center">
+                    Nasıl Çalışıyor?
+                  </button>
+                </div>
+                
+                {/* İstatistikler */}
+                <div className="flex flex-wrap items-center gap-10 pt-8 mt-10 border-t border-slate-200">
+                  <div className="group hover:-translate-y-1 transition-transform">
+                    <div className="text-3xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">450+</div>
+                    <div className="text-sm text-slate-500 font-semibold tracking-wide uppercase mt-1">Aktif Lİman</div>
+                  </div>
+                  <div className="w-px h-10 bg-slate-200 hidden sm:block"></div>
+                  <div className="group hover:-translate-y-1 transition-transform">
+                    <div className="text-3xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">2K+</div>
+                    <div className="text-sm text-slate-500 font-semibold tracking-wide uppercase mt-1">Doğrulanmış Üye</div>
+                  </div>
+                  <div className="w-px h-10 bg-slate-200 hidden sm:block"></div>
+                  <div className="group hover:-translate-y-1 transition-transform">
+                    <div className="text-3xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">10K+</div>
+                    <div className="text-sm text-slate-500 font-semibold tracking-wide uppercase mt-1">Hizmet Kaydı</div>
+                  </div>
                 </div>
               </div>
-              <div className="absolute -top-6 -right-6 w-72 h-72 bg-primary/30 rounded-full blur-3xl -z-10 group-hover:bg-primary/40 transition-colors duration-700"></div>
-              <div className="absolute -bottom-6 -left-6 w-72 h-72 bg-blue-500/30 rounded-full blur-3xl -z-10 group-hover:bg-blue-400/40 transition-colors duration-700 animate-[pulse_4s_ease-in-out_infinite]"></div>
+
+              {/* Sağ Görsel Alanı */}
+              <div className="relative group perspective-1000 hidden xl:block">
+                <div className="relative z-10 bg-white/60 backdrop-blur-md rounded-[2.5rem] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.06)] border border-white/80 transform transition-transform duration-700 group-hover:scale-[1.03]">
+                  <div className="aspect-[4/3] rounded-[2rem] relative overflow-hidden bg-slate-100">
+                    <img
+                      src={heroImage}
+                      alt="Denizcilik lojistik operasyonları"
+                      className="w-full h-full object-cover transform duration-1000 group-hover:scale-105"
+                    />
+                    {/* Glassmorphic Gradient Overlay on Image */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/10 to-transparent"></div>
+                  </div>
+                </div>
+                {/* Dekoratif Halkalar */}
+                <div className="absolute -top-10 -right-10 w-full h-full border-2 border-blue-50 rounded-[3rem] -z-10 transform rotate-3"></div>
+                <div className="absolute -bottom-8 -left-8 w-full h-full border-2 border-sky-50 rounded-[3rem] -z-10 transform -rotate-3"></div>
+              </div>
+
             </div>
           </div>
         </section>
 
+
         {/* --- YENİ PREMİUM NASIL ÇALIŞIR BÖLÜMÜ --- */}
-    <section id="how-it-works" className="w-full pt-20 pb-10 bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 scroll-mt-20">
+        <section id="how-it-works" className="w-full py-24 bg-slate-50 border-b border-slate-100 scroll-mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h3 className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-4">
-                KOLAY VE HIZLI SÜREÇ
+              <h3 className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100/50 text-blue-700 text-xs font-bold uppercase tracking-[0.2em] mb-4">
+                <span className="w-2 h-2 rounded-full bg-blue-600"></span>
+                Operasyon Akışı
               </h3>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 dark:text-white">
-                Portlink Nasıl Çalışır?
+              <h2 className="text-4xl font-extrabold text-slate-900 mb-4">
+                Mükemmel Sonuç İçin Dört Adım
               </h2>
+              <p className="text-slate-600 max-w-2xl mx-auto text-lg">
+                Yüzlerce arama ve e-posta trafiğinden kurtulun. Portlink altyapısı sayesinde doğru hizmete ulaşmak tahmin ettiğinizden çok daha kolaydır.
+              </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {steps.map((step) => (
-                <div key={step.id} className="group relative bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-slate-100 dark:border-slate-700 overflow-hidden">
-                  <div className="absolute top-4 right-6 text-6xl font-black text-slate-50 dark:text-slate-700/30 transition-colors duration-300 group-hover:text-blue-50 dark:group-hover:text-blue-900/20 z-0 select-none">
+                <div key={step.id} className="group relative bg-white rounded-3xl p-8 border border-slate-200/60 shadow-sm hover:shadow-[0_20px_40px_rgba(15,23,42,0.06)] hover:-translate-y-2 transition-all duration-300 overflow-hidden">
+                  <div className="absolute top-0 right-0 p-6 text-7xl font-black text-slate-50 transition-colors duration-500 group-hover:text-blue-50 select-none z-0">
                     {step.id}
                   </div>
                   <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-slate-700/50 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-6 transition-colors duration-300 group-hover:bg-blue-600 group-hover:text-white shadow-sm">
+                    <div className="w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-8 border border-blue-100 transition-all duration-500 group-hover:bg-blue-600 group-hover:text-white group-hover:shadow-[0_8px_20px_rgba(37,99,235,0.3)]">
                       {step.icon}
                     </div>
-                    <h4 className="text-xl font-bold text-slate-800 dark:text-white mb-3">
+                    <h4 className="text-xl font-bold text-slate-900 mb-3">
                       {step.title}
                     </h4>
-                    <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm">
+                    <p className="text-slate-500 leading-relaxed text-sm font-medium">
                       {step.description}
                     </p>
                   </div>
-                  <div className="absolute bottom-0 left-0 w-0 h-1 bg-blue-600 transition-all duration-300 group-hover:w-full"></div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-        {/* --- HİZMET SEÇİMİ KARTLARI SECTION --- */}
-        <section className="w-full py-20 bg-white dark:bg-slate-950">
-           <section id="services" className="w-full py-20 bg-white dark:bg-slate-950 scroll-mt-20"></section>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h3 className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-4">
-                HIZLI ERİŞİM
-              </h3>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 dark:text-white">
-                İhtiyacınız Olan Hizmet Dalını Seçin
-              </h2>
-            </div>
-            <div className="flex flex-wrap justify-center gap-6">
-              {services.map((service) => (
-                <div key={service.id} className="relative group h-96 lg:h-80 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(23%)] rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300">
-                  <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url(${service.image})` }}></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent transition-opacity duration-300 group-hover:from-blue-900/90"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col items-center justify-end h-full transform transition-transform duration-300 group-hover:-translate-y-2">
-                    <h3 className="text-xl font-bold text-white tracking-wide text-center">
-                      {service.title}
-                    </h3>
-                    <div className="w-0 h-1 bg-blue-400 mt-3 transition-all duration-300 group-hover:w-12 rounded-full"></div>
-                  </div>
+                  <div className="absolute bottom-0 left-0 w-0 h-1.5 bg-gradient-to-r from-blue-500 to-sky-400 transition-all duration-500 group-hover:w-full"></div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-       {/* --- PREMIUM GLOBAL MARITIME NETWORK SECTION --- */}
-        <section className="w-full py-24 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 relative overflow-hidden">
-          <div className="text-center mb-12">
-            <h2 className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-4">Türkiye'nin Stratejik Limanları</h2>
-            <p className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 flex items-center justify-center gap-3 tracking-tight">
-              <span className="animate-pulse">🌍</span> Küresel Denizcilik Ağı
-            </p>
-            <div className="flex flex-col items-center justify-center font-medium text-slate-500 dark:text-slate-400 text-sm md:text-base">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_#3b82f6] animate-pulse"></span>
-                <span className="text-slate-800 dark:text-slate-200 font-bold">Istanbul (Merkez)</span>
-              </div>
-            </div>
-          </div>
 
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="relative w-full aspect-[21/9] md:aspect-[24/10] rounded-[2.5rem] bg-[#020b18] border border-[#1e3a8a]/40 shadow-[0_30px_80px_rgba(2,11,24,0.7)] overflow-hidden group">
-              
-              {/* --- TÜRKİYE HARİTASI (KÜÇÜLTÜLMÜŞ VE ORTALANMIŞ) --- */}
-              <div 
-                className="absolute inset-0 opacity-25 pointer-events-none bg-center bg-no-repeat bg-[length:65%] z-0"
-                style={{ backgroundImage: "url('/world-map.svg')" }}
-              ></div>
-
-              {/* Gradyan Işık Efektleri */}
-              <div className="absolute inset-0 opacity-30 mix-blend-screen pointer-events-none z-10">
-                <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[150%] bg-[radial-gradient(ellipse_at_center,_rgba(29,78,216,0.15)_0%,_transparent_70%)]"></div>
-              </div>
-
-              <svg className="absolute inset-0 w-full h-full z-20" viewBox="0 0 1000 450" preserveAspectRatio="xMidYMid slice">
-                <defs>
-                  <linearGradient id="wake-gradient" x1="1" y1="0" x2="0" y2="0">
-                    <stop offset="0%" stopColor="rgba(224, 242, 254, 0.4)" />
-                    <stop offset="100%" stopColor="rgba(224, 242, 254, 0)" />
-                  </linearGradient>
-                  
-                  {/* Gemi Tasarımı */}
-                  <g id="premium-ship" transform="scale(0.7)">
-                    <path d="M -18 -6 L -45 -16 L -45 16 L -18 6 Z" fill="url(#wake-gradient)" opacity="0.6"/>
-                    <rect x="-24" y="-8" width="52" height="16" rx="3" fill="#0f172a" stroke="#38bdf8" strokeWidth="0.8"/>
-                    <path d="M 28 -8 L 40 0 L 28 8 Z" fill="#0f172a" stroke="#38bdf8" strokeWidth="0.8"/>
-                    {/* Konteynerler */}
-                    <rect x="-8" y="-6" width="6" height="5" fill="#ef4444" rx="0.5"/>
-                    <rect x="0" y="-6" width="6" height="5" fill="#10b981" rx="0.5"/>
-                    <rect x="8" y="-6" width="6" height="5" fill="#3b82f6" rx="0.5"/>
-                    <rect x="-8" y="1" width="6" height="5" fill="#f59e0b" rx="0.5"/>
-                    <rect x="0" y="1" width="6" height="5" fill="#ef4444" rx="0.5"/>
-                    <rect x="8" y="1" width="6" height="5" fill="#3b82f6" rx="0.5"/>
-                  </g>
-
-                  {/* KIYILARA DOĞRU HAREKET EDEN YENİ ROTALAR */}
-                  {/* 1. Batıdan Marmara'ya Giriş */}
-                  <path id="route-marmara" d="M 50 150 Q 250 160 450 195" />
-                  {/* 2. Güneyden Akdeniz/Ege'ye Giriş */}
-                  <path id="route-ege" d="M 200 400 Q 280 300 350 240" />
-                  {/* 3. Doğudan Karadeniz Kıyılarına */}
-                  <path id="route-blacksea" d="M 950 150 Q 750 140 600 165" />
-                  {/* 4. Güneyden Mersin/İskenderun'a */}
-                  <path id="route-med" d="M 800 420 Q 700 350 580 260" />
-                </defs>
-
-                {/* Gemi Hareketleri */}
-                <use href="#premium-ship">
-                  <animateMotion dur="22s" repeatCount="indefinite" rotate="auto">
-                    <mpath href="#route-marmara" />
-                  </animateMotion>
-                </use>
-                <use href="#premium-ship">
-                  <animateMotion dur="28s" repeatCount="indefinite" rotate="auto" begin="4s">
-                    <mpath href="#route-ege" />
-                  </animateMotion>
-                </use>
-                <use href="#premium-ship">
-                  <animateMotion dur="25s" repeatCount="indefinite" rotate="auto" begin="8s">
-                    <mpath href="#route-blacksea" />
-                  </animateMotion>
-                </use>
-                <use href="#premium-ship">
-                  <animateMotion dur="30s" repeatCount="indefinite" rotate="auto" begin="2s">
-                    <mpath href="#route-med" />
-                  </animateMotion>
-                </use>
-
-                {/* İstanbul Merkez Noktası */}
-                <g transform="translate(485, 190)">
-                  <circle cx="0" cy="0" r="30" fill="none" stroke="#38bdf8" strokeWidth="1" className="animate-[ping_4s_ease-out_infinite]" opacity="0.4"/>
-                  <circle cx="0" cy="0" r="8" fill="rgba(56, 189, 248, 0.4)" className="animate-pulse" />
-                  <circle cx="0" cy="0" r="4" fill="#38bdf8" style={{ filter: 'drop-shadow(0 0 10px #38bdf8)' }}/>
-                </g>
-              </svg>
-            </div>
-          </div>
-        </section>
-
-
-        {/* --- YENİ BENTO BOX: NEDEN PORTLİNK BÖLÜMÜ --- */}
-        <section id="about" className="w-full py-24 bg-white dark:bg-slate-950 scroll-mt-24">
+        {/* --- NEDEN PORTLINK? SECTION (BENTOS) --- */}
+        <section id="about" className="w-full py-24 bg-white scroll-mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-extrabold text-slate-800 dark:text-white mb-4 relative inline-block">
-                Neden Portlink?
-                <span className="absolute -bottom-2 left-1/4 right-1/4 h-1.5 bg-gradient-to-r from-transparent via-blue-600 to-transparent rounded-full opacity-50"></span>
-              </h2>
-              <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mt-4">
-                Denizcilik sektöründe ihtiyacınız olan tüm hizmetlere tek platformdan, güvenle erişin.
+            <div className="flex flex-col lg:flex-row justify-between items-end mb-16 gap-8">
+              <div className="max-w-2xl">
+                <h3 className="text-xs font-bold text-blue-600 uppercase tracking-[0.25em] mb-4">
+                  Avantajlarımız
+                </h3>
+                <h2 className="text-4xl font-extrabold text-slate-900">
+                  Limanda Gücünüz: <br/>Portlink ile Daima İlerde
+                </h2>
+              </div>
+              <p className="text-lg text-slate-600 max-w-lg font-medium border-l-4 border-blue-500 pl-6">
+                Sürekli değişen küresel pazar şartlarında doğru partnerlerle çalışarak maliyetlerinizi düşürün, güvenliği artırın.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-2 gap-6 auto-rows-[200px] lg:auto-rows-auto">
-              {/* 1. Sol Büyük Dikey Kutu (Güvenilir Ağ) */}
-              <div className="lg:col-span-1 lg:row-span-2 group relative bg-slate-50 dark:bg-slate-900 rounded-3xl p-8 md:p-10 flex flex-col justify-between overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:border-blue-200 transition-all duration-300 min-h-[400px]">
-                <div>
-                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 ${features[0].bgColor} transition-transform duration-500 group-hover:scale-110`}>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              
+              {/* Sol Büyük Kutu */}
+              <div className={`lg:col-span-1 lg:row-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden border transition-all duration-300 min-h-[440px] bg-slate-50 border-slate-200 hover:border-blue-300 hover:shadow-2xl`}>
+                <div className="relative z-10">
+                  <div className={`w-16 h-16 rounded-[1.25rem] flex items-center justify-center mb-8 ${features[0].bgColor} ${features[0].borderColor} border transition-transform duration-500 group-hover:scale-110 shadow-sm`}>
                     {features[0].icon}
                   </div>
-                  <h3 className="text-3xl font-bold text-slate-800 dark:text-white mb-4">
+                  <h3 className="text-3xl font-extrabold text-slate-900 mb-4 leading-tight">
                     {features[0].title}
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+                  <p className="text-slate-600 text-lg leading-relaxed font-medium">
                     {features[0].description}
                   </p>
                 </div>
-                <div className="absolute -bottom-10 -right-10 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
-                  <svg width="200" height="200" fill="currentColor" className="text-blue-900" viewBox="0 0 24 24">
-                    <path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
-                  </svg>
-                </div>
               </div>
 
-              {/* 2. Sağ Üst Uzun Yatay Kutu (Global Kapsam) */}
-              <div className="lg:col-span-2 lg:row-span-1 group bg-slate-50 dark:bg-slate-900 rounded-3xl p-8 flex flex-col md:flex-row items-start md:items-center gap-6 border border-slate-100 dark:border-slate-800 hover:shadow-xl hover:border-indigo-200 transition-all duration-300">
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 ${features[1].bgColor} transition-transform duration-500 group-hover:-rotate-12`}>
+              {/* Sağ Üst Yatay Kutu */}
+              <div className={`lg:col-span-2 group rounded-[2.5rem] p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-8 border transition-all duration-300 bg-slate-50 border-slate-200 hover:border-indigo-300 hover:shadow-xl`}>
+                <div className={`w-20 h-20 rounded-[1.25rem] flex items-center justify-center flex-shrink-0 ${features[1].bgColor} ${features[1].borderColor} border transition-transform duration-500 group-hover:-rotate-6 shadow-sm`}>
                   {features[1].icon}
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-3">
                     {features[1].title}
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-400 text-base">
+                  <p className="text-slate-600 text-lg font-medium leading-relaxed">
                     {features[1].description}
                   </p>
                 </div>
               </div>
 
-              {/* 3. Sağ Alt Sol Küçük Kutu (Hızlı Eşleştirme) */}
-              <div className="lg:col-span-1 lg:row-span-1 group bg-slate-50 dark:bg-slate-900 rounded-3xl p-8 flex flex-col justify-center border border-slate-100 dark:border-slate-800 hover:shadow-xl hover:border-amber-200 transition-all duration-300 min-h-[200px]">
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${features[2].bgColor}`}>
+              {/* Sağ Alt Kutu 1 */}
+              <div className={`lg:col-span-1 group rounded-[2.5rem] p-8 flex flex-col justify-center border transition-all duration-300 min-h-[220px] bg-slate-50 border-slate-200 hover:border-sky-300 hover:shadow-xl`}>
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${features[2].bgColor} ${features[2].borderColor} border shadow-sm`}>
                   {features[2].icon}
                 </div>
-                <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">
+                <h3 className="text-xl font-bold text-slate-900 mb-2">
                   {features[2].title}
                 </h3>
-                <p className="text-slate-500 dark:text-slate-400 text-sm">
+                <p className="text-slate-600 text-sm font-medium">
                   {features[2].description}
                 </p>
               </div>
 
-              {/* 4. Sağ Alt Sağ Küçük Kutu (Doğrulanmış Profiller) */}
-              <div className="lg:col-span-1 lg:row-span-1 group bg-slate-50 dark:bg-slate-900 rounded-3xl p-8 flex flex-col justify-center border border-slate-100 dark:border-slate-800 hover:shadow-xl hover:border-emerald-200 transition-all duration-300 min-h-[200px]">
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${features[3].bgColor}`}>
+              {/* Sağ Alt Kutu 2 */}
+              <div className={`lg:col-span-1 group rounded-[2.5rem] p-8 flex flex-col justify-center border transition-all duration-300 min-h-[220px] bg-slate-50 border-slate-200 hover:border-cyan-300 hover:shadow-xl`}>
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${features[3].bgColor} ${features[3].borderColor} border shadow-sm`}>
                   {features[3].icon}
                 </div>
-                <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">
+                <h3 className="text-xl font-bold text-slate-900 mb-2">
                   {features[3].title}
                 </h3>
-                <p className="text-slate-500 dark:text-slate-400 text-sm">
+                <p className="text-slate-600 text-sm font-medium">
                   {features[3].description}
                 </p>
               </div>
+
             </div>
           </div>
         </section>
 
-        {/* --- HARİKA CTA (Gemi Animasyonlu) BÖLÜMÜ --- */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="bg-gradient-to-br from-primary via-blue-600 to-indigo-700 rounded-3xl text-center text-white relative overflow-hidden shadow-2xl mb-12">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 animate-[pulse_6s_ease-in-out_infinite]"></div>
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3 animate-[pulse_6s_ease-in-out_infinite_2s]"></div>
 
-            <style>
-              {`
-                @keyframes sail-right {
-                  0% { left: -10%; transform: translateY(0px) rotate(-2deg); opacity: 0; }
-                  10% { opacity: 0.25; }
-                  50% { transform: translateY(15px) rotate(2deg); opacity: 0.25; }
-                  90% { opacity: 0.25; }
-                  100% { left: 110%; transform: translateY(-5px) rotate(-1deg); opacity: 0; }
-                }
-                @keyframes sail-left {
-                  0% { right: -10%; transform: translateY(0px) rotate(2deg); opacity: 0; }
-                  10% { opacity: 0.2; }
-                  50% { transform: translateY(15px) rotate(-2deg); opacity: 0.2; }
-                  90% { opacity: 0.2; }
-                  100% { right: 110%; transform: translateY(-5px) rotate(1deg); opacity: 0; }
-                }
-              `}
-            </style>
-
-            <div className="absolute top-[20%] z-0 pointer-events-none" style={{ animation: 'sail-right 25s linear infinite' }}>
-              <span className="material-icons-round text-5xl text-white">directions_boat</span>
+        {/* --- HİZMET SEÇİMİ KARTLARI --- */}
+        <section id="services" className="w-full py-24 bg-slate-50 border-t border-slate-200 scroll-mt-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h3 className="text-xs font-bold text-blue-600 uppercase tracking-[0.3em] mb-4">
+                EKOSİSTEMİMİZ
+              </h3>
+              <h2 className="text-4xl font-extrabold text-slate-900">
+                Liman Hizmetleri Platformu
+              </h2>
             </div>
+            <div className="flex flex-wrap justify-center gap-6">
+              {services.map((service) => (
+                <div key={service.id} className="relative group h-[400px] w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1.2rem)] rounded-[2rem] overflow-hidden cursor-pointer shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                  <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" style={{ backgroundImage: `url(${service.image})` }}></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent transition-opacity duration-500 group-hover:from-blue-900/95"></div>
+                  
+                  <div className="absolute top-6 left-6 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="material-icons-round text-lg">arrow_outward</span>
+                  </div>
 
-            <div className="absolute bottom-[25%] z-0 pointer-events-none" style={{ animation: 'sail-left 30s linear infinite 5s' }}>
-              <div style={{ transform: 'scaleX(-1)' }}>
-                <span className="material-icons-round text-6xl text-white">directions_boat</span>
+                  <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col justify-end h-full transform transition-transform duration-500">
+                    <h3 className="text-2xl font-bold text-white tracking-wide">
+                      {service.title}
+                    </h3>
+                    <div className="w-0 h-1 bg-blue-400 mt-4 transition-all duration-500 group-hover:w-16 rounded-full"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+
+        {/* --- HARİKA PREMIUM ÇAĞRI (Gemi ve Harita) BÖLÜMÜ --- */}
+        <section className="w-full py-24 bg-white relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="bg-slate-900 rounded-[3rem] text-center text-white relative overflow-hidden shadow-[0_20px_50px_rgba(15,23,42,0.2)] border border-slate-800">
+              
+              {/* Harita Arka Plan (Opak) */}
+              <div 
+                className="absolute inset-0 opacity-[0.05] pointer-events-none bg-center bg-no-repeat bg-[length:70%] z-0"
+                style={{ backgroundImage: "url('/world-map.svg')" }}
+              ></div>
+
+              {/* Canlı Mavi Işıklar */}
+              <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 z-0 pointer-events-none"></div>
+              <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-sky-500/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/3 z-0 pointer-events-none"></div>
+
+              <div className="relative z-10 flex flex-col items-center px-6 py-20 lg:py-24">
+                <div className="p-4 bg-white/5 backdrop-blur rounded-full border border-white/10 mb-8 inline-block shadow-lg">
+                  <span className="material-icons-round text-5xl text-blue-400">directions_boat</span>
+                </div>
+                
+                <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 tracking-tight text-white">Denizlerde Yalnız Değilsiniz</h2>
+                <p className="text-lg lg:text-xl mb-12 text-slate-400 max-w-2xl font-medium">
+                  Portlink ağına hemen dahil olun. Güvenilir sağlayıcılar, anında teklifler ve premium deneyim ile okyanus ötesi rahatlığa ulaşın.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button
+                    onClick={() => navigate('/signup')}
+                    className="group px-10 py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg hover:bg-blue-500 transition-all duration-300 shadow-[0_0_30px_rgba(37,99,235,0.4)] hover:shadow-[0_0_40px_rgba(37,99,235,0.6)] transform hover:-translate-y-1 flex items-center gap-2"
+                  >
+                    Ücretsiz Kaydol
+                    <span className="material-icons-round group-hover:translate-x-1 transition-transform">rocket_launch</span>
+                  </button>
+                  <button 
+                    onClick={() => navigate('/contact')}
+                    className="px-10 py-4 bg-white/5 text-white rounded-2xl font-bold text-lg border border-white/10 hover:bg-white/10 transition-all duration-300"
+                  >
+                    Bizimle İletişime Geçin
+                  </button>
+                </div>
               </div>
-            </div>
 
-            <div className="absolute top-[65%] z-0 pointer-events-none" style={{ animation: 'sail-right 35s linear infinite 12s' }}>
-              <span className="material-icons-round text-3xl text-white">directions_boat</span>
-            </div>
-
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-30 mix-blend-overlay">
-              <svg className="w-full h-full" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                <g stroke="white" strokeWidth="1" strokeOpacity="0.15" fill="none">
-                  <path d="M0,100 C400,120 800,80 1200,100" strokeDasharray="4 4" />
-                  <path d="M0,200 C400,220 800,180 1200,200" strokeDasharray="4 4" />
-                  <path d="M0,300 C400,320 800,280 1200,300" strokeDasharray="4 4" />
-                  <path d="M300,0 Q320,200 300,400" strokeDasharray="4 4" />
-                  <path d="M600,0 Q620,200 600,400" strokeDasharray="4 4" />
-                  <path d="M900,0 Q920,200 900,400" strokeDasharray="4 4" />
-                </g>
-
-                <path d="M-100,300 Q200,150 500,250 T1300,150" fill="none" stroke="white" strokeWidth="2" strokeDasharray="8 8" strokeOpacity="0.4" className="animate-[pulse_4s_ease-in-out_infinite]" />
-                <path d="M-50,50 Q400,250 800,100 T1300,250" fill="none" stroke="white" strokeWidth="1.5" strokeDasharray="4 6" strokeOpacity="0.25" />
-
-                <g transform="translate(250, 195)">
-                  <circle cx="0" cy="0" r="4" fill="white" fillOpacity="0.8" />
-                  <circle cx="0" cy="0" r="14" fill="none" stroke="white" strokeWidth="1" strokeOpacity="0.6" className="animate-ping" style={{ animationDuration: '3s' }} />
-                </g>
-                
-                <g transform="translate(800, 130)">
-                  <circle cx="0" cy="0" r="6" fill="white" fillOpacity="0.9" />
-                  <circle cx="0" cy="0" r="14" fill="none" stroke="white" strokeWidth="1" strokeOpacity="0.5" />
-                  <circle cx="0" cy="0" r="24" fill="none" stroke="white" strokeWidth="0.5" strokeOpacity="0.3" />
-                </g>
-                
-                <g transform="translate(1000, 215)">
-                  <circle cx="0" cy="0" r="3" fill="white" fillOpacity="0.6" />
-                  <circle cx="0" cy="0" r="8" fill="none" stroke="white" strokeWidth="1" strokeOpacity="0.4" />
-                </g>
-              </svg>
-            </div>
-
-            <div className="relative z-10 flex flex-col items-center p-12 lg:p-16">
-              <span className="material-icons-round text-5xl mb-4 text-white/80 animate-bounce">anchor</span>
-              <h2 className="text-4xl lg:text-5xl font-bold mb-6 tracking-tight">Hazır mısınız?</h2>
-              <p className="text-xl lg:text-2xl mb-10 text-blue-100 max-w-2xl font-light">
-                Portlink'e katılın ve denizcilik sektöründe yepyeni dijital fırsatlar keşfedin.
-              </p>
-              <button
-                onClick={() => navigate('/login')}
-                className="group px-10 py-4 bg-white text-primary rounded-xl font-bold text-lg hover:bg-slate-50 transition-all duration-300 shadow-xl shadow-black/10 hover:shadow-2xl transform hover:-translate-y-1 flex items-center gap-2"
-              >
-                Ücretsiz Başlayın
-                <span className="material-icons-round group-hover:translate-x-1 transition-transform">rocket_launch</span>
-              </button>
             </div>
           </div>
         </section>
