@@ -1,24 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const AgentAssignedJobDetail: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   // State'ler
-  const [isSendingMessage, setIsSendingMessage] = useState(false);
-  const [messageSent, setMessageSent] = useState(false);
-  
   const [isRequestingReport, setIsRequestingReport] = useState(false);
   const [reportRequested, setReportRequested] = useState(false);
 
-  const handleSendMessage = () => {
-    setIsSendingMessage(true);
+  // Chat State'leri
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatMessage, setChatMessage] = useState('');
+  const [messages, setMessages] = useState([
+    { id: 1, text: 'Merhaba, işlemler planlandığı gibi gidiyor mu?', sender: 'me', time: '10:30' },
+    { id: 2, text: 'Evet, sabah saatlerinde başladık. Şu an için bir sorun yok.', sender: 'subcontractor', time: '10:35' },
+    { id: 3, text: 'Harika, kolay gelsin. Ekstra parça ihtiyacı olursa haber verin.', sender: 'me', time: '10:36' }
+  ]);
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isChatOpen) {
+      setTimeout(() => chatEndRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+    }
+  }, [isChatOpen, messages]);
+
+  const handleSendChatMessage = () => {
+    if (!chatMessage.trim()) return;
+    setMessages(prev => [...prev, { 
+      id: Date.now(), 
+      text: chatMessage, 
+      sender: 'me', 
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
+    }]);
+    setChatMessage('');
+    
+    // Taşeron cevabını simüle et
     setTimeout(() => {
-      setIsSendingMessage(false);
-      setMessageSent(true);
-      setTimeout(() => setMessageSent(false), 3000); // 3 saniye sonra normale döner
-    }, 1000);
+      setMessages(prev => [...prev, { 
+        id: Date.now(), 
+        text: 'Mesajınızı aldık, yetkiliye iletiyorum.', 
+        sender: 'subcontractor', 
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
+      }]);
+    }, 1500);
   };
 
   const handleRequestReport = () => {
@@ -75,22 +101,11 @@ const AgentAssignedJobDetail: React.FC = () => {
         <div className="flex items-center gap-3">
           {/* Mesaj Gönder Butonu */}
           <button 
-            onClick={handleSendMessage}
-            disabled={isSendingMessage || messageSent}
-            className={`flex items-center gap-2 px-4 py-2 border rounded-xl font-bold shadow-sm transition-all text-sm ${
-              messageSent 
-                ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
-                : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50'
-            }`}
+            onClick={() => setIsChatOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 border rounded-xl font-bold shadow-sm transition-all text-sm bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50"
           >
-            {isSendingMessage ? (
-              <span className="material-icons-round text-[18px] animate-spin">autorenew</span>
-            ) : messageSent ? (
-              <span className="material-icons-round text-[18px]">check_circle</span>
-            ) : (
-              <span className="material-icons-round text-[18px]">chat</span>
-            )}
-            {isSendingMessage ? 'Gönderiliyor...' : messageSent ? 'Mesaj İletildi' : 'Mesaj Gönder'}
+            <span className="material-icons-round text-[18px]">chat</span>
+            Mesaj Gönder
           </button>
 
           {/* Rapor İste Butonu */}
@@ -285,6 +300,91 @@ const AgentAssignedJobDetail: React.FC = () => {
 
         </div>
       </div>
+
+      {/* Chat Slide-Over */}
+      <AnimatePresence>
+        {isChatOpen && (
+          <div className="fixed inset-0 z-[100] flex justify-end">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsChatOpen(false)}
+              className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+            />
+            <motion.div 
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="relative w-full max-w-sm sm:max-w-md bg-slate-50 dark:bg-slate-900 h-full shadow-2xl flex flex-col border-l border-slate-200 dark:border-slate-800"
+            >
+              {/* Chat Header */}
+              <div className="p-4 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between shadow-sm z-10">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold shadow-inner">
+                    {job.subcontractorInitials}
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-800 dark:text-white leading-none mb-1">{job.subcontractor}</h3>
+                    <div className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Çevrimiçi
+                    </div>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => setIsChatOpen(false)} 
+                  className="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600 transition-colors"
+                >
+                  <span className="material-icons-round text-[18px]">close</span>
+                </button>
+              </div>
+
+              {/* Chat Messages Array */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] dark:bg-none bg-slate-50 dark:bg-slate-900/50">
+                {messages.map((msg) => (
+                  <div key={msg.id} className={`flex flex-col ${msg.sender === 'me' ? 'items-end' : 'items-start'}`}>
+                    <div className={`max-w-[85%] p-3 rounded-2xl text-[13px] sm:text-sm font-medium leading-relaxed shadow-sm ${
+                      msg.sender === 'me' 
+                        ? 'bg-primary text-white rounded-br-none shadow-primary/20' 
+                        : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-100 dark:border-slate-700 rounded-bl-none'
+                    }`}>
+                      {msg.text}
+                    </div>
+                    <span className="text-[10px] text-slate-400 font-bold mt-1 px-1 tracking-wide">{msg.time}</span>
+                  </div>
+                ))}
+                <div ref={chatEndRef} className="h-1" />
+              </div>
+
+              {/* Chat Input Field */}
+              <div className="p-4 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700">
+                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2 rounded-2xl transition-all focus-within:border-primary/50 focus-within:shadow-[0_0_0_2px_rgba(59,130,246,0.1)]">
+                  <button className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-primary transition-colors shrink-0">
+                    <span className="material-icons-round text-[20px]">attach_file</span>
+                  </button>
+                  <input 
+                    type="text"
+                    value={chatMessage}
+                    onChange={(e) => setChatMessage(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSendChatMessage()}
+                    placeholder="Bir mesaj yazın..."
+                    className="flex-1 bg-transparent px-2 py-1.5 outline-none text-sm font-medium text-slate-800 dark:text-white placeholder-slate-400 min-w-0"
+                  />
+                  <button 
+                    onClick={handleSendChatMessage}
+                    disabled={!chatMessage.trim()}
+                    className="w-9 h-9 flex items-center justify-center rounded-xl bg-primary text-white disabled:opacity-50 disabled:bg-slate-300 dark:disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 transition-all shrink-0"
+                  >
+                    <span className="material-icons-round text-[18px]">send</span>
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 };

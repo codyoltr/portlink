@@ -11,7 +11,6 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
   const location = useLocation();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const [isSettingsMenuOpen, setIsSettingsMenuOpen] = useState(false);
 
   const getRoleDisplayName = () => {
     switch (role) {
@@ -128,38 +127,6 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
 
           {/* HEADER SAĞ KISIM - AYARLAR VE PROFİL */}
           <div className="flex items-center gap-4 relative">
-            
-            {/* AYARLAR BUTONU VE DROPDOWN */}
-            <div className="relative">
-              <button 
-                onClick={() => setIsSettingsMenuOpen(!isSettingsMenuOpen)}
-                className="w-10 h-10 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-primary hover:bg-slate-50 dark:hover:bg-slate-800 transition-all font-bold"
-                onBlur={() => setTimeout(() => setIsSettingsMenuOpen(false), 200)}
-                title="Sistem Ayarları"
-              >
-                <span className="material-icons-round">settings</span>
-              </button>
-              
-              {isSettingsMenuOpen && (
-                <div className="absolute right-0 top-14 mt-1 w-56 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 py-2 z-50 animate-in fade-in slide-in-from-top-2">
-                  <div className="px-4 py-2 border-b border-slate-50 dark:border-slate-700/50 mb-1">
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sistem Ayarları</span>
-                  </div>
-                  <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-                    <span className="material-icons-round text-lg text-slate-400">notifications</span>
-                    Bildirimleri Yönet
-                  </button>
-                  <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-                    <span className="material-icons-round text-lg text-slate-400">security</span>
-                    Güvenlik İzinleri
-                  </button>
-                  <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-                    <span className="material-icons-round text-lg text-slate-400">palette</span>
-                    Görünüm Ayarları
-                  </button>
-                </div>
-              )}
-            </div>
 
             {/* PROFİL WIDGET */}
             <div className="relative">
@@ -192,6 +159,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
                   >
                     <span className="material-icons-round text-lg text-slate-400">person</span>
                     Kişisel Profil
+                  </button>
+                  <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <span className="material-icons-round text-lg text-slate-400">settings</span>
+                    Sistem Ayarları
                   </button>
                   <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
                     <span className="material-icons-round text-lg text-slate-400">help_outline</span>

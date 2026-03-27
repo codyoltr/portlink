@@ -337,8 +337,8 @@ const closeModals = () => {
       </div>
 {isDetailModalOpen && selectedJob && (
   <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-[2px] px-4">
-    <div className="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
-      <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-700">
+    <div className="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden max-h-[90vh] flex flex-col">
+      <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-700 shrink-0">
         <div>
           <h3 className="text-xl font-bold text-slate-800 dark:text-white">
             İlan Detayı
@@ -356,7 +356,7 @@ const closeModals = () => {
         </button>
       </div>
 
-      <div className="p-6">
+      <div className="p-6 overflow-y-auto">
         <div className="flex items-start justify-between gap-3 mb-5">
           <div>
             <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
@@ -390,14 +390,15 @@ const closeModals = () => {
           </div>
         </div>
 
-        <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-700/60 p-5 mb-6">
+        <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-700/60 p-5">
           <h5 className="text-sm font-bold text-slate-800 dark:text-white mb-2">İş Açıklaması</h5>
           <p className="text-sm leading-7 text-slate-600 dark:text-slate-300">
             {selectedJob.description}
           </p>
         </div>
+      </div>
 
-        <div className="flex flex-col sm:flex-row justify-end gap-3">
+        <div className="flex flex-col sm:flex-row justify-end gap-3 p-6 pt-4 border-t border-slate-100 dark:border-slate-700 shrink-0 bg-white dark:bg-slate-800">
           <button
             onClick={closeModals}
             className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:border-primary/40 hover:text-primary transition-all"
@@ -417,16 +418,15 @@ const closeModals = () => {
   Bu İlan İçin Teklif Ver
 </button>
         </div>
-      </div>
     </div>
   </div>
       )}
       {isOfferModalOpen && selectedJob && (
   <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-[2px] px-4">
-    <div className="w-full max-w-3xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+    <div className="w-full max-w-3xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden max-h-[90vh] flex flex-col">
       
       {/* HEADER */}
-      <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-700">
+      <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-700 shrink-0">
         <div>
           <h3 className="text-xl font-bold text-slate-800 dark:text-white">
             Teklif Ver
@@ -444,7 +444,7 @@ const closeModals = () => {
         </button>
       </div>
 
-      <div className="p-6 space-y-6">
+      <div className="p-6 space-y-6 overflow-y-auto">
 
         {/* İLAN BİLGİ */}
         <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-700/60 p-4 space-y-2">
@@ -523,9 +523,10 @@ const closeModals = () => {
             Fotoğraf / video yükle (opsiyonel)
           </p>
         </div>
+      </div>
 
         {/* BUTTONS */}
-        <div className="flex justify-end gap-3 pt-2">
+        <div className="flex justify-end gap-3 p-6 pt-4 border-t border-slate-100 dark:border-slate-700 shrink-0 bg-white dark:bg-slate-800">
           <button
             onClick={closeModals}
             className="px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold"
@@ -541,7 +542,6 @@ const closeModals = () => {
           </button>
         </div>
 
-      </div>
     </div>
   </div>
 )}

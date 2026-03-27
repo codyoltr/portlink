@@ -35,7 +35,7 @@ const CreateOfferModal: React.FC<CreateOfferModalProps> = ({ isOpen, onClose, jo
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 dark:bg-slate-900/80 backdrop-blur-sm animate-in fade-in duration-200">
       <div
-        className="w-full max-w-lg bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden"
+        className="w-full max-w-lg bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {isSuccess ? (
@@ -50,7 +50,7 @@ const CreateOfferModal: React.FC<CreateOfferModalProps> = ({ isOpen, onClose, jo
           </div>
         ) : (
           <>
-            <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50">
+            <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50 shrink-0">
               <h2 className="text-xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
                 <span className="material-icons-round text-primary">send</span>
                 Teklif Oluştur
@@ -63,7 +63,8 @@ const CreateOfferModal: React.FC<CreateOfferModalProps> = ({ isOpen, onClose, jo
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-6 space-y-5">
+            <form onSubmit={handleSubmit} className="flex flex-col min-h-0">
+              <div className="p-6 space-y-5 overflow-y-auto">
               <div className="bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-xl p-4 mb-2">
                 <p className="text-xs font-bold text-primary mb-1 uppercase tracking-wider">İlgili İlan</p>
                 <p className="text-sm font-semibold text-slate-800 dark:text-white">{jobTitle}</p>
@@ -112,7 +113,9 @@ const CreateOfferModal: React.FC<CreateOfferModalProps> = ({ isOpen, onClose, jo
                 ></textarea>
               </div>
 
-              <div className="pt-4 flex gap-3 border-t border-slate-100 dark:border-slate-700">
+              </div>
+
+              <div className="p-6 pt-4 flex gap-3 border-t border-slate-100 dark:border-slate-700 shrink-0 bg-white dark:bg-slate-800">
                 <button
                   type="button"
                   onClick={onClose}
