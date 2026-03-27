@@ -9,8 +9,9 @@ interface DashboardLayoutProps {
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [isSettingsMenuOpen, setIsSettingsMenuOpen] = useState(false);
 
   const getRoleDisplayName = () => {
     switch (role) {
@@ -30,155 +31,189 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
     }
   };
 
-  const baseNavItems = [
-    { label: 'Özet (Dashboard)', path: `/dashboard/${role}`, icon: 'dashboard' },
-  ];
-
   const agentNavItems = [
-    ...baseNavItems,
-    { label: 'Gelen Teklifler', path: `/dashboard/${role}/offers`, icon: 'receipt_long' },
-    { label: 'Aktif İlanlarım', path: `/dashboard/${role}/jobs`, icon: 'work' },
+    { label: 'Özet (Dashboard)', path: `/dashboard/agent`, icon: 'dashboard' },
+    { label: 'Gelen Teklifler', path: `/dashboard/agent/offers`, icon: 'receipt_long' },
+    { label: 'Devam Eden İşler', path: `/dashboard/agent/assigned`, icon: 'autorenew' },
+    { label: 'Aktif İlanlarım', path: `/dashboard/agent/jobs`, icon: 'work' },
+    { label: 'Taşeron Rehberi', path: `/dashboard/agent/subcontractor-directory`, icon: 'contact_page' },
+    { label: 'Arşiv ve Finans', path: `/dashboard/agent/archive-finance`, icon: 'account_balance_wallet' },
   ];
 
   const subNavItems = [
-    ...baseNavItems,
-    { label: 'Verilen Teklifler', path: `/dashboard/${role}/offers`, icon: 'send' },
-    { label: 'Aktif İşlerim', path: `/dashboard/${role}/active-jobs`, icon: 'verified' },
+    { label: 'Özet (Dashboard)', path: `/dashboard/subcontractor`, icon: 'dashboard' },
+    { label: 'İş Ara', path: `/dashboard/subcontractor/jobs`, icon: 'search' },
+    { label: 'Verilen Teklifler', path: `/dashboard/subcontractor/offers`, icon: 'send' },
+    { label: 'Aktif İşlerim', path: `/dashboard/subcontractor/active-jobs`, icon: 'autorenew' },
+    { label: 'Cüzdan ve Kazanç', path: `/dashboard/subcontractor/wallet`, icon: 'account_balance_wallet' },
   ];
 
   const captainNavItems = [
-    ...baseNavItems,
-    { label: 'Planlanan Seferler', path: `/dashboard/${role}/voyages`, icon: 'directions_boat' },
-    { label: 'Bekleyen Onaylar', path: `/dashboard/${role}/approvals`, icon: 'rule' },
+    { label: 'Özet (Dashboard)', path: `/dashboard/captain`, icon: 'dashboard' },
+    { label: 'Planlanan Seferler', path: `/dashboard/captain/voyages`, icon: 'directions_boat' },
+    { label: 'Bekleyen Onaylar', path: `/dashboard/captain/approvals`, icon: 'rule' },
   ];
 
   const navItems = role === 'agent' ? agentNavItems : role === 'subcontractor' ? subNavItems : captainNavItems;
 
   return (
-    <div className="flex h-screen bg-slate-50 dark:bg-slate-900 font-display overflow-hidden">
-      {/* Mobile Sidebar Overlay */}
-      {isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-slate-900/50 z-40 lg:hidden"
-          onClick={() => setIsSidebarOpen(false)}
-        />
-      )}
-
-      {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform transition-transform duration-300 lg:transform-none flex flex-col ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-        <div className="h-20 flex items-center justify-between px-6 border-b border-slate-100 dark:border-slate-700/50">
+    <div className="flex h-screen w-full bg-slate-50 dark:bg-slate-900 font-display overflow-hidden">
+      
+      {/* SIDEBAR */}
+      <aside className={`${isSidebarCollapsed ? 'w-24' : 'w-80'} transition-all duration-300 h-full bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col flex-shrink-0 z-40 hidden lg:flex`}>
+        <div className={`h-20 flex flex-shrink-0 items-center border-b border-slate-100 dark:border-slate-700/50 ${isSidebarCollapsed ? 'justify-center px-0' : 'px-6'}`}>
           <Link to="/" className="flex items-center gap-3">
-            <div className="bg-primary p-2.5 rounded-xl">
+            <div className="bg-primary p-2.5 rounded-xl flex-shrink-0">
               <span className="material-icons-round text-white text-xl">directions_boat</span>
             </div>
-            <span className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Portlink CRM</span>
+            {!isSidebarCollapsed && <span className="text-xl font-bold text-slate-900 dark:text-white tracking-tight truncate">Portlink CRM</span>}
           </Link>
-          <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-slate-500 hover:text-slate-700 p-2">
-            <span className="material-icons-round">close</span>
-          </button>
         </div>
 
-        <div className="p-6">
-          <div className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700/50 mb-6">
-            <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-200">
-              <img src="https://i.pravatar.cc/150?img=11" alt="Profile" className="w-full h-full object-cover" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-slate-900 dark:text-white">Mehmet Yılmaz</h3>
-              <span className={`inline-flex items-center px-2 py-0.5 mt-1 rounded-md text-[10px] font-bold ${getRoleBadgeColor()}`}>
-                {getRoleDisplayName()}
-              </span>
-            </div>
-          </div>
-
-          <nav className="space-y-1">
+        <div className={`flex-1 overflow-y-auto ${isSidebarCollapsed ? 'p-3' : 'p-6'}`}>
+          <nav className="space-y-1.5">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
               return (
                 <Link
                   key={item.path}
                   to={item.path}
-                  onClick={() => setIsSidebarOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3.5 rounded-xl font-semibold transition-all ${isActive
-                    ? 'bg-primary text-white shadow-md shadow-primary/20'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-slate-200'
-                    }`}
+                  className={`flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3 px-4'} py-3.5 rounded-xl font-semibold transition-all ${
+                    isActive
+                      ? 'bg-primary text-white shadow-lg shadow-primary/20'
+                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                  title={isSidebarCollapsed ? item.label : undefined}
                 >
                   <span className="material-icons-round text-[20px]">{item.icon}</span>
-                  {item.label}
+                  {!isSidebarCollapsed && <span className="truncate">{item.label}</span>}
                 </Link>
               );
             })}
-
-            <div className="h-px w-full bg-slate-200 dark:bg-slate-700 my-4" />
-
-            <Link
-              to="/settings"
-              className="flex items-center gap-3 px-4 py-3.5 rounded-xl font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 transition-all"
-            >
-              <span className="material-icons-round text-[20px]">settings</span>
-              Hesap Ayarları
-            </Link>
           </nav>
         </div>
 
-        <div className="mt-auto p-6 border-t border-slate-100 dark:border-slate-700/50">
+        {/* SIDEBAR ÇIKIŞ YAP (GERİ GETİRİLDİ) */}
+        <div className={`p-6 border-t border-slate-100 dark:border-slate-700/50 flex flex-shrink-0 ${isSidebarCollapsed ? 'justify-center p-3' : ''}`}>
           <button
             onClick={() => navigate('/login')}
-            className="flex items-center gap-3 w-full px-4 py-3 rounded-xl font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors"
+            className={`flex items-center ${isSidebarCollapsed ? 'justify-center px-0 w-12 h-12' : 'gap-3 px-4 w-full'} py-3 rounded-xl font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors`}
+            title={isSidebarCollapsed ? "Çıkış Yap" : undefined}
           >
             <span className="material-icons-round text-[20px]">logout</span>
-            Çıkış Yap
+            {!isSidebarCollapsed && <span>Çıkış Yap</span>}
           </button>
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <main className="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-slate-900 overflow-hidden">
-        {/* Top Header */}
-        <header className="h-20 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between px-4 sm:px-6 lg:px-8 z-30">
+      {/* ANA İÇERİK ALANI */}
+      <main className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+        <header className="h-20 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between px-8 flex-shrink-0 z-30 shadow-sm relative">
+          
+          {/* HEADER SOL KISIM - HEADER BAŞLIĞI VE COLLAPSE BUTTON */}
           <div className="flex items-center gap-4">
-            <button
-              onClick={() => setIsSidebarOpen(true)}
-              className="lg:hidden p-2 -ml-2 text-slate-500 hover:text-slate-900 dark:hover:text-white rounded-lg"
+            <button 
+              onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+              className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 border border-slate-100 dark:border-slate-700 dark:bg-slate-800 text-slate-500 hover:text-primary hover:bg-white transition-colors"
             >
-              <span className="material-icons-round">menu</span>
+              <span className="material-icons-round">{isSidebarCollapsed ? 'menu_open' : 'menu'}</span>
             </button>
-            <h1 className="text-xl font-bold text-slate-800 dark:text-white hidden sm:block tracking-tight">
+            <h1 className="text-xl font-bold text-slate-800 dark:text-white tracking-tight hidden md:block">
               {getRoleDisplayName()} Paneli
             </h1>
           </div>
 
-          <div className="flex items-center gap-4">
+          {/* HEADER SAĞ KISIM - AYARLAR VE PROFİL */}
+          <div className="flex items-center gap-4 relative">
+            
+            {/* AYARLAR BUTONU VE DROPDOWN */}
             <div className="relative">
-              <button
-                onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
-                className="p-2 text-slate-400 hover:text-primary transition-colors relative"
+              <button 
+                onClick={() => setIsSettingsMenuOpen(!isSettingsMenuOpen)}
+                className="w-10 h-10 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-primary hover:bg-slate-50 dark:hover:bg-slate-800 transition-all font-bold"
+                onBlur={() => setTimeout(() => setIsSettingsMenuOpen(false), 200)}
+                title="Sistem Ayarları"
               >
-                <span className="material-icons-round">notifications</span>
-                <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-rose-500 rounded-full border-2 border-white dark:border-slate-800"></span>
+                <span className="material-icons-round">settings</span>
               </button>
-
-              {isNotificationsOpen && (
-                <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 py-2 z-50">
-                  <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-700">
-                    <h3 className="font-bold text-slate-800 dark:text-white">Bildirimler</h3>
+              
+              {isSettingsMenuOpen && (
+                <div className="absolute right-0 top-14 mt-1 w-56 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 py-2 z-50 animate-in fade-in slide-in-from-top-2">
+                  <div className="px-4 py-2 border-b border-slate-50 dark:border-slate-700/50 mb-1">
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sistem Ayarları</span>
                   </div>
-                  <div className="max-h-80 overflow-y-auto">
-                    <div className="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer border-b border-slate-50 dark:border-slate-700/50 bg-primary/5">
-                      <p className="text-sm text-slate-900 dark:text-white font-semibold">Sisteme başarıyla giriş yaptınız.</p>
-                      <span className="text-xs text-slate-400 mt-1 block">Şimdi</span>
-                    </div>
-                  </div>
+                  <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <span className="material-icons-round text-lg text-slate-400">notifications</span>
+                    Bildirimleri Yönet
+                  </button>
+                  <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <span className="material-icons-round text-lg text-slate-400">security</span>
+                    Güvenlik İzinleri
+                  </button>
+                  <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <span className="material-icons-round text-lg text-slate-400">palette</span>
+                    Görünüm Ayarları
+                  </button>
                 </div>
               )}
             </div>
+
+            {/* PROFİL WIDGET */}
+            <div className="relative">
+              <button 
+                onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                className="flex items-center gap-3 p-1.5 pr-3 rounded-full border border-transparent hover:border-slate-200 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                onBlur={() => setTimeout(() => setIsProfileMenuOpen(false), 200)}
+              >
+                <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-200 flex-shrink-0">
+                  <img src="https://i.pravatar.cc/150?img=11" alt="Profile" className="w-full h-full object-cover" />
+                </div>
+                <div className="hidden md:flex flex-col items-start min-w-0 text-left">
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white truncate">Mehmet Yılmaz</h3>
+                  <span className={`inline-flex items-center px-1.5 py-0.5 mt-0.5 rounded-md text-[9px] font-black uppercase tracking-widest ${getRoleBadgeColor()}`}>
+                    {getRoleDisplayName()}
+                  </span>
+                </div>
+                <span className="material-icons-round text-slate-400">arrow_drop_down</span>
+              </button>
+
+              {/* DROPDOWN OPTIONS */}
+              {isProfileMenuOpen && (
+                <div className="absolute right-0 top-14 mt-1 w-56 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 py-2 z-50 animate-in fade-in slide-in-from-top-2">
+                  <button 
+                    onClick={() => {
+                      setIsProfileMenuOpen(false);
+                      navigate(role === 'agent' ? '/dashboard/agent/profile' : '/dashboard/subcontractor/profile');
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
+                  >
+                    <span className="material-icons-round text-lg text-slate-400">person</span>
+                    Kişisel Profil
+                  </button>
+                  <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <span className="material-icons-round text-lg text-slate-400">help_outline</span>
+                    Yardım & Destek
+                  </button>
+                  <div className="h-px bg-slate-100 dark:bg-slate-700/50 my-1"></div>
+                  <button 
+                    onClick={() => navigate('/login')}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors"
+                  >
+                    <span className="material-icons-round text-lg">logout</span>
+                    Sistemden Çıkış
+                  </button>
+                </div>
+              )}
+            </div>
+            
           </div>
         </header>
 
-        {/* Page Content Scrollable Area */}
-        <div className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8">
-          {children}
+        {/* --- GENİŞLİK AYARI YAPILAN YER --- */}
+        <div className="flex-1 overflow-auto bg-slate-50 dark:bg-slate-900 p-4 md:p-8 lg:p-12">
+          <div className="mx-auto w-full max-w-full 2xl:max-w-[1600px]">
+             {children}
+          </div>
         </div>
       </main>
     </div>
@@ -186,4 +221,3 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
 };
 
 export default DashboardLayout;
-

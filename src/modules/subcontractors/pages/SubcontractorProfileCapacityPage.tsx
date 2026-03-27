@@ -393,6 +393,58 @@ const SubcontractorProfileCapacityPage: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/* Eklenen Puan ve Referanslar Alanı (Görsel-2 İstekleri) */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
+        {/* Ortalama Puan */}
+        <div className="bg-gradient-to-br from-emerald-600 to-emerald-900 p-6 rounded-2xl shadow-xl shadow-emerald-900/20 border border-emerald-500/30 flex flex-col justify-center">
+          <h3 className="text-lg font-bold text-emerald-200 mb-5">Hizmet Puanı</h3>
+          <div className="flex items-center gap-6">
+            <div>
+              <h3 className="text-5xl font-black text-white tracking-tighter">4.7<span className="text-xl text-emerald-300 font-medium">/5</span></h3>
+              <p className="text-sm text-emerald-100 mt-2 font-medium">128 Değerlendirme</p>
+            </div>
+            <div className="space-y-2 flex-1">
+              <div className="flex items-center gap-1 mb-2 text-amber-400 text-2xl">
+                <span className="material-icons-round">star</span>
+                <span className="material-icons-round">star</span>
+                <span className="material-icons-round">star</span>
+                <span className="material-icons-round">star</span>
+                <span className="material-icons-round">star_half</span>
+              </div>
+              <p className="text-sm text-emerald-100 font-medium">Müşterilerin %94'ü bu taşeronu tekrar önermektedir.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Referanslar */}
+        <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700/50">
+          <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-5">Referanslar</h3>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700/50">
+              <div className="flex items-center gap-3">
+                <span className="material-icons-round text-primary text-xl">business</span>
+                <span className="font-bold text-slate-800 dark:text-white text-sm">Akdeniz Gemi İşletmeciliği</span>
+              </div>
+              <span className="text-[10px] font-black uppercase text-slate-400">2026</span>
+            </div>
+            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700/50">
+              <div className="flex items-center gap-3">
+                <span className="material-icons-round text-primary text-xl">directions_boat</span>
+                <span className="font-bold text-slate-800 dark:text-white text-sm">Yıldız Tersanesi A.Ş</span>
+              </div>
+              <span className="text-[10px] font-black uppercase text-slate-400">2025</span>
+            </div>
+            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700/50">
+              <div className="flex items-center gap-3">
+                <span className="material-icons-round text-primary text-xl">anchor</span>
+                <span className="font-bold text-slate-800 dark:text-white text-sm">Deniz Yıldızı Lojistik</span>
+              </div>
+              <span className="text-[10px] font-black uppercase text-slate-400">2025</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

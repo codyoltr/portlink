@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const ArchiveFinance: React.FC = () => {
@@ -6,10 +6,27 @@ const ArchiveFinance: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('HEPSİ');
 
+  const [localData, setLocalData] = useState<any[]>([]);
+
+  useEffect(() => {
+    const data = localStorage.getItem('finans_kayitlari');
+    if (data) {
+      setLocalData(JSON.parse(data));
+    }
+  }, []);
+
   const financeData = [
     { id: '1', title: 'Makine Dairesi Bakımı', company: 'EREN MARINE', amount: '85.000', date: '18.03.2026', status: 'ONAYLANDI' },
     { id: '2', title: 'Güverte Boyama İşlemi', company: 'MAVİ LOJİSTİK', amount: '12.500', date: '15.03.2026', status: 'İŞLEMDE' },
-    { id: '3', title: 'Elektrik Panosu Revizyon', company: 'PORT TECH', amount: '4.200', date: '10.03.2026', status: 'ÖDENDİ' }
+    { id: '3', title: 'Elektrik Panosu Revizyon', company: 'PORT TECH', amount: '4.200', date: '10.03.2026', status: 'ÖDENDİ' },
+    ...localData.map(item => ({
+      id: item.id,
+      title: item.title,
+      company: item.subcontractor || 'Belirtilmedi',
+      amount: Number(item.amount).toLocaleString('tr-TR'),
+      date: item.date ? item.date.split('-').reverse().join('.') : '18.03.2026',
+      status: item.status ? item.status.toUpperCase() : 'İŞLEMDE'
+    }))
   ];
 
   const filteredData = financeData.filter(item => {
@@ -22,15 +39,28 @@ const ArchiveFinance: React.FC = () => {
   return (
     <div className="w-full space-y-8 animate-in fade-in duration-700 px-4">
       
-      {/* BAŞLIK ALANI (Geri Dön Butonu Kaldırıldı) */}
+      {/* BAŞLIK ALANI */}
       <div className="flex justify-between items-end py-2">
         <div className="space-y-1">
           <h2 className="text-3xl font-black text-slate-800 tracking-tight">Arşiv & Finans</h2>
           <p className="text-slate-500 text-sm font-medium">Onaylanan teklifleri ve finansal detayları buradan takip edebilirsiniz.</p>
         </div>
-        <button className="w-12 h-12 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-slate-100 text-slate-400 hover:text-primary transition-all">
-          <span className="material-icons-round">print</span>
-        </button>
+        <div className="flex items-center gap-3 print:hidden">
+          <button 
+            onClick={() => navigate('/dashboard/agent/add-finance')}
+            className="h-12 px-6 flex items-center justify-center gap-2 bg-primary text-white rounded-2xl shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all font-bold"
+          >
+            <span className="material-icons-round text-xl">add</span>
+            <span>Kalem Ekle</span>
+          </button>
+          <button 
+            onClick={() => window.print()}
+            title="Tüm İşleri Yazdır"
+            className="w-12 h-12 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-slate-100 text-slate-400 hover:text-primary transition-all"
+          >
+            <span className="material-icons-round">print</span>
+          </button>
+        </div>
       </div>
 
       {/* ÜST ÖZET KARTLARI */}
@@ -54,7 +84,7 @@ const ArchiveFinance: React.FC = () => {
       </div>
 
       {/* ARAMA VE DROPDOWN */}
-      <div className="bg-white p-4 rounded-[28px] shadow-sm border border-slate-100 flex flex-col md:flex-row gap-4">
+      <div className="bg-white p-4 rounded-[28px] shadow-sm border border-slate-100 flex flex-col md:flex-row gap-4 print:hidden">
         <div className="relative flex-1">
           <span className="material-icons-round absolute left-4 top-1/2 -translate-y-1/2 text-slate-300">search</span>
           <input type="text" placeholder="İş tanımı veya firma ara..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full pl-12 pr-4 py-3 bg-slate-50/50 rounded-2xl outline-none text-sm font-medium border border-transparent focus:bg-white focus:border-primary/10 transition-all placeholder:text-slate-300" />
@@ -72,7 +102,7 @@ const ArchiveFinance: React.FC = () => {
       <div className="bg-white rounded-[40px] shadow-sm border border-slate-100 overflow-hidden mb-10">
         <table className="w-full text-left">
           <thead className="bg-slate-50/30 text-[9px] uppercase font-black text-slate-400 tracking-[0.2em] font-mono border-b border-slate-50">
-            <tr><th className="px-10 py-6">İş / Firma Detayı</th><th className="px-8 py-6 text-center">Tutar</th><th className="px-8 py-6 text-center">Durum</th><th className="px-10 py-6 text-right">Detay</th></tr>
+            <tr><th className="px-10 py-6">İş / Firma Detayı</th><th className="px-8 py-6 text-center">Tutar</th><th className="px-8 py-6 text-center">Durum</th><th className="px-10 py-6 text-right print:hidden">Detay</th></tr>
           </thead>
           <tbody className="divide-y divide-slate-50">
             {filteredData.map((item) => (
@@ -80,7 +110,7 @@ const ArchiveFinance: React.FC = () => {
                 <td className="px-10 py-8"><span className="font-black text-slate-800 block text-base mb-1 group-hover:text-primary transition-colors">{item.title}</span><span className="text-[10px] font-black text-primary uppercase tracking-widest">{item.company}</span></td>
                 <td className="px-8 py-8 text-center"><p className="font-black text-slate-900 text-lg tracking-tighter">₺{item.amount}</p><p className="text-[10px] text-slate-400 font-bold">18.03.2026</p></td>
                 <td className="px-8 py-8 text-center"><span className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest ${item.status === 'ÖDENDİ' ? 'bg-emerald-50 text-emerald-600' : item.status === 'ONAYLANDI' ? 'bg-blue-50 text-blue-600' : 'bg-amber-50 text-amber-600'}`}>{item.status}</span></td>
-                <td className="px-10 py-8 text-right">
+                <td className="px-10 py-8 text-right print:hidden">
                   <button onClick={() => navigate(`/dashboard/agent/archive-finance/${item.id}`)} className="w-10 h-10 inline-flex items-center justify-center rounded-xl bg-blue-50 text-blue-500 hover:bg-primary hover:text-white transition-all shadow-sm"><span className="material-icons-round text-lg">visibility</span></button>
                 </td>
               </tr>
