@@ -70,28 +70,32 @@ const summaryCards = [
 
 const SubcontractorOffersPage: React.FC = () => {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('Tüm Durumlar');
-  const [dateFilter, setDateFilter] = useState('Tüm Tarihler');
+  const [searchInput, setSearchInput] = useState('');
+  const [statusInput, setStatusInput] = useState('Tüm Durumlar');
+  const [dateInput, setDateInput] = useState('Tüm Tarihler');
+  
+  const [appliedSearch, setAppliedSearch] = useState('');
+  const [appliedStatus, setAppliedStatus] = useState('Tüm Durumlar');
+  const [appliedDate, setAppliedDate] = useState('Tüm Tarihler');
 
-  const filteredOffers = useMemo(() => {
+const filteredOffers = useMemo(() => {
   return offers.filter((offer) => {
     const matchesSearch =
-      offer.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      offer.company.toLowerCase().includes(searchTerm.toLowerCase());
+      offer.jobTitle.toLowerCase().includes(appliedSearch.toLowerCase()) ||
+      offer.company.toLowerCase().includes(appliedSearch.toLowerCase());
 
     const matchesStatus =
-      statusFilter === 'Tüm Durumlar' || offer.status === statusFilter;
+      appliedStatus === 'Tüm Durumlar' || offer.status === appliedStatus;
 
     const matchesDate =
-      dateFilter === 'Tüm Tarihler' ||
-      (dateFilter === 'Son 7 Gün' && ['12 Mart 2026', '10 Mart 2026'].includes(offer.submittedAt)) ||
-      (dateFilter === 'Son 30 Gün' && ['12 Mart 2026', '10 Mart 2026', '8 Mart 2026'].includes(offer.submittedAt)) ||
-      (dateFilter === 'Bu Ay' && offer.submittedAt.includes('Mart 2026'));
+      appliedDate === 'Tüm Tarihler' ||
+      (appliedDate === 'Son 7 Gün' && ['12 Mart 2026', '10 Mart 2026'].includes(offer.submittedAt)) ||
+      (appliedDate === 'Son 30 Gün' && ['12 Mart 2026', '10 Mart 2026', '8 Mart 2026'].includes(offer.submittedAt)) ||
+      (appliedDate === 'Bu Ay' && offer.submittedAt.includes('Mart 2026'));
 
     return matchesSearch && matchesStatus && matchesDate;
   });
-}, [searchTerm, statusFilter, dateFilter]);
+}, [appliedSearch, appliedStatus, appliedDate]);
 
   const [selectedOffer, setSelectedOffer] = useState<(typeof offers)[number] | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
@@ -182,8 +186,8 @@ const SubcontractorOffersPage: React.FC = () => {
               </span>
               <input
                 type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Örn. Kuzey Denizcilik"
                 className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
               />
@@ -195,8 +199,8 @@ const SubcontractorOffersPage: React.FC = () => {
               Durum
             </label>
             <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
+              value={statusInput}
+              onChange={(e) => setStatusInput(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
             >
               <option>Tüm Durumlar</option>
@@ -212,8 +216,8 @@ const SubcontractorOffersPage: React.FC = () => {
               Tarih
             </label>
             <select
-              value={dateFilter}
-              onChange={(e) => setDateFilter(e.target.value)}
+              value={dateInput}
+              onChange={(e) => setDateInput(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
             >
               <option>Tüm Tarihler</option>
@@ -223,17 +227,33 @@ const SubcontractorOffersPage: React.FC = () => {
             </select>
           </div>
 
-          <div className="flex items-end">
+          <div className="flex items-end gap-2">
             <button
               onClick={() => {
-                setSearchTerm('');
-                setStatusFilter('Tüm Durumlar');
-                setDateFilter('Tüm Tarihler');
+                setSearchInput('');
+                setStatusInput('Tüm Durumlar');
+                setDateInput('Tüm Tarihler');
+          
+                setAppliedSearch('');
+                setAppliedStatus('Tüm Durumlar');
+                setAppliedDate('Tüm Tarihler');
+              }}
+              className="px-3 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-red-500 hover:border-red-300 dark:hover:border-red-600 transition-all flex items-center justify-center"
+              title="Filtreleri Sıfırla"
+            >
+              <span className="material-icons-round text-[18px]">restart_alt</span>
+            </button>
+          
+            <button
+              onClick={() => {
+                setAppliedSearch(searchInput);
+                setAppliedStatus(statusInput);
+                setAppliedDate(dateInput);
               }}
               className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-5 rounded-xl transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2"
             >
-              <span className="material-icons-round text-sm">restart_alt</span>
-              Filtreleri Sıfırla
+              <span className="material-icons-round text-sm">filter_alt</span>
+              Filtreleri Uygula
             </button>
           </div>
         </div>
@@ -246,69 +266,101 @@ const SubcontractorOffersPage: React.FC = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
-        {filteredOffers.map((offer) => (
+      <div className="flex flex-col gap-4">
+      {filteredOffers.length > 0 ? (
+        filteredOffers.map((offer) => (
           <div
             key={offer.id}
-            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 md:p-6 shadow-sm hover:border-primary/40 hover:shadow-md transition-all"
+            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-5 py-4 shadow-sm hover:border-primary/40 hover:shadow-md transition-all"
           >
-            <div className="flex items-start justify-between gap-3 mb-4">
-              <div>
-                <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-1">
-                  {offer.jobTitle}
-                </h4>
-
-                <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-                  <span className="material-icons-round text-[16px] text-primary">apartment</span>
-                  {offer.company}
+            <div className="flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-5">
+              
+              <div className="min-w-0 xl:w-[28%]">
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <div className="min-w-0">
+                    <h4 className="text-lg font-bold text-slate-900 dark:text-white truncate">
+                      {offer.jobTitle}
+                    </h4>
+                    <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mt-1">
+                      <span className="material-icons-round text-[16px] text-primary">apartment</span>
+                      <span className="truncate">{offer.company}</span>
+                    </div>
+                  </div>
+      
+                  <span
+                    className={`text-[11px] font-bold px-2.5 py-1 rounded-md whitespace-nowrap ${offer.statusStyle}`}
+                  >
+                    {offer.status}
+                  </span>
+                </div>
+      
+                <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">
+                  {offer.note}
+                </p>
+              </div>
+      
+              <div className="grid grid-cols-1 sm:grid-cols-3 xl:flex xl:flex-1 gap-3">
+                <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60 xl:min-w-[170px]">
+                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">
+                    Konum
+                  </p>
+                  <p className="text-sm font-bold text-slate-700 dark:text-slate-200">
+                    {offer.location}
+                  </p>
+                </div>
+      
+                <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60 xl:min-w-[170px]">
+                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">
+                    Teklif Tutarı
+                  </p>
+                  <p className="text-sm font-bold text-slate-700 dark:text-slate-200">
+                    {offer.offerAmount}
+                  </p>
+                </div>
+      
+                <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60 xl:min-w-[170px]">
+                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">
+                    Gönderim
+                  </p>
+                  <p className="text-sm font-bold text-slate-700 dark:text-slate-200">
+                    {offer.submittedAt}
+                  </p>
                 </div>
               </div>
-
-              <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md whitespace-nowrap ${offer.statusStyle}`}>
-                {offer.status}
-              </span>
-            </div>
-
-            <p className="text-sm leading-6 text-slate-500 dark:text-slate-400 mb-5">
-              {offer.note}
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
-              <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Konum</p>
-                <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{offer.location}</p>
+      
+              <div className="flex flex-col sm:flex-row xl:flex-row gap-3 xl:min-w-[300px] xl:justify-end">
+                <button
+                  onClick={() => openDetailModal(offer)}
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:border-primary/40 hover:text-primary transition-all whitespace-nowrap"
+                >
+                  <span className="material-icons-round text-[18px]">visibility</span>
+                  Teklif Detayı
+                </button>
+      
+                <button
+                  onClick={() => openEditModal(offer)}
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all whitespace-nowrap"
+                >
+                  <span className="material-icons-round text-[18px]">edit</span>
+                  Teklifi Güncelle
+                </button>
               </div>
-
-              <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Teklif Tutarı</p>
-                <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{offer.offerAmount}</p>
-              </div>
-
-              <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Gönderim</p>
-                <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{offer.submittedAt}</p>
-              </div>
-            </div>
-
-            <div className="pt-4 border-t border-slate-100 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <button
-                onClick={() => openDetailModal(offer)}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:border-primary/40 hover:text-primary transition-all"
-              >
-                <span className="material-icons-round text-[18px]">visibility</span>
-                Teklif Detayı
-              </button>
-
-              <button
-                onClick={() => openEditModal(offer)}
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all"
-              >
-                <span className="material-icons-round text-[18px]">edit</span>
-                Teklifi Güncelle
-              </button>
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8 shadow-sm text-center">
+          <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
+            <span className="material-icons-round text-slate-400">search_off</span>
+          </div>
+          <h4 className="text-lg font-bold text-slate-800 dark:text-white mb-2">
+            Sonuç bulunamadı
+          </h4>
+          <p className="text-slate-500 dark:text-slate-400">
+            Filtrelerinize uygun teklif bulunamadı.
+          </p>
+        </div>
+      )}
       </div>
       {isDetailModalOpen && selectedOffer && (
   <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-[2px] px-4">
