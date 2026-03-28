@@ -9,7 +9,8 @@ interface DashboardLayoutProps {
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  // BURASI DEĞİŞTİ: false olan başlangıç değeri true yapıldı.
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true); 
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isSettingsMenuOpen, setIsSettingsMenuOpen] = useState(false);
 
