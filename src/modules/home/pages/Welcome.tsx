@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useNavigate } from 'react-router-dom';
@@ -110,9 +110,76 @@ const features = [
 
 const Welcome: React.FC = () => {
   const navigate = useNavigate();
-
+  const [showRoleBar, setShowRoleBar] = useState(true);
   return (
     <FullPageLayout>
+{/* --- QUICK ROLE BAR (WARNING STYLE) --- */}
+{showRoleBar && (
+<section className="w-full bg-amber-50/60 border-b border-amber-100 relative">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <button
+      onClick={() => setShowRoleBar(false)}
+      className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-lg text-amber-600 hover:bg-amber-200/50 transition"
+    >
+      <span className="material-icons-round text-[18px]">close</span>
+    </button>
+    <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-amber-200/60">
+      
+      {/* ACENTE */}
+      <div
+        onClick={() => navigate('/signup/agent')}
+        className="flex-1 flex items-center justify-between px-6 py-5 cursor-pointer hover:bg-amber-100/70 transition-all group"
+      >
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+            <span className="material-icons-round text-lg">business</span>
+          </div>
+
+          <div>
+            <div className="font-bold text-slate-900 text-sm">
+              Portlink Acentesi Ol
+            </div>
+            <div className="text-xs text-slate-600">
+              Hizmet ver & iş al
+            </div>
+          </div>
+        </div>
+
+        <span className="material-icons-round text-amber-500 group-hover:translate-x-1 transition">
+          arrow_forward
+        </span>
+      </div>
+
+      {/* TAŞERON */}
+      <div
+        onClick={() => navigate('/signup/subcontractor')}
+        className="flex-1 flex items-center justify-between px-6 py-5 cursor-pointer hover:bg-amber-100/70 transition-all group"
+      >
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+            <span className="material-icons-round text-lg">engineering</span>
+          </div>
+
+          <div>
+            <div className="font-bold text-slate-900 text-sm">
+              Portlink Taşeronu Ol
+            </div>
+            <div className="text-xs text-slate-600">
+              İş bul & teklif ver
+            </div>
+          </div>
+        </div>
+
+        <span className="material-icons-round text-amber-500 group-hover:translate-x-1 transition">
+          arrow_forward
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+)}
       <Navbar />
 
       {/* Ana İçerik */}
