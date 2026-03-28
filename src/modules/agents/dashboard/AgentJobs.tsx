@@ -153,96 +153,82 @@ const AgentJobs: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {filteredJobs.map((job) => (
-          <div
-            key={job.id}
-            className="group flex flex-col bg-white dark:bg-slate-800 rounded-2xl shadow-sm hover:shadow-xl border border-slate-100 dark:border-slate-700/50 overflow-hidden transition-all duration-300 hover:-translate-y-1"
-          >
-            <div className="p-6 flex-1 flex flex-col gap-4">
-              <div className="flex justify-between items-start">
-                <div className="flex gap-3 items-start">
-                  <div className="w-12 h-12 rounded-xl bg-slate-50 dark:bg-slate-700 flex items-center justify-center border border-slate-100 dark:border-slate-600 shrink-0 text-slate-500 dark:text-slate-400 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
-                    <span className="material-icons-round">{getCategoryIcon(job.category)}</span>
-                  </div>
+      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700/50 dark:bg-slate-800">
+        {/* Table Header */}
+        <div className="hidden grid-cols-12 gap-4 border-b border-slate-200 bg-slate-50 px-6 py-4 text-sm font-semibold text-slate-500 md:grid dark:border-slate-700/50 dark:bg-slate-800/80">
+          <div className="col-span-6 pl-32">İlan Başlığı</div>
+          <div className="col-span-2 text-center">Kategori</div>
+          <div className="col-span-2 text-center">İlan Tarihi</div>
+          <div className="col-span-2 text-center">Konum</div>
+        </div>
 
-                  <div>
-                    {getStatusBadge(job.status)}
-                    <h3 className="text-lg font-bold text-slate-800 dark:text-white mt-2 leading-tight group-hover:text-primary transition-colors">
+        {/* List */}
+        <div className="flex flex-col divide-y divide-slate-100 dark:divide-slate-700/50">
+          {filteredJobs.map((job) => {
+            const dateParts = job.date.split('.');
+            const formattedDate = dateParts.length === 3 
+                ? { top: `${dateParts[0]} Eki`, bottom: dateParts[2] || '2024' } 
+                : { top: job.date.substring(0, 6) || job.date, bottom: job.date.substring(6) || '2024' };
+            
+            const locationParts = job.location.split(' ');
+            const locTop = locationParts[0] || job.location;
+            const locBottom = locationParts.slice(1).join(' ') || 'Limanı';
+
+            return (
+              <div
+                key={job.id}
+                onClick={() => navigate(`/dashboard/agent/jobs/${job.id}`)}
+                className="group flex cursor-pointer flex-col gap-4 p-6 transition-colors hover:bg-slate-50/50 md:grid md:grid-cols-12 md:items-center dark:hover:bg-slate-700/30"
+              >
+                {/* Image & Title */}
+                <div className="col-span-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+                  <div className="h-[90px] w-[140px] shrink-0 overflow-hidden rounded-md border border-slate-200 dark:border-slate-700">
+                    <img
+                      src={`https://picsum.photos/seed/${job.id || 'ship'}/280/180`}
+                      alt={job.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  
+                  <div className="flex flex-col items-start gap-1">
+                    <span className="text-xs font-medium text-slate-400">#{job.id.padStart(10, '0')}</span>
+                    <h3 className="line-clamp-2 text-base font-bold text-blue-700 transition-colors group-hover:text-blue-600 dark:text-blue-400">
                       {job.title}
                     </h3>
+                    <div className="mt-1 flex flex-wrap items-center gap-2">
+                      <span className="flex items-center gap-1 rounded bg-orange-50 px-2 py-0.5 text-[11px] font-bold text-orange-600 dark:bg-orange-500/10 dark:text-orange-500">
+                        <span className="material-icons-round text-[12px]">stars</span>
+                        Taşeron İlanı
+                      </span>
+                      <span className="line-clamp-1 text-xs text-slate-500 dark:text-slate-400">
+                        - {job.category.length > 30 ? job.category.substring(0, 30) + "..." : job.category}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
-           
-              </div>
-
-              <div className="flex flex-col gap-2 mt-2">
-                <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-                  <span className="material-icons-round text-[16px] text-primary/70">directions_boat</span>
-                  <span className="font-semibold">{job.shipName}</span>
-                </div>
-
-                <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-500">
-                  <span className="material-icons-round text-[16px] text-slate-400">location_on</span>
-                  <span>{job.location}</span>
-                </div>
-
-                <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-500">
-                  <span className="material-icons-round text-[16px] text-slate-400">calendar_today</span>
-                  <span>Yayın: {job.date}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-700/50 flex justify-between items-center group-hover:bg-primary/5 transition-colors">
-              <div className="flex items-center gap-2">
-                <div className="flex -space-x-2">
-                  {job.offerCount > 0 ? (
-                    <>
-                      {[...Array(Math.min(3, job.offerCount))].map((_, i) => (
-                        <div
-                          key={i}
-                          className="w-7 h-7 rounded-full bg-slate-200 border-2 border-white dark:border-slate-800 overflow-hidden shrink-0 shadow-sm"
-                        >
-                          <img
-                            src={`https://i.pravatar.cc/150?img=${i + job.offerCount * 2}`}
-                            alt="Bidder"
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      ))}
-
-                      {job.offerCount > 3 && (
-                        <div className="w-7 h-7 rounded-full bg-primary text-white text-[10px] font-bold border-2 border-white dark:border-slate-800 flex items-center justify-center shrink-0 z-10">
-                          +{job.offerCount - 3}
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 ml-1">
-                      Henüz teklif yok
-                    </div>
-                  )}
-                </div>
-
-                {job.offerCount > 0 && (
-                  <span className="text-xs font-bold text-slate-600 dark:text-slate-300 ml-2">
-                    {job.offerCount} Teklif
+                {/* Category */}
+                <div className="col-span-2 flex items-center justify-start md:justify-center">
+                  <span className="text-left text-sm font-bold leading-tight text-slate-700 dark:text-slate-200 md:text-center">
+                    {job.category}
                   </span>
-                )}
-              </div>
+                </div>
 
-              <button
-                onClick={() => navigate(`/dashboard/agent/jobs/${job.id}`)}
-                className="text-sm font-bold text-primary group-hover:text-primary/80 transition-colors flex items-center gap-1"
-              >
-                İncele
-                <span className="material-icons-round text-[16px]">arrow_forward</span>
-              </button>
-            </div>
-          </div>
-        ))}
+                {/* Date */}
+                <div className="col-span-2 flex items-center justify-start text-sm font-bold text-slate-700 md:flex-col md:justify-center dark:text-slate-300">
+                  <span className="mr-2 md:mr-0">{formattedDate.top}</span>
+                  <span className="text-xs font-medium text-slate-500">{formattedDate.bottom}</span>
+                </div>
+
+                {/* Location */}
+                <div className="col-span-2 flex items-center justify-start text-sm font-bold text-slate-700 md:flex-col md:justify-center md:text-center dark:text-slate-300">
+                  <span className="mr-2 md:mr-0">{locTop}</span>
+                  <span className="text-xs font-medium text-slate-500">{locBottom}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {filteredJobs.length === 0 && (
