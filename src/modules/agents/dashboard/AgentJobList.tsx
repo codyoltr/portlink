@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type ListingType = 'subcontractor' | 'agency-partnership' | 'all';
 
@@ -43,7 +44,7 @@ const ports = [
 
 const AgentJobList: React.FC = () => {
     const [step, setStep] = useState<number>(1);
-    
+
     // Fake Initial Jobs Data
     const fakeJobs: JobListing[] = [
         {
@@ -134,7 +135,7 @@ const AgentJobList: React.FC = () => {
     const [filterCategory, setFilterCategory] = useState<string>('');
     const [filterPort, setFilterPort] = useState<string>('');
     const [sortBy, setSortBy] = useState<string>('newest');
-
+    const navigate = useNavigate();
     useEffect(() => {
         const storedJobs = localStorage.getItem('jobs');
         if (storedJobs) {
@@ -184,15 +185,14 @@ const AgentJobList: React.FC = () => {
                 <div className="max-w-[900px] w-full bg-white rounded-[2rem] shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-slate-100 p-10 md:p-16 text-center shadow-sm">
                     <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Nasıl bir destek arıyorsunuz?</h1>
                     <p className="text-slate-500 mb-12 text-lg">İhtiyaçlarınıza en uygun çözüm portalını listelememiz için lütfen size uygun olan seçeneği işaretleyin.</p>
-                    
+
                     <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-12 text-left">
                         <button
                             onClick={() => handleSelectType('subcontractor')}
-                            className={`relative rounded-2xl border-2 p-8 transition-all duration-300 text-left cursor-pointer overflow-hidden ${
-                                filterType === 'subcontractor'
+                            className={`relative rounded-2xl border-2 p-8 transition-all duration-300 text-left cursor-pointer overflow-hidden ${filterType === 'subcontractor'
                                     ? 'border-blue-600 bg-blue-50/50 shadow-md ring-4 ring-blue-600/10'
                                     : 'border-slate-200 hover:border-blue-300 hover:bg-slate-50 shadow-sm'
-                            }`}
+                                }`}
                         >
                             {filterType === 'subcontractor' && (
                                 <div className="absolute top-6 right-6 flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white">
@@ -208,11 +208,10 @@ const AgentJobList: React.FC = () => {
 
                         <button
                             onClick={() => handleSelectType('agency-partnership')}
-                            className={`relative rounded-2xl border-2 p-8 transition-all duration-300 text-left cursor-pointer overflow-hidden ${
-                                filterType === 'agency-partnership'
+                            className={`relative rounded-2xl border-2 p-8 transition-all duration-300 text-left cursor-pointer overflow-hidden ${filterType === 'agency-partnership'
                                     ? 'border-blue-600 bg-blue-50/50 shadow-md ring-4 ring-blue-600/10'
                                     : 'border-slate-200 hover:border-blue-300 hover:bg-slate-50 shadow-sm'
-                            }`}
+                                }`}
                         >
                             {filterType === 'agency-partnership' && (
                                 <div className="absolute top-6 right-6 flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white">
@@ -251,34 +250,34 @@ const AgentJobList: React.FC = () => {
     return (
         <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
             {/* Top Bar filtering display */}
-            { (filterCategory || filterPort) && (
-            <div className="bg-slate-100/80 border-b border-slate-200 px-6 lg:px-12 py-3 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-10 backdrop-blur-md">
-                <div className="flex items-center gap-4 flex-wrap text-sm font-semibold">
-                    <span className="text-slate-500 tracking-wider">ARAMA KRİTERLERİ:</span>
-                    {filterCategory && (
-                        <span className="inline-flex items-center gap-1.5 bg-white border border-slate-200 text-slate-700 px-3 py-1.5 rounded-full shadow-sm">
-                            <span className="material-icons-round text-blue-500 text-sm">category</span>
-                            Kategori: {filterCategory}
-                        </span>
-                    )}
-                    {filterPort && (
-                        <span className="inline-flex items-center gap-1.5 bg-white border border-slate-200 text-slate-700 px-3 py-1.5 rounded-full shadow-sm">
-                            <span className="material-icons-round text-blue-500 text-sm">location_on</span>
-                            Konum: {filterPort}
-                        </span>
-                    )}
+            {(filterCategory || filterPort) && (
+                <div className="bg-slate-100/80 border-b border-slate-200 px-6 lg:px-12 py-3 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-10 backdrop-blur-md">
+                    <div className="flex items-center gap-4 flex-wrap text-sm font-semibold">
+                        <span className="text-slate-500 tracking-wider">ARAMA KRİTERLERİ:</span>
+                        {filterCategory && (
+                            <span className="inline-flex items-center gap-1.5 bg-white border border-slate-200 text-slate-700 px-3 py-1.5 rounded-full shadow-sm">
+                                <span className="material-icons-round text-blue-500 text-sm">category</span>
+                                Kategori: {filterCategory}
+                            </span>
+                        )}
+                        {filterPort && (
+                            <span className="inline-flex items-center gap-1.5 bg-white border border-slate-200 text-slate-700 px-3 py-1.5 rounded-full shadow-sm">
+                                <span className="material-icons-round text-blue-500 text-sm">location_on</span>
+                                Konum: {filterPort}
+                            </span>
+                        )}
+                    </div>
+
+                    <button onClick={clearFilters} className="text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-1 transition-colors">
+                        <span className="material-icons-round text-[18px]">close</span>
+                        Filtreleri Temizle
+                    </button>
                 </div>
-                
-                <button onClick={clearFilters} className="text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-1 transition-colors">
-                    <span className="material-icons-round text-[18px]">close</span>
-                    Filtreleri Temizle
-                </button>
-            </div>
             )}
 
             {/* Main Content Area */}
             <div className="flex flex-col lg:flex-row flex-1 max-w-[1600px] w-full mx-auto p-4 lg:p-8 gap-8">
-                
+
                 {/* Sidebar Filters */}
                 <aside className="w-full lg:w-72 flex-shrink-0">
                     <div className="bg-white rounded-2xl border border-slate-200 p-6 sticky top-24 shadow-sm">
@@ -293,8 +292,8 @@ const AgentJobList: React.FC = () => {
                             <div className="space-y-3">
                                 <label className="flex items-center gap-3 cursor-pointer group">
                                     <div className="relative flex items-center justify-center">
-                                        <input 
-                                            type="radio" 
+                                        <input
+                                            type="radio"
                                             name="category"
                                             checked={filterCategory === ''}
                                             onChange={() => setFilterCategory('')}
@@ -307,8 +306,8 @@ const AgentJobList: React.FC = () => {
                                 {serviceCategories.map(cat => (
                                     <label key={cat.id} className="flex items-center gap-3 cursor-pointer group">
                                         <div className="relative flex items-center justify-center">
-                                            <input 
-                                                type="radio" 
+                                            <input
+                                                type="radio"
                                                 name="category"
                                                 checked={filterCategory === cat.title}
                                                 onChange={() => setFilterCategory(cat.title)}
@@ -325,7 +324,7 @@ const AgentJobList: React.FC = () => {
                         {/* Port Filter */}
                         <div>
                             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">LİMAN ONAYI</h3>
-                            <select 
+                            <select
                                 value={filterPort}
                                 onChange={(e) => setFilterPort(e.target.value)}
                                 className="w-full bg-slate-50 border border-slate-200 text-slate-700 text-sm font-medium rounded-xl px-4 py-3 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors appearance-none"
@@ -348,7 +347,7 @@ const AgentJobList: React.FC = () => {
                             Seçime Geri Dön
                         </button>
                     </div>
-                
+
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                         <div>
                             <h2 className="text-2xl font-bold text-slate-800">
@@ -358,7 +357,7 @@ const AgentJobList: React.FC = () => {
                         </div>
                         <div className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl px-4 py-2 shadow-sm shrink-0">
                             <span className="text-xs font-bold text-slate-400">SIRALA:</span>
-                            <select 
+                            <select
                                 value={sortBy}
                                 onChange={(e) => setSortBy(e.target.value)}
                                 className="bg-transparent text-sm font-bold text-slate-800 outline-none cursor-pointer pr-2"
@@ -388,7 +387,7 @@ const AgentJobList: React.FC = () => {
                                     </div>
                                     <h3 className="text-lg font-bold text-slate-700 mb-2">Kriterlere uygun ilan bulunamadı</h3>
                                     <p className="text-slate-500">Filtrelerinizi değiştirerek veya temizleyerek yeniden deneyin.</p>
-                                    <button 
+                                    <button
                                         onClick={clearFilters}
                                         className="mt-6 text-blue-600 font-bold hover:text-blue-800 transition-colors underline underline-offset-4"
                                     >
@@ -397,15 +396,16 @@ const AgentJobList: React.FC = () => {
                                 </div>
                             ) : (
                                 filteredJobs.map((job, index) => (
-                                    <div 
-                                        key={job.id} 
-                                        className={`flex flex-col md:grid md:grid-cols-[120px_1fr_140px_120px_140px] gap-4 items-center px-4 py-3 border-b last:border-0 border-slate-200 transition-colors hover:bg-blue-50/30 ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/40'}`}
+                                    <div
+                                        key={job.id}
+                                        onClick={() => navigate(`/dashboard/agent/listing/${job.id}`)}
+                                        className="flex flex-col md:grid md:grid-cols-[120px_1fr_140px_120px_140px] gap-4 items-center px-4 py-3 border-b last:border-0 border-slate-200 transition-colors hover:bg-blue-50/30 cursor-pointer"
                                     >
                                         {/* Image Column */}
                                         <div className="w-[120px] h-[90px] bg-slate-200 rounded overflow-hidden shrink-0 hidden md:block border border-slate-200 relative">
-                                            <img 
-                                                src={job.imageUrl || "https://images.unsplash.com/photo-1596484394142-fbbc5b85a363?auto=format&fit=crop&q=80&w=240&h=180"} 
-                                                alt="Ship" 
+                                            <img
+                                                src={job.imageUrl || "https://images.unsplash.com/photo-1596484394142-fbbc5b85a363?auto=format&fit=crop&q=80&w=240&h=180"}
+                                                alt="Ship"
                                                 className="w-full h-full object-cover"
                                             />
                                         </div>
@@ -454,7 +454,7 @@ const AgentJobList: React.FC = () => {
                                 ))
                             )}
                         </div>
-                        
+
                         {filteredJobs.length > 0 && (
                             <div className="flex justify-center bg-slate-50/80 border-t border-slate-200 py-3">
                                 <div className="flex gap-1 text-sm font-semibold">

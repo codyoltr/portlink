@@ -18,6 +18,7 @@ import ArchiveFinanceDetail from './pages/ArchiveFinanceDetail';
 import AddFinance from './pages/FinansEkle'; // Was FinansEkle
 import AgentProfilePage from './pages/AgentProfilePage';
 import AgentProfileEditPage from './pages/AgentProfileEditPage';
+import AgentListingDetail from './dashboard/AgentJOBListingDetail';
 
 // AGENT DASHBOARD PAGES
 import AgentAssignedJobDetail from './dashboard/AgentAssignedJobDetail';
@@ -53,6 +54,7 @@ export default function AgentRoutes() {
               <Route path="assigned" element={<AgentAssignedJobs />} />
               <Route path="assigned/:id" element={<AgentAssignedJobDetail />} />
               <Route path="jobs/:id" element={<AgentJobDetails />} />
+              <Route path="listing/:id" element={<AgentListingDetail />} />
               <Route path="add-subcontractor" element={<SubcontractorDirectory />} />
               <Route path="quick-post" element={<QuickPostPage />} />
               <Route path="quick-post/:id" element={<QuickPostPage />} />

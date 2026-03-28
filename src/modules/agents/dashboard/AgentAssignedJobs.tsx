@@ -125,11 +125,10 @@ const AgentAssignedJobs: React.FC = () => {
             <button
               key={tab.id}
               onClick={() => setFilter(tab.id as typeof filter)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all whitespace-nowrap ${
-                filter === tab.id
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all whitespace-nowrap ${filter === tab.id
                   ? 'bg-white dark:bg-slate-700 text-primary shadow-sm'
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
-              }`}
+                }`}
             >
               {tab.label}
               <span className={`px-2 py-0.5 rounded-md text-[10px] ${filter === tab.id ? 'bg-primary/10 text-primary' : 'bg-slate-200 dark:bg-slate-800 text-slate-500'}`}>
@@ -203,12 +202,12 @@ const AgentAssignedJobs: React.FC = () => {
                   <div className="px-6 py-5 text-center">
                     <span className={`text-sm font-bold ${statusInfo.color}`}>{statusInfo.label}</span>
                   </div>
-{/* Tarih */}
-<div className="px-6 py-5 text-center">
-  <p className="text-sm font-bold text-slate-700 dark:text-slate-200">
-    {job.startDate}
-  </p>
-</div>
+                  {/* Tarih */}
+                  <div className="px-6 py-5 text-center">
+                    <p className="text-sm font-bold text-slate-700 dark:text-slate-200">
+                      {job.startDate}
+                    </p>
+                  </div>
                   {/* Konum */}
                   <div className="px-6 py-5 text-center">
                     <p className="text-sm font-bold text-slate-800 dark:text-white">{job.location}</p>
