@@ -40,9 +40,8 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
   };
 
   const agentNavItems = [
-    { label: 'Özet (Dashboard)', path: `/dashboard/agent`, icon: 'dashboard' },
+    { label: 'Dashboard', path: `/dashboard/agent/job-list`, icon: 'dashboard' },
     { label: 'Gelen Teklifler', path: `/dashboard/agent/offers`, icon: 'receipt_long' },
-    { label: 'İş Listesi', path: `/dashboard/agent/job-list`, icon: 'receipt_long' },
     { label: 'Devam Eden İşler', path: `/dashboard/agent/assigned`, icon: 'autorenew' },
     { label: 'Aktif İlanlarım', path: `/dashboard/agent/jobs`, icon: 'work' },
     { label: 'Taşeron Rehberi', path: `/dashboard/agent/subcontractor-directory`, icon: 'contact_page' },
