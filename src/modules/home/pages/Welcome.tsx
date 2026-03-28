@@ -108,9 +108,19 @@ const features = [
   }
 ];
 
+// --- HARİTA NOKTALARI (Kıyı/Deniz Üzerine Taşındı) ---
+const mapPoints = [
+  { id: 1, name: 'İstanbul (Marmara)', x: '28%', y: '30%', stats: '150+ İşlemi' },
+  { id: 2, name: 'İzmir (Ege)', x: '15%', y: '53%', stats: '85+ İşlem' },
+  { id: 3, name: 'Mersin (Akdeniz)', x: '55%', y: '78%', stats: '120+ İşlem' },
+  { id: 4, name: 'İskenderun (Akdeniz)', x: '62%', y: '80%', stats: '40+ İşlem' },
+  { id: 5, name: 'Trabzon (Karadeniz)', x: '75%', y: '18%', stats: '30+ İşlem' },
+];
+
 const Welcome: React.FC = () => {
   const navigate = useNavigate();
   const [showRoleBar, setShowRoleBar] = useState(true);
+  
   return (
     <FullPageLayout>
 {/* --- QUICK ROLE BAR (WARNING STYLE) --- */}
@@ -187,7 +197,6 @@ const Welcome: React.FC = () => {
         
         {/* --- PREMIUM HERO SECTION --- */}
         <section className="relative overflow-hidden w-full bg-white border-b border-slate-100">
-          {/* Subtle Dynamic Backgrounds */}
           <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[70%] bg-blue-50/50 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-[-10%] left-[-5%] w-[30%] h-[50%] bg-sky-50/50 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -209,20 +218,40 @@ const Welcome: React.FC = () => {
                   Uluslararası standartlarda hizmet arayan gemiler ile güvenilir acente ve taşeronları bir araya getiren yegane premium platform. Ticaretinizi hızlandırın, maliyetinizi optimize edin.
                 </p>
                 
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <button
-                    onClick={() => navigate('/login')}
-                    className="group px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold text-base hover:bg-blue-700 transition-all duration-300 shadow-[0_8px_20px_rgba(37,99,235,0.25)] hover:shadow-[0_12px_25px_rgba(37,99,235,0.35)] transform hover:-translate-y-1 flex items-center justify-center gap-2"
-                  >
-                    Acenta Arıyorum
-                    <span className="material-icons-round group-hover:translate-x-1 transition-transform">handshake</span>
-                  </button>
-                  <button 
-                    onClick={() => navigate('/login')}
-                    className="group px-8 py-4 bg-white text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-50 transition-all duration-300 shadow-[0_8px_20px_rgba(37,99,235,0.05)] hover:shadow-[0_12px_25px_rgba(37,99,235,0.15)] transform hover:-translate-y-1 flex items-center justify-center gap-2">
-                    Taşeron Arıyorum
-                    <span className="material-icons-round group-hover:translate-x-1 transition-transform">engineering</span>
-                  </button>
+                {/* 3'LÜ ŞEFFAF BUTON GRUBU */}
+                <div className="flex flex-col sm:flex-row flex-wrap gap-5 pt-4">
+                  <div className="flex flex-col items-center sm:items-start flex-1 sm:flex-none">
+                    <button
+                      onClick={() => navigate('/login')}
+                      className="group w-full px-6 py-3.5 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-[15px] hover:bg-blue-50 transition-all duration-300 shadow-sm transform hover:-translate-y-1 flex items-center justify-center gap-2 whitespace-nowrap"
+                    >
+                      İş Talebi Aç
+                      <span className="material-icons-round text-base group-hover:translate-x-1 transition-transform text-blue-500">add_circle</span>
+                    </button>
+                    <span className="text-sm text-slate-500 italic mt-2.5 font-medium text-center sm:text-left w-full">"Gemi için hizmet al"</span>
+                  </div>
+
+                  <div className="flex flex-col items-center sm:items-start flex-1 sm:flex-none">
+                    <button 
+                      onClick={() => navigate('/login')}
+                      className="group w-full px-6 py-3.5 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-[15px] hover:bg-blue-50 transition-all duration-300 shadow-sm transform hover:-translate-y-1 flex items-center justify-center gap-2 whitespace-nowrap"
+                    >
+                      İş Ortaklığı Ara
+                      <span className="material-icons-round text-base group-hover:translate-x-1 transition-transform text-blue-500">handshake</span>
+                    </button>
+                    <span className="text-sm text-slate-500 italic mt-2.5 font-medium text-center sm:text-left w-full">"Başka acentelerle çalış"</span>
+                  </div>
+
+                  <div className="flex flex-col items-center sm:items-start flex-1 sm:flex-none">
+                    <button 
+                      onClick={() => navigate('/login')}
+                      className="group w-full px-6 py-3.5 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-[15px] hover:bg-blue-50 transition-all duration-300 shadow-sm transform hover:-translate-y-1 flex items-center justify-center gap-2 whitespace-nowrap"
+                    >
+                      İş Bul
+                      <span className="material-icons-round text-base group-hover:translate-x-1 transition-transform text-blue-500">work</span>
+                    </button>
+                    <span className="text-sm text-slate-500 italic mt-2.5 font-medium text-center sm:text-left w-full">"İşlere teklif ver"</span>
+                  </div>
                 </div>
                 
                 {/* İstatistikler */}
@@ -253,11 +282,9 @@ const Welcome: React.FC = () => {
                       alt="Denizcilik lojistik operasyonları"
                       className="w-full h-full object-cover transform duration-1000 group-hover:scale-105"
                     />
-                    {/* Glassmorphic Gradient Overlay on Image */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/10 to-transparent"></div>
                   </div>
                 </div>
-                {/* Dekoratif Halkalar */}
                 <div className="absolute -top-10 -right-10 w-full h-full border-2 border-blue-50 rounded-[3rem] -z-10 transform rotate-3"></div>
                 <div className="absolute -bottom-8 -left-8 w-full h-full border-2 border-sky-50 rounded-[3rem] -z-10 transform -rotate-3"></div>
               </div>
@@ -326,8 +353,6 @@ const Welcome: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              
-              {/* Sol Büyük Kutu */}
               <div className={`lg:col-span-1 lg:row-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden border transition-all duration-300 min-h-[440px] bg-slate-50 border-slate-200 hover:border-blue-300 hover:shadow-2xl`}>
                 <div className="relative z-10">
                   <div className={`w-16 h-16 rounded-[1.25rem] flex items-center justify-center mb-8 ${features[0].bgColor} ${features[0].borderColor} border transition-transform duration-500 group-hover:scale-110 shadow-sm`}>
@@ -342,7 +367,6 @@ const Welcome: React.FC = () => {
                 </div>
               </div>
 
-              {/* Sağ Üst Yatay Kutu */}
               <div className={`lg:col-span-2 group rounded-[2.5rem] p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-8 border transition-all duration-300 bg-slate-50 border-slate-200 hover:border-indigo-300 hover:shadow-xl`}>
                 <div className={`w-20 h-20 rounded-[1.25rem] flex items-center justify-center flex-shrink-0 ${features[1].bgColor} ${features[1].borderColor} border transition-transform duration-500 group-hover:-rotate-6 shadow-sm`}>
                   {features[1].icon}
@@ -357,7 +381,6 @@ const Welcome: React.FC = () => {
                 </div>
               </div>
 
-              {/* Sağ Alt Kutu 1 */}
               <div className={`lg:col-span-1 group rounded-[2.5rem] p-8 flex flex-col justify-center border transition-all duration-300 min-h-[220px] bg-slate-50 border-slate-200 hover:border-sky-300 hover:shadow-xl`}>
                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${features[2].bgColor} ${features[2].borderColor} border shadow-sm`}>
                   {features[2].icon}
@@ -370,7 +393,6 @@ const Welcome: React.FC = () => {
                 </p>
               </div>
 
-              {/* Sağ Alt Kutu 2 */}
               <div className={`lg:col-span-1 group rounded-[2.5rem] p-8 flex flex-col justify-center border transition-all duration-300 min-h-[220px] bg-slate-50 border-slate-200 hover:border-cyan-300 hover:shadow-xl`}>
                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${features[3].bgColor} ${features[3].borderColor} border shadow-sm`}>
                   {features[3].icon}
@@ -382,7 +404,6 @@ const Welcome: React.FC = () => {
                   {features[3].description}
                 </p>
               </div>
-
             </div>
           </div>
         </section>
@@ -422,6 +443,87 @@ const Welcome: React.FC = () => {
         </section>
 
 
+        {/* --- YENİ BÖLÜM: HARİTA VE İSTATİSTİKLER --- */}
+        <section className="w-full py-24 bg-white border-t border-slate-200 relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            {/* Üst Başlıklar */}
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-extrabold text-slate-800 mb-4">
+                Denizcilik Operasyonlarında Aktif Ağ
+              </h2>
+              <p className="text-xl text-slate-600 font-medium">
+                Doğru İş, Doğru Ekip, Doğru Limanda
+              </p>
+            </div>
+
+            {/* İstatistikler */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
+              <div className="flex flex-col items-center text-center">
+                <span className="text-sm font-bold text-slate-700 mb-3">Açık İş Talepleri</span>
+                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg">
+                  <span className="font-bold">125</span>
+                </div>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <span className="text-sm font-bold text-slate-700 mb-3">Aktif Acenteler</span>
+                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg">
+                  <span className="font-bold">89</span>
+                </div>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <span className="text-sm font-bold text-slate-700 mb-3">Servis Sağlayıcılar</span>
+                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg">
+                  <span className="font-bold">64</span>
+                </div>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <span className="text-sm font-bold text-slate-700 mb-3">Hangi limanlarda aktifiz?</span>
+                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg">
+                  <span className="material-icons-round text-xl">map</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Türkiye Haritası Alanı (ARKA PLAN ŞEFFAF YAPILDI) */}
+            <div className="relative max-w-5xl mx-auto bg-transparent p-4 sm:p-8">
+              <div className="relative w-full aspect-[2/1] mx-auto">
+                <img 
+                  src="/world-map.svg" 
+                  alt="Türkiye Operasyon Haritası" 
+                  className="w-full h-full object-contain opacity-80"
+                />
+                
+                {/* Harita Üzerindeki Noktalar (DENİZE TAŞINDI) */}
+                {mapPoints.map((point) => (
+                  <div 
+                    key={point.id}
+                    className="absolute group"
+                    style={{ left: point.x, top: point.y }}
+                  >
+                    {/* Pulsing Dot */}
+                    <div className="relative flex items-center justify-center">
+                      <div className="absolute w-4 h-4 bg-blue-400 rounded-full animate-ping opacity-75"></div>
+                      <div className="relative w-3 h-3 bg-blue-600 rounded-full border border-white shadow-sm cursor-pointer hover:scale-150 transition-transform"></div>
+                    </div>
+                    
+                    {/* Tooltip (Hover olduğunda gözüken kutucuk) */}
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 hidden group-hover:flex flex-col items-center animate-in fade-in slide-in-from-bottom-2 z-10 w-max">
+                      <div className="bg-slate-800 text-white text-xs rounded-lg py-1.5 px-3 shadow-xl text-center">
+                        <div className="font-bold">{point.name}</div>
+                        <div className="text-slate-300">{point.stats}</div>
+                      </div>
+                      <div className="w-2 h-2 bg-slate-800 rotate-45 -mt-1"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+
         {/* --- HARİKA PREMIUM ÇAĞRI (Gemi ve Harita) BÖLÜMÜ --- */}
         <section className="w-full py-24 bg-white relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -450,14 +552,14 @@ const Welcome: React.FC = () => {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={() => navigate('/signup')}
-                    className="group px-10 py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg hover:bg-blue-500 transition-all duration-300 shadow-[0_0_30px_rgba(37,99,235,0.4)] hover:shadow-[0_0_40px_rgba(37,99,235,0.6)] transform hover:-translate-y-1 flex items-center gap-2"
+                    className="group px-10 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-lg hover:bg-blue-50 transition-all duration-300 shadow-sm transform hover:-translate-y-1 flex items-center gap-2"
                   >
                     Ücretsiz Kaydol
-                    <span className="material-icons-round group-hover:translate-x-1 transition-transform">rocket_launch</span>
+                    <span className="material-icons-round group-hover:translate-x-1 transition-transform text-blue-500">rocket_launch</span>
                   </button>
                   <button 
                     onClick={() => navigate('/contact')}
-                    className="px-10 py-4 bg-white/5 text-white rounded-2xl font-bold text-lg border border-white/10 hover:bg-white/10 transition-all duration-300"
+                    className="group px-10 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-lg hover:bg-blue-50 transition-all duration-300 shadow-sm transform hover:-translate-y-1 flex items-center gap-2"
                   >
                     Bizimle İletişime Geçin
                   </button>
