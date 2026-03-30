@@ -18,7 +18,7 @@ import ArchiveFinanceDetail from './pages/ArchiveFinanceDetail';
 import AddFinance from './pages/FinansEkle'; // Was FinansEkle
 import AgentProfilePage from './pages/AgentProfilePage';
 import AgentProfileEditPage from './pages/AgentProfileEditPage';
-import AgentListingDetail from './dashboard/AgentJOBListingDetail';
+import AgentListingDetail from './dashboard/AgentJobListingDetail';
 
 // AGENT DASHBOARD PAGES
 import AgentAssignedJobDetail from './dashboard/AgentAssignedJobDetail';

@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import { useNavigate } from 'react-router-dom';
 import FullPageLayout from '@/features/shell/components/FullPageLayout';
 import heroImage from '@/assets/hero-image.png';
+import StatsSection from './StatsSection';
 
 // --- BÜTÜN VERİ LİSTELERİ ---
 
@@ -113,78 +114,78 @@ const Welcome: React.FC = () => {
   const [showRoleBar, setShowRoleBar] = useState(true);
   return (
     <FullPageLayout>
-{/* --- QUICK ROLE BAR (WARNING STYLE) --- */}
-{showRoleBar && (
-<section className="w-full bg-amber-50/60 border-b border-amber-100 relative">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <button
-      onClick={() => setShowRoleBar(false)}
-      className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-lg text-amber-600 hover:bg-amber-200/50 transition"
-    >
-      <span className="material-icons-round text-[18px]">close</span>
-    </button>
-    <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-amber-200/60">
-      
-      {/* ACENTE */}
-      <div
-        onClick={() => navigate('/signup/agent')}
-        className="flex-1 flex items-center justify-between px-6 py-5 cursor-pointer hover:bg-amber-100/70 transition-all group"
-      >
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
-            <span className="material-icons-round text-lg">business</span>
-          </div>
+      {/* --- QUICK ROLE BAR (WARNING STYLE) --- */}
+      {showRoleBar && (
+        <section className="w-full bg-amber-50/60 border-b border-amber-100 relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <button
+              onClick={() => setShowRoleBar(false)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-lg text-amber-600 hover:bg-amber-200/50 transition"
+            >
+              <span className="material-icons-round text-[18px]">close</span>
+            </button>
+            <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-amber-200/60">
 
-          <div>
-            <div className="font-bold text-slate-900 text-sm">
-              Portlink Acentesi Ol
+              {/* ACENTE */}
+              <div
+                onClick={() => navigate('/signup/agent')}
+                className="flex-1 flex items-center justify-between px-6 py-5 cursor-pointer hover:bg-amber-100/70 transition-all group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                    <span className="material-icons-round text-lg">business</span>
+                  </div>
+
+                  <div>
+                    <div className="font-bold text-slate-900 text-sm">
+                      Portlink Acentesi Ol
+                    </div>
+                    <div className="text-xs text-slate-600">
+                      Hizmet ver & iş al
+                    </div>
+                  </div>
+                </div>
+
+                <span className="material-icons-round text-amber-500 group-hover:translate-x-1 transition">
+                  arrow_forward
+                </span>
+              </div>
+
+              {/* TAŞERON */}
+              <div
+                onClick={() => navigate('/signup/subcontractor')}
+                className="flex-1 flex items-center justify-between px-6 py-5 cursor-pointer hover:bg-amber-100/70 transition-all group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                    <span className="material-icons-round text-lg">engineering</span>
+                  </div>
+
+                  <div>
+                    <div className="font-bold text-slate-900 text-sm">
+                      Portlink Taşeronu Ol
+                    </div>
+                    <div className="text-xs text-slate-600">
+                      İş bul & teklif ver
+                    </div>
+                  </div>
+                </div>
+
+                <span className="material-icons-round text-amber-500 group-hover:translate-x-1 transition">
+                  arrow_forward
+                </span>
+              </div>
+
             </div>
-            <div className="text-xs text-slate-600">
-              Hizmet ver & iş al
-            </div>
+
           </div>
-        </div>
-
-        <span className="material-icons-round text-amber-500 group-hover:translate-x-1 transition">
-          arrow_forward
-        </span>
-      </div>
-
-      {/* TAŞERON */}
-      <div
-        onClick={() => navigate('/signup/subcontractor')}
-        className="flex-1 flex items-center justify-between px-6 py-5 cursor-pointer hover:bg-amber-100/70 transition-all group"
-      >
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
-            <span className="material-icons-round text-lg">engineering</span>
-          </div>
-
-          <div>
-            <div className="font-bold text-slate-900 text-sm">
-              Portlink Taşeronu Ol
-            </div>
-            <div className="text-xs text-slate-600">
-              İş bul & teklif ver
-            </div>
-          </div>
-        </div>
-
-        <span className="material-icons-round text-amber-500 group-hover:translate-x-1 transition">
-          arrow_forward
-        </span>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-)}
+        </section>
+      )}
       <Navbar />
 
       {/* Ana İçerik */}
       <main className="flex-1 w-full bg-slate-50 text-slate-800">
-        
+
         {/* --- PREMIUM HERO SECTION --- */}
         <section className="relative overflow-hidden w-full bg-white border-b border-slate-100">
           {/* Subtle Dynamic Backgrounds */}
@@ -193,22 +194,22 @@ const Welcome: React.FC = () => {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative z-10">
             <div className="grid xl:grid-cols-2 gap-16 items-center">
-              
+
               <div className="space-y-8 animate-[fade-in-up_1s_ease-out]">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-100 rounded-full text-blue-700 font-bold text-xs tracking-wide uppercase hover:bg-blue-100 transition-colors cursor-default shadow-sm">
                   <span className="material-icons-round text-base text-blue-500 animate-pulse">rocket_launch</span>
                   Liman Operasyonlarının Geleceği
                 </div>
-                
+
                 <h1 className="text-5xl lg:text-[4rem] font-extrabold text-slate-900 leading-[1.1] tracking-tight">
-                  Denizcilik Ağı İçin <br/>
+                  Denizcilik Ağı İçin <br />
                   <span className="bg-gradient-to-r from-blue-700 via-sky-600 to-blue-500 bg-clip-text text-transparent">Doğru Bağlantı</span>
                 </h1>
-                
+
                 <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-xl font-medium">
                   Uluslararası standartlarda hizmet arayan gemiler ile güvenilir acente ve taşeronları bir araya getiren yegane premium platform. Ticaretinizi hızlandırın, maliyetinizi optimize edin.
                 </p>
-                
+
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <button
                     onClick={() => navigate('/login')}
@@ -217,14 +218,14 @@ const Welcome: React.FC = () => {
                     Acenta Arıyorum
                     <span className="material-icons-round group-hover:translate-x-1 transition-transform">handshake</span>
                   </button>
-                  <button 
+                  <button
                     onClick={() => navigate('/login')}
                     className="group px-8 py-4 bg-white text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-50 transition-all duration-300 shadow-[0_8px_20px_rgba(37,99,235,0.05)] hover:shadow-[0_12px_25px_rgba(37,99,235,0.15)] transform hover:-translate-y-1 flex items-center justify-center gap-2">
                     Taşeron Arıyorum
                     <span className="material-icons-round group-hover:translate-x-1 transition-transform">engineering</span>
                   </button>
                 </div>
-                
+
                 {/* İstatistikler */}
                 <div className="flex flex-wrap items-center gap-10 pt-8 mt-10 border-t border-slate-200">
                   <div className="group hover:-translate-y-1 transition-transform">
@@ -282,7 +283,7 @@ const Welcome: React.FC = () => {
                 Yüzlerce arama ve e-posta trafiğinden kurtulun. Portlink altyapısı sayesinde doğru hizmete ulaşmak tahmin ettiğinizden çok daha kolaydır.
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {steps.map((step) => (
                 <div key={step.id} className="group relative bg-white rounded-3xl p-8 border border-slate-200/60 shadow-sm hover:shadow-[0_20px_40px_rgba(15,23,42,0.06)] hover:-translate-y-2 transition-all duration-300 overflow-hidden">
@@ -306,7 +307,7 @@ const Welcome: React.FC = () => {
             </div>
           </div>
         </section>
-
+    
 
         {/* --- NEDEN PORTLINK? SECTION (BENTOS) --- */}
         <section id="about" className="w-full py-24 bg-white scroll-mt-16">
@@ -317,7 +318,7 @@ const Welcome: React.FC = () => {
                   Avantajlarımız
                 </h3>
                 <h2 className="text-4xl font-extrabold text-slate-900">
-                  Limanda Gücünüz: <br/>Portlink ile Daima İlerde
+                  Limanda Gücünüz: <br />Portlink ile Daima İlerde
                 </h2>
               </div>
               <p className="text-lg text-slate-600 max-w-lg font-medium border-l-4 border-blue-500 pl-6">
@@ -326,7 +327,7 @@ const Welcome: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              
+
               {/* Sol Büyük Kutu */}
               <div className={`lg:col-span-1 lg:row-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden border transition-all duration-300 min-h-[440px] bg-slate-50 border-slate-200 hover:border-blue-300 hover:shadow-2xl`}>
                 <div className="relative z-10">
@@ -386,6 +387,7 @@ const Welcome: React.FC = () => {
             </div>
           </div>
         </section>
+            <StatsSection />
 
 
         {/* --- HİZMET SEÇİMİ KARTLARI --- */}
@@ -404,7 +406,7 @@ const Welcome: React.FC = () => {
                 <div key={service.id} className="relative group h-[400px] w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1.2rem)] rounded-[2rem] overflow-hidden cursor-pointer shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
                   <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" style={{ backgroundImage: `url(${service.image})` }}></div>
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent transition-opacity duration-500 group-hover:from-blue-900/95"></div>
-                  
+
                   <div className="absolute top-6 left-6 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <span className="material-icons-round text-lg">arrow_outward</span>
                   </div>
@@ -426,9 +428,9 @@ const Welcome: React.FC = () => {
         <section className="w-full py-24 bg-white relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-slate-900 rounded-[3rem] text-center text-white relative overflow-hidden shadow-[0_20px_50px_rgba(15,23,42,0.2)] border border-slate-800">
-              
+
               {/* Harita Arka Plan (Opak) */}
-              <div 
+              <div
                 className="absolute inset-0 opacity-[0.05] pointer-events-none bg-center bg-no-repeat bg-[length:70%] z-0"
                 style={{ backgroundImage: "url('/world-map.svg')" }}
               ></div>
@@ -441,12 +443,12 @@ const Welcome: React.FC = () => {
                 <div className="p-4 bg-white/5 backdrop-blur rounded-full border border-white/10 mb-8 inline-block shadow-lg">
                   <span className="material-icons-round text-5xl text-blue-400">directions_boat</span>
                 </div>
-                
+
                 <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 tracking-tight text-white">Denizlerde Yalnız Değilsiniz</h2>
                 <p className="text-lg lg:text-xl mb-12 text-slate-400 max-w-2xl font-medium">
                   Portlink ağına hemen dahil olun. Güvenilir sağlayıcılar, anında teklifler ve premium deneyim ile okyanus ötesi rahatlığa ulaşın.
                 </p>
-                
+
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={() => navigate('/signup')}
@@ -455,7 +457,7 @@ const Welcome: React.FC = () => {
                     Ücretsiz Kaydol
                     <span className="material-icons-round group-hover:translate-x-1 transition-transform">rocket_launch</span>
                   </button>
-                  <button 
+                  <button
                     onClick={() => navigate('/contact')}
                     className="px-10 py-4 bg-white/5 text-white rounded-2xl font-bold text-lg border border-white/10 hover:bg-white/10 transition-all duration-300"
                   >
@@ -469,7 +471,7 @@ const Welcome: React.FC = () => {
         </section>
 
       </main>
-     <Footer />
+      <Footer />
     </FullPageLayout>
   );
 };
