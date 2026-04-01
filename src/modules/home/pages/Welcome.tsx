@@ -112,6 +112,7 @@ const features = [
 const Welcome: React.FC = () => {
   const navigate = useNavigate();
   const [showRoleBar, setShowRoleBar] = useState(true);
+  
   return (
     <FullPageLayout>
       {/* --- QUICK ROLE BAR (WARNING STYLE) --- */}
@@ -196,34 +197,62 @@ const Welcome: React.FC = () => {
             <div className="grid xl:grid-cols-2 gap-16 items-center">
 
               <div className="space-y-8 animate-[fade-in-up_1s_ease-out]">
+                {/* ÜST KÜÇÜK BAŞLIK */}
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-100 rounded-full text-blue-700 font-bold text-xs tracking-wide uppercase hover:bg-blue-100 transition-colors cursor-default shadow-sm">
                   <span className="material-icons-round text-base text-blue-500 animate-pulse">rocket_launch</span>
-                  Liman Operasyonlarının Geleceği
+                  Denizcilikte İş Eşleştirme Platformu
                 </div>
 
+                {/* ANA SLOGAN */}
                 <h1 className="text-5xl lg:text-[4rem] font-extrabold text-slate-900 leading-[1.1] tracking-tight">
-                  Denizcilik Ağı İçin <br />
-                  <span className="bg-gradient-to-r from-blue-700 via-sky-600 to-blue-500 bg-clip-text text-transparent">Doğru Bağlantı</span>
+                  Gemi İhtiyacını <br />
+                  <span className="bg-gradient-to-r from-blue-700 via-sky-600 to-blue-500 bg-clip-text text-transparent">Doğru Ekiplerle Anında Buluştur</span>
                 </h1>
 
+                {/* ALT AÇIKLAMA 1 */}
                 <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-xl font-medium">
-                  Uluslararası standartlarda hizmet arayan gemiler ile güvenilir acente ve taşeronları bir araya getiren yegane premium platform. Ticaretinizi hızlandırın, maliyetinizi optimize edin.
+                  Acentelerin açtığı iş taleplerini, doğru taşeron ve yerel acentelerle eşleştiren dijital platform. Tüm gemi operasyonlarını tek yerden yönet, teklif al ve hızla çözüme ulaş.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <button
-                    onClick={() => navigate('/login')}
-                    className="group px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold text-base hover:bg-blue-700 transition-all duration-300 shadow-[0_8px_20px_rgba(37,99,235,0.25)] hover:shadow-[0_12px_25px_rgba(37,99,235,0.35)] transform hover:-translate-y-1 flex items-center justify-center gap-2"
-                  >
-                    Acenta Arıyorum
-                    <span className="material-icons-round group-hover:translate-x-1 transition-transform">handshake</span>
-                  </button>
-                  <button
-                    onClick={() => navigate('/login')}
-                    className="group px-8 py-4 bg-white text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-50 transition-all duration-300 shadow-[0_8px_20px_rgba(37,99,235,0.05)] hover:shadow-[0_12px_25px_rgba(37,99,235,0.15)] transform hover:-translate-y-1 flex items-center justify-center gap-2">
-                    Taşeron Arıyorum
-                    <span className="material-icons-round group-hover:translate-x-1 transition-transform">engineering</span>
-                  </button>
+                <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full max-w-3xl">
+                  {/* 1. Buton Grubu */}
+                  <div className="flex flex-col items-center flex-1">
+                    <button
+                      onClick={() => navigate('/login')}
+                      className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                    >
+                      İş Talebi Aç
+                    </button>
+                    <span className="text-sm text-slate-500 font-medium italic mt-3 text-center">
+                      "Gemi için hizmet al"
+                    </span>
+                  </div>
+
+                  {/* 2. Buton Grubu */}
+                  <div className="flex flex-col items-center flex-1">
+                    <button
+                      onClick={() => navigate('/login')}
+                      className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                    >
+                      İş Ortaklığı Ara
+                    </button>
+                    <span className="text-sm text-slate-500 font-medium italic mt-3 text-center">
+                      "Başka acentelerle çalış"
+                    </span>
+                  </div>
+
+                  {/* 3. Buton Grubu */}
+                  <div className="flex flex-col items-center flex-1">
+                    <button
+                      onClick={() => navigate('/login')}
+                      className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                    >
+                      İş Bul
+                    </button>
+                    <span className="text-sm text-slate-500 font-medium italic mt-3 text-center">
+                      "İşlere teklif ver"
+                    </span>
+                  </div>
                 </div>
 
                 {/* İstatistikler */}
@@ -279,8 +308,9 @@ const Welcome: React.FC = () => {
               <h2 className="text-4xl font-extrabold text-slate-900 mb-4">
                 Mükemmel Sonuç İçin Dört Adım
               </h2>
+              {/* ALT AÇIKLAMA 2 */}
               <p className="text-slate-600 max-w-2xl mx-auto text-lg">
-                Yüzlerce arama ve e-posta trafiğinden kurtulun. Portlink altyapısı sayesinde doğru hizmete ulaşmak tahmin ettiğinizden çok daha kolaydır.
+                Gemiye gereken tüm hizmetler için ilan açın, doğru ekiplerden teklif alın ve operasyonu tek platformdan yönetin.
               </p>
             </div>
 
@@ -321,8 +351,9 @@ const Welcome: React.FC = () => {
                   Limanda Gücünüz: <br />Portlink ile Daima İlerde
                 </h2>
               </div>
+              {/* ALT AÇIKLAMA 3 */}
               <p className="text-lg text-slate-600 max-w-lg font-medium border-l-4 border-blue-500 pl-6">
-                Sürekli değişen küresel pazar şartlarında doğru partnerlerle çalışarak maliyetlerinizi düşürün, güvenliği artırın.
+                Teknik servislerden kumanyaya, crew işlemlerinden liman operasyonlarına kadar tüm ihtiyaçlar tek yerden yönetilir, teklif alınır ve iş birliği kurulur.
               </p>
             </div>
 
@@ -444,14 +475,14 @@ const Welcome: React.FC = () => {
                   <span className="material-icons-round text-5xl text-blue-400">directions_boat</span>
                 </div>
 
-                <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 tracking-tight text-white">Denizlerde Yalnız Değilsiniz</h2>
+                <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 tracking-tight text-white">Doğru Ekip, Sorunsuz Operasyon</h2>
                 <p className="text-lg lg:text-xl mb-12 text-slate-400 max-w-2xl font-medium">
-                  Portlink ağına hemen dahil olun. Güvenilir sağlayıcılar, anında teklifler ve premium deneyim ile okyanus ötesi rahatlığa ulaşın.
+                  Limanlardaki en güçlü dijital çözüm ortağınızla tanışın. İhtiyacınıza en uygun hizmet sağlayıcısını bulmak ve süreci tek ekrandan yönetmek artık çok kolay.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
-                    onClick={() => navigate('/signup')}
+                    onClick={() => navigate('/login')}
                     className="group px-10 py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg hover:bg-blue-500 transition-all duration-300 shadow-[0_0_30px_rgba(37,99,235,0.4)] hover:shadow-[0_0_40px_rgba(37,99,235,0.6)] transform hover:-translate-y-1 flex items-center gap-2"
                   >
                     Ücretsiz Kaydol
