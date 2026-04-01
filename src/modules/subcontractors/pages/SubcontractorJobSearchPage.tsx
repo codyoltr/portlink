@@ -252,88 +252,123 @@ const closeModals = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
-        {sortedJobs.map((job) => (
-          <div
-            key={job.id}
-            className={`
-            rounded-2xl p-5 md:p-6 shadow-sm transition-all border
+      <div className="flex flex-col gap-4">
+    {sortedJobs.length > 0 ? (
+      sortedJobs.map((job) => (
+        <div
+          key={job.id}
+          className={`
+            rounded-2xl px-5 py-4 shadow-sm transition-all border
             ${
               job.tag === 'Acil'
                 ? 'bg-red-50/60 dark:bg-red-900/10 border-red-200 dark:border-red-800/40 hover:border-red-300 dark:hover:border-red-700/50'
                 : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-primary/40 hover:shadow-md'
             }
           `}
->
-            <div className="flex items-start justify-between gap-3 mb-4">
-              <div>
-                <h4
-                  className={`text-lg font-bold mb-1 ${
-                    job.tag === 'Acil'
-                      ? 'text-red-700 dark:text-red-300'
-                      : 'text-slate-900 dark:text-white'
-                  }`}
-                >
-                  {job.title}
-                </h4>
-                <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-                  <span className="material-icons-round text-[16px] text-primary">apartment</span>
-                  {job.company}
+        >
+          <div className="flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-5">
+            
+            {/* Sol blok */}
+            <div className="min-w-0 xl:w-[30%]">
+              <div className="flex items-start justify-between gap-3 mb-2">
+                <div className="min-w-0">
+                  <h4
+                    className={`text-lg font-bold mb-1 truncate ${
+                      job.tag === 'Acil'
+                        ? 'text-red-700 dark:text-red-300'
+                        : 'text-slate-900 dark:text-white'
+                    }`}
+                  >
+                    {job.title}
+                  </h4>
+    
+                  <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+                    <span className="material-icons-round text-[16px] text-primary">apartment</span>
+                    <span className="truncate">{job.company}</span>
+                  </div>
                 </div>
+    
+                {job.tag === 'Acil' ? (
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-md whitespace-nowrap bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300">
+                    <span className="material-icons-round text-[14px]">warning</span>
+                    Acil
+                  </span>
+                ) : (
+                  <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md whitespace-nowrap ${job.tagStyle}`}>
+                    {job.tag}
+                  </span>
+                )}
               </div>
-
-              {job.tag === 'Acil' ? (
-                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-md whitespace-nowrap bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300">
-                  <span className="material-icons-round text-[14px]">warning</span>
-                  Acil
-                </span>
-              ) : (
-                <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md whitespace-nowrap ${job.tagStyle}`}>
-                  {job.tag}
-                </span>
-              )}
+    
+              <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">
+                {job.description}
+              </p>
             </div>
-
-            <p className="text-sm leading-6 text-slate-500 dark:text-slate-400 mb-5">
-              {job.description}
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
-              <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Konum</p>
-                <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{job.location}</p>
+    
+            {/* Orta bilgi alanı */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 xl:flex xl:flex-1 gap-3">
+              <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60 xl:min-w-[170px]">
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">
+                  Konum
+                </p>
+                <p className="text-sm font-bold text-slate-700 dark:text-slate-200">
+                  {job.location}
+                </p>
               </div>
-
-              <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Bütçe</p>
-                <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{job.budget}</p>
+    
+              <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60 xl:min-w-[170px]">
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">
+                  Bütçe
+                </p>
+                <p className="text-sm font-bold text-slate-700 dark:text-slate-200">
+                  {job.budget}
+                </p>
               </div>
-
-              <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Tarih</p>
-                <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{job.deadline}</p>
+    
+              <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60 xl:min-w-[190px]">
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">
+                  Tarih
+                </p>
+                <p className="text-sm font-bold text-slate-700 dark:text-slate-200">
+                  {job.deadline}
+                </p>
               </div>
             </div>
-
-            <div className="pt-4 border-t border-slate-100 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+    
+            {/* Sağ butonlar */}
+            <div className="flex flex-col sm:flex-row xl:flex-row gap-3 xl:min-w-[280px] xl:justify-end">
               <button
                 onClick={() => openDetailModal(job)}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:border-primary/40 hover:text-primary transition-all"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:border-primary/40 hover:text-primary transition-all whitespace-nowrap"
               >
                 <span className="material-icons-round text-[18px]">visibility</span>
                 Detayları Gör
               </button>
-
+    
               <button
                 onClick={() => openOfferModal(job)}
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all whitespace-nowrap"
               >
                 <span className="material-icons-round text-[18px]">send</span>
                 Teklif Ver
               </button>
             </div>
           </div>
-        ))}
+        </div>
+      ))
+    ) : (
+      <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8 shadow-sm text-center">
+        <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
+          <span className="material-icons-round text-slate-400">search_off</span>
+        </div>
+        <h4 className="text-lg font-bold text-slate-800 dark:text-white mb-2">
+          Uygun ilan bulunamadı
+        </h4>
+        <p className="text-slate-500 dark:text-slate-400">
+          Filtrelerinize uygun ilan bulunamadı. Arama kriterlerini güncelleyebilirsiniz.
+        </p>
+      </div>
+    )}
       </div>
 {isDetailModalOpen && selectedJob && (
   <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-[2px] px-4">
