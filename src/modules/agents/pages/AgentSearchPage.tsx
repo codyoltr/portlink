@@ -4,60 +4,60 @@ import { useNavigate } from 'react-router-dom';
 const jobs = [
   {
     id: 1,
-    title: 'Makine Dairesi Bakım İşi',
-    company: 'Kuzey Denizcilik',
-    location: 'Tuzla / İstanbul',
-    port: 'Tuzla',
-    budget: '₺75.000 - ₺95.000',
-    budgetValue: 95000,
-    deadline: '18 Mart 2026',
+    title: 'İzmir Limanı - Acentelik İş Ortaklığı',
+    company: 'Ege Port Services',
+    location: 'İzmir Alsancak Limanı',
+    port: 'İzmir',
+    category: 'Liman İşlemleri',
+    budget: '₺120.000 - ₺160.000',
+    budgetValue: 160000,
+    deadline: '14 Nisan 2026',
     description:
-      'Kuru yük gemisi için makine dairesi genel bakım, ekipman kontrolü ve raporlama hizmeti verecek deneyimli taşeron ekip aranmaktadır.',
+      'İzmir bölgesinde yükleme, tahliye ve operasyon yönetim süreçlerinde deneyimli acente partner aranmaktadır.',
     tag: 'Yeni İlan',
-    category: 'Makine Bakımı',
-    serviceType: 'Liman Operasyonları',
+    serviceType: 'Acentelik',
     image:
-      'https://images.unsplash.com/photo-1566375637385-2fb5a61b1b03?auto=format&fit=crop&w=300&q=80',
+      'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=300&q=80',
+    isUrgent: false,
+    createdOrder: 3,
+  },
+  {
+    id: 2,
+    title: 'Yalova Tersane Operasyon Desteği',
+    company: 'Marmara Shipyard',
+    location: 'Yalova',
+    port: 'Yalova',
+    category: 'Teknik & Tamir Hizmetleri',
+    budget: '₺85.000 - ₺110.000',
+    budgetValue: 110000,
+    deadline: '10 Nisan 2026',
+    description:
+      'Tersane bakım süreçlerinde koordinasyon sağlayacak, tedarik ve saha yönetimi yapabilecek acente desteği talep edilmektedir.',
+    tag: 'Popüler',
+    serviceType: 'Teknik Servis',
+    image:
+      'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=300&q=80',
     isUrgent: false,
     createdOrder: 2,
   },
   {
-    id: 2,
-    title: 'Güverte Kumlama ve Boya',
-    company: 'Marmara Lojistik',
-    location: 'Ambarlı / İstanbul',
-    port: 'Ambarlı',
-    budget: '₺110.000 - ₺145.000',
-    budgetValue: 145000,
-    deadline: '20 Mart 2026',
-    description:
-      'Genel kargo gemisi dış yüzey kumlama ve boya operasyonu için uzman taşeron ekipler değerlendirilecektir.',
-    tag: 'Popüler',
-    category: 'Boya / Kumlama',
-    serviceType: 'Teknik Servis',
-    image:
-      'https://images.unsplash.com/photo-1494412519320-aa613dfb7738?auto=format&fit=crop&w=300&q=80',
-    isUrgent: false,
-    createdOrder: 1,
-  },
-  {
     id: 3,
-    title: 'Elektrik Tesisat Kontrolü',
-    company: 'Delta Marine',
-    location: 'Yalova',
-    port: 'Yalova',
-    budget: '₺60.000 - ₺80.000',
-    budgetValue: 80000,
-    deadline: '22 Mart 2026',
+    title: 'Mersin Acil Operasyon Koordinasyonu',
+    company: 'Akdeniz Lojistik',
+    location: 'Mersin Limanı',
+    port: 'Mersin',
+    category: 'Yükleme – Boşaltma Operasyonu',
+    budget: '₺95.000 - ₺140.000',
+    budgetValue: 140000,
+    deadline: '6 Nisan 2026',
     description:
-      'Gemi elektrik hatlarının kontrolü, arıza tespiti ve bakım işlemleri için sertifikalı teknik ekip ihtiyacı bulunmaktadır.',
+      'Yoğun gemi trafiği nedeniyle operasyonel süreçleri hızlandıracak ve vardiya planlamasını yönetecek acente aranmaktadır.',
     tag: 'Acil',
-    category: 'Elektrik',
-    serviceType: 'Teknik Servis',
+    serviceType: 'Lojistik',
     image:
-      'https://images.unsplash.com/photo-1516900557549-41557d405adf?auto=format&fit=crop&w=300&q=80',
+      'https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?auto=format&fit=crop&w=300&q=80',
     isUrgent: true,
-    createdOrder: 3,
+    createdOrder: 4,
   },
 ];
 
@@ -71,7 +71,7 @@ const getTagStyle = (tag: string) => {
   return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300';
 };
 
-const SubcontractorJobSearchPage: React.FC = () => {
+const AgentSearchPage: React.FC = () => {
   const navigate = useNavigate();
 
   const [selectedCategory, setSelectedCategory] = useState('Tümü');
@@ -83,23 +83,23 @@ const SubcontractorJobSearchPage: React.FC = () => {
 
   const [selectedJob, setSelectedJob] = useState<(typeof jobs)[number] | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
-  const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
+  const [isActionModalOpen, setIsActionModalOpen] = useState(false);
 
   const openDetailModal = (job: (typeof jobs)[number]) => {
     setSelectedJob(job);
-    setIsOfferModalOpen(false);
+    setIsActionModalOpen(false);
     setIsDetailModalOpen(true);
   };
 
-  const openOfferModal = (job: (typeof jobs)[number]) => {
+  const openActionModal = (job: (typeof jobs)[number]) => {
     setSelectedJob(job);
     setIsDetailModalOpen(false);
-    setIsOfferModalOpen(true);
+    setIsActionModalOpen(true);
   };
 
   const closeModals = () => {
     setIsDetailModalOpen(false);
-    setIsOfferModalOpen(false);
+    setIsActionModalOpen(false);
     setSelectedJob(null);
   };
 
@@ -107,7 +107,7 @@ const SubcontractorJobSearchPage: React.FC = () => {
     let result = [...jobs];
 
     if (selectedCategory !== 'Tümü') {
-      result = result.filter((job) => job.serviceType === selectedCategory || job.category === selectedCategory);
+      result = result.filter((job) => job.category === selectedCategory || job.serviceType === selectedCategory);
     }
 
     if (selectedPort !== 'Tüm Limanlar') {
@@ -162,30 +162,28 @@ const SubcontractorJobSearchPage: React.FC = () => {
       <div className="mb-8 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
         <div>
           <button
-            onClick={() => navigate('/dashboard/subcontractor')}
+            onClick={() => navigate('/dashboard/agent')}
             className="inline-flex items-center gap-1 text-sm font-semibold text-slate-500 hover:text-primary transition-colors mb-3"
           >
             <span className="material-icons-round text-[18px]">arrow_back</span>
-            Geri Dön
+            Seçime Geri Dön
           </button>
 
           <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
-            Uygun İlanlar Bulundu
+            Uygun Acente İlanları Bulundu
           </h2>
           <p className="text-slate-500 dark:text-slate-400">
             {filteredJobs.length} kayıtlı ilan listeleniyor.
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
-          <button
-            onClick={() => navigate('/dashboard/subcontractor/active-jobs')}
-            className="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-6 rounded-2xl transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2"
-          >
-            <span className="material-icons-round text-[18px]">receipt_long</span>
-            Aktif İşlerim
-          </button>
-        </div>
+        <button
+          onClick={() => navigate('/dashboard/agent/offers')}
+          className="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-6 rounded-2xl transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2"
+        >
+          <span className="material-icons-round text-[18px]">add</span>
+          Hızlı İlan Ver
+        </button>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-[280px_minmax(0,1fr)] gap-6">
@@ -201,7 +199,15 @@ const SubcontractorJobSearchPage: React.FC = () => {
                 Hizmet Kategorisi
               </p>
               <div className="space-y-3">
-                {['Tümü', 'Liman Operasyonları', 'Teknik Servis', 'Makine Bakımı', 'Boya / Kumlama', 'Elektrik'].map((item) => (
+                {[
+                  'Tümü',
+                  'Liman İşlemleri',
+                  'Yükleme – Boşaltma Operasyonu',
+                  'Gemi İkmal Hizmetleri',
+                  'Teknik & Tamir Hizmetleri',
+                  'Acentelik',
+                  'Lojistik',
+                ].map((item) => (
                   <label key={item} className="flex items-center gap-3 text-sm text-slate-700 dark:text-slate-200 cursor-pointer">
                     <input
                       type="radio"
@@ -226,9 +232,9 @@ const SubcontractorJobSearchPage: React.FC = () => {
                 className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
               >
                 <option>Tüm Limanlar</option>
-                <option>Tuzla</option>
-                <option>Ambarlı</option>
+                <option>İzmir</option>
                 <option>Yalova</option>
+                <option>Mersin</option>
               </select>
             </div>
 
@@ -297,10 +303,10 @@ const SubcontractorJobSearchPage: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
             <div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                Bana Uygun İlanlar
+                Uygun İş Fırsatları
               </h3>
               <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                Taşeron profilinize uygun ilanlar aşağıda listeleniyor.
+                Acente profilinize uygun iş fırsatları aşağıda listeleniyor.
               </p>
             </div>
 
@@ -342,7 +348,7 @@ const SubcontractorJobSearchPage: React.FC = () => {
 
                       <div className="min-w-0">
                         <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          <span className="text-xs font-bold text-slate-400 uppercase">ID: {130700 + job.id}</span>
+                          <span className="text-xs font-bold text-slate-400 uppercase">ID: {130750 + job.id}</span>
                         </div>
 
                         <h4 className={`text-xl font-bold leading-snug mb-1 ${
@@ -402,7 +408,7 @@ const SubcontractorJobSearchPage: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="flex flex-col gap-3 lg:min-w-[190px]">
+                    <div className="flex flex-col gap-3 lg:min-w-[210px]">
                       {job.tag === 'Acil' ? (
                         <span className={`inline-flex items-center justify-center gap-1.5 text-[11px] font-bold px-2.5 py-2 rounded-xl whitespace-nowrap ${getTagStyle(job.tag)}`}>
                           <span className="material-icons-round text-[14px]">warning</span>
@@ -423,11 +429,11 @@ const SubcontractorJobSearchPage: React.FC = () => {
                       </button>
 
                       <button
-                        onClick={() => openOfferModal(job)}
+                        onClick={() => openActionModal(job)}
                         className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all"
                       >
-                        <span className="material-icons-round text-[18px]">send</span>
-                        Teklif Ver
+                        <span className="material-icons-round text-[18px]">handshake</span>
+                        İş Birliği Başlat
                       </button>
                     </div>
                   </div>
@@ -442,7 +448,7 @@ const SubcontractorJobSearchPage: React.FC = () => {
                   Uygun ilan bulunamadı
                 </h4>
                 <p className="text-slate-500 dark:text-slate-400">
-                  Filtrelerinize uygun ilan bulunamadı. Arama kriterlerini güncelleyebilirsiniz.
+                  Filtrelerinize uygun iş fırsatı bulunamadı.
                 </p>
               </div>
             )}
@@ -451,217 +457,156 @@ const SubcontractorJobSearchPage: React.FC = () => {
       </div>
 
       {isDetailModalOpen && selectedJob && (
-  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-[2px] px-4">
-    <div className="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
-      <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-700">
-        <div>
-          <h3 className="text-xl font-bold text-slate-800 dark:text-white">
-            İlan Detayı
-          </h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Seçilen ilana ait detay bilgiler
-          </p>
-        </div>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-[2px] px-4">
+          <div className="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+            <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-700">
+              <div>
+                <h3 className="text-xl font-bold text-slate-800 dark:text-white">
+                  İlan Detayı
+                </h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                  Seçilen iş fırsatına ait detay bilgiler
+                </p>
+              </div>
 
-        <button
-          onClick={closeModals}
-          className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all"
-        >
-          <span className="material-icons-round">close</span>
-        </button>
-      </div>
+              <button
+                onClick={closeModals}
+                className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all"
+              >
+                <span className="material-icons-round">close</span>
+              </button>
+            </div>
 
-      <div className="p-6">
-        <div className="flex items-start justify-between gap-3 mb-5">
-          <div>
-            <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-              {selectedJob.title}
-            </h4>
-            <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-              <span className="material-icons-round text-[16px] text-primary">apartment</span>
-              {selectedJob.company}
+            <div className="p-6">
+              <div className="flex items-start justify-between gap-3 mb-5">
+                <div>
+                  <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+                    {selectedJob.title}
+                  </h4>
+                  <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+                    <span className="material-icons-round text-[16px] text-primary">apartment</span>
+                    {selectedJob.company}
+                  </div>
+                </div>
+
+                <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md whitespace-nowrap ${getTagStyle(selectedJob.tag)}`}>
+                  {selectedJob.tag}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+                <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
+                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Konum</p>
+                  <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{selectedJob.location}</p>
+                </div>
+
+                <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
+                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Bütçe</p>
+                  <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{selectedJob.budget}</p>
+                </div>
+
+                <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
+                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Deadline</p>
+                  <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{selectedJob.deadline}</p>
+                </div>
+              </div>
+
+              <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-700/60 p-5 mb-6">
+                <h5 className="text-sm font-bold text-slate-800 dark:text-white mb-2">İş Açıklaması</h5>
+                <p className="text-sm leading-7 text-slate-600 dark:text-slate-300">
+                  {selectedJob.description}
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row justify-end gap-3">
+                <button
+                  onClick={closeModals}
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:border-primary/40 hover:text-primary transition-all"
+                >
+                  Kapat
+                </button>
+
+                <button
+                  onClick={() => openActionModal(selectedJob)}
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all"
+                >
+                  <span className="material-icons-round text-[18px]">handshake</span>
+                  İş Birliği Başlat
+                </button>
+              </div>
             </div>
           </div>
-
-          <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md whitespace-nowrap ${selectedJob.tagStyle}`}>
-            {selectedJob.tag}
-          </span>
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-          <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Konum</p>
-            <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{selectedJob.location}</p>
-          </div>
-
-          <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Bütçe</p>
-            <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{selectedJob.budget}</p>
-          </div>
-
-          <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Son Tarih</p>
-            <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{selectedJob.deadline}</p>
-          </div>
-        </div>
-
-        <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-700/60 p-5 mb-6">
-          <h5 className="text-sm font-bold text-slate-800 dark:text-white mb-2">İş Açıklaması</h5>
-          <p className="text-sm leading-7 text-slate-600 dark:text-slate-300">
-            {selectedJob.description}
-          </p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row justify-end gap-3">
-          <button
-            onClick={closeModals}
-            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:border-primary/40 hover:text-primary transition-all"
-          >
-            Kapat
-          </button>
-
-          <button
-  onClick={() => {
-    if (selectedJob) {
-      openOfferModal(selectedJob);
-    }
-  }}
-  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all"
->
-  <span className="material-icons-round text-[18px]">send</span>
-  Bu İlan İçin Teklif Ver
-</button>
-        </div>
-      </div>
-    </div>
-  </div>
       )}
-      {isOfferModalOpen && selectedJob && (
-  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-[2px] px-4">
-    <div className="w-full max-w-3xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
-      
-      {/* HEADER */}
-      <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-700">
-        <div>
-          <h3 className="text-xl font-bold text-slate-800 dark:text-white">
-            Teklif Ver
-          </h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            {selectedJob.title} ilanı için teklif oluşturun
-          </p>
-        </div>
 
-        <button
-          onClick={closeModals}
-          className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all"
-        >
-          <span className="material-icons-round">close</span>
-        </button>
-      </div>
+      {isActionModalOpen && selectedJob && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-[2px] px-4">
+          <div className="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+            <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-700">
+              <div>
+                <h3 className="text-xl font-bold text-slate-800 dark:text-white">
+                  İş Birliği Başlat
+                </h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                  {selectedJob.title} fırsatı için başvuru oluşturun
+                </p>
+              </div>
 
-      <div className="p-6 space-y-6">
+              <button
+                onClick={closeModals}
+                className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all"
+              >
+                <span className="material-icons-round">close</span>
+              </button>
+            </div>
 
-        {/* İLAN BİLGİ */}
-        <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-700/60 p-4 space-y-2">
-          <p className="font-bold text-slate-800 dark:text-white">
-            {selectedJob.title}
-          </p>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
-            {selectedJob.company}
-          </p>
+            <div className="p-6 space-y-5">
+              <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-700/60 p-4">
+                <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">İlan</p>
+                <p className="font-bold text-slate-800 dark:text-white">{selectedJob.title}</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{selectedJob.company}</p>
+              </div>
 
-          {/* ⭐ ACENTE PUANI */}
-          <div className="flex items-center gap-1 text-sm mt-2">
-            <span className="material-icons-round text-yellow-400 text-[18px]">star</span>
-            <span className="font-semibold text-slate-700 dark:text-slate-200">
-              4.6 / 5
-            </span>
-            <span className="text-slate-400 text-xs">(Acenta puanı)</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  placeholder="Temsilci Adı"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
+                />
+                <input
+                  type="text"
+                  placeholder="İrtibat Telefonu"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
+                />
+              </div>
+
+              <textarea
+                rows={5}
+                placeholder="İş birliği talebinize dair kısa açıklama ekleyin..."
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 resize-none"
+              />
+
+              <div className="flex justify-end gap-3">
+                <button
+                  onClick={closeModals}
+                  className="px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold"
+                >
+                  Vazgeç
+                </button>
+
+                <button
+                  onClick={closeModals}
+                  className="px-5 py-3 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all"
+                >
+                  Başvuruyu Gönder
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* DETAY BİLGİLER */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          
-          <input
-            type="text"
-            placeholder="Liman (örn: Tuzla)"
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
-          />
-
-          <input
-            type="text"
-            placeholder="Gemi Tipi (opsiyonel)"
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
-          />
-
-          <input
-            type="text"
-            placeholder="İş Kategorisi (örn: Elektrik, Boya)"
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
-          />
-
-          <input
-            type="date"
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
-          />
-        </div>
-
-        {/* TEKLİF BİLGİLERİ */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            placeholder="Teklif Tutarı (₺)"
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
-          />
-
-          <input
-            type="text"
-            placeholder="Tahmini Süre (örn: 5 gün)"
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40"
-          />
-        </div>
-
-        {/* AÇIKLAMA */}
-        <textarea
-          rows={4}
-          placeholder="Kısa açıklama / teklif notu"
-          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 resize-none"
-        />
-
-        {/* FOTO / VİDEO */}
-        <div className="border border-dashed border-slate-300 dark:border-slate-600 rounded-xl p-5 text-center cursor-pointer hover:border-primary transition-all">
-          <span className="material-icons-round text-3xl text-slate-400 mb-2 block">
-            upload
-          </span>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
-            Fotoğraf / video yükle (opsiyonel)
-          </p>
-        </div>
-
-        {/* BUTTONS */}
-        <div className="flex justify-end gap-3 pt-2">
-          <button
-            onClick={closeModals}
-            className="px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold"
-          >
-            Vazgeç
-          </button>
-
-          <button
-            onClick={closeModals}
-            className="px-5 py-3 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all"
-          >
-            Teklifi Gönder
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-)}
+      )}
     </>
   );
 };
 
-export default SubcontractorJobSearchPage;
+export default AgentSearchPage;

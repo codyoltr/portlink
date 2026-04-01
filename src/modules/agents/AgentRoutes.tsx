@@ -19,6 +19,7 @@ import AddFinance from './pages/FinansEkle'; // Was FinansEkle
 import AgentProfilePage from './pages/AgentProfilePage';
 import AgentProfileEditPage from './pages/AgentProfileEditPage';
 import AgentListingDetail from './dashboard/AgentJobListingDetail';
+import AgentSearchPage from './pages/AgentSearchPage';
 
 // AGENT DASHBOARD PAGES
 import AgentAssignedJobDetail from './dashboard/AgentAssignedJobDetail';
@@ -58,6 +59,7 @@ export default function AgentRoutes() {
               <Route path="add-subcontractor" element={<SubcontractorDirectory />} />
               <Route path="quick-post" element={<QuickPostPage />} />
               <Route path="quick-post/:id" element={<QuickPostPage />} />
+              <Route path="job-search" element={<AgentSearchPage />} />
 
             </Routes>
           </DashboardLayout>
