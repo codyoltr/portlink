@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import ports from "@/data/ports.json";
 
 type ListingType = 'subcontractor' | 'agency-partnership';
 
@@ -65,17 +66,7 @@ const serviceCategories: ServiceCategory[] = [
     },
 ];
 
-const ports = [
-    'Ambarlı Limanı',
-    'Haydarpaşa Limanı',
-    'Mersin Limanı',
-    'İzmir Alsancak Limanı',
-    'Gemlik Limanı',
-    'Samsun Limanı',
-    'İskenderun Limanı',
-    'Yalova Tersanesi',
-    'Tuzla Tersanesi',
-];
+
 
 const steps = ['İlan Tipi', 'Hizmet Kategorisi', 'Kısa İlan', 'Önizleme & Yayın'];
 
@@ -96,6 +87,14 @@ const QuickPostPage: React.FC = () => {
     const [needText, setNeedText] = useState<string>('');
     const [files, setFiles] = useState<File[]>([]);
 
+    //kısa ilan başlığı
+    const [title, setTitle] = useState('');
+
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    //filtreleme liman için
+    const [portSearch, setPortSearch] = useState('');
+    const [showDropdown, setShowDropdown] = useState(false);
+
     const selectedCategories = useMemo(
         () => serviceCategories.filter((cat) => selectedCategoryIds.includes(cat.id)),
         [selectedCategoryIds]
@@ -106,9 +105,58 @@ const QuickPostPage: React.FC = () => {
         [selectedServicesByCategory]
     );
 
+    const normalize = (text: string) =>
+        text
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/ı/g, "i");
+
+    const filteredPorts = useMemo(() => {
+        const search = normalize(portSearch.trim());
+        return ports
+            .filter((p) => {
+                const name = normalize(p.name);
+                const code = normalize(p.code);
+
+                return name.includes(search) || code.includes(search);
+            })
+            .sort((a, b) => {
+                const aName = normalize(a.name);
+                const bName = normalize(b.name);
+
+                const aStarts = aName.startsWith(search);
+                const bStarts = bName.startsWith(search);
+
+                if (aStarts && !bStarts) return -1;
+                if (!aStarts && bStarts) return 1;
+
+                return aName.localeCompare(bName, "tr");
+            });
+
+    }, [portSearch]);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(event.target as Node)
+            ) {
+                setShowDropdown(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     const canGoStep2 = !!listingType;
     const canGoStep3 = selectedCategoryIds.length > 0 && totalSelectedServices.length > 0;
     const canGoStep4 =
+        !!title.trim() &&
         !!eta.trim() &&
         !!port.trim() &&
         !!ship.trim() &&
@@ -122,7 +170,7 @@ const QuickPostPage: React.FC = () => {
 
         if (exists) {
             setSelectedCategoryIds((prev) => prev.filter((id) => id !== categoryId));
-            
+
             setSelectedServicesByCategory((prevServices) => {
                 const updated = { ...prevServices };
                 delete updated[categoryId];
@@ -242,24 +290,22 @@ const QuickPostPage: React.FC = () => {
                             return (
                                 <div key={label} className="flex flex-col items-center text-center">
                                     <div
-                                        className={`flex h-12 w-12 items-center justify-center rounded-full border-2 text-sm font-bold transition-all ${
-                                            isCompleted
-                                                ? 'border-emerald-500 bg-emerald-500 text-white'
-                                                : isActive
-                                                    ? 'border-primary bg-primary text-white'
-                                                    : 'border-slate-300 bg-white text-slate-500'
-                                        }`}
+                                        className={`flex h-12 w-12 items-center justify-center rounded-full border-2 text-sm font-bold transition-all ${isCompleted
+                                            ? 'border-emerald-500 bg-emerald-500 text-white'
+                                            : isActive
+                                                ? 'border-primary bg-primary text-white'
+                                                : 'border-slate-300 bg-white text-slate-500'
+                                            }`}
                                     >
                                         {isCompleted ? '✓' : current}
                                     </div>
                                     <span
-                                        className={`mt-3 text-sm font-medium ${
-                                            isActive
-                                                ? 'text-primary'
-                                                : isCompleted
-                                                    ? 'text-emerald-600'
-                                                    : 'text-slate-500'
-                                        }`}
+                                        className={`mt-3 text-sm font-medium ${isActive
+                                            ? 'text-primary'
+                                            : isCompleted
+                                                ? 'text-emerald-600'
+                                                : 'text-slate-500'
+                                            }`}
                                     >
                                         {label}
                                     </span>
@@ -281,11 +327,10 @@ const QuickPostPage: React.FC = () => {
                                 <button
                                     type="button"
                                     onClick={() => setListingType('subcontractor')}
-                                    className={`rounded-3xl border p-6 text-left transition-all ${
-                                        listingType === 'subcontractor'
-                                            ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
-                                            : 'border-slate-200 hover:border-primary/40 hover:bg-slate-50'
-                                    }`}
+                                    className={`rounded-3xl border p-6 text-left transition-all ${listingType === 'subcontractor'
+                                        ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
+                                        : 'border-slate-200 hover:border-primary/40 hover:bg-slate-50'
+                                        }`}
                                 >
                                     <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
                                         <span className="material-icons-round">engineering</span>
@@ -299,11 +344,10 @@ const QuickPostPage: React.FC = () => {
                                 <button
                                     type="button"
                                     onClick={() => setListingType('agency-partnership')}
-                                    className={`rounded-3xl border p-6 text-left transition-all ${
-                                        listingType === 'agency-partnership'
-                                            ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
-                                            : 'border-slate-200 hover:border-primary/40 hover:bg-slate-50'
-                                    }`}
+                                    className={`rounded-3xl border p-6 text-left transition-all ${listingType === 'agency-partnership'
+                                        ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
+                                        : 'border-slate-200 hover:border-primary/40 hover:bg-slate-50'
+                                        }`}
                                 >
                                     <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-50 text-violet-600">
                                         <span className="material-icons-round">handshake</span>
@@ -328,55 +372,54 @@ const QuickPostPage: React.FC = () => {
 
                             <div className="mt-8 grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
                                 <div className="space-y-4">
-    {serviceCategories.map((category) => {
-        const isSelected = selectedCategoryIds.includes(category.id);
-        const selectedServiceCount = selectedServicesByCategory[category.id]?.length || 0;
+                                    {serviceCategories.map((category) => {
+                                        const isSelected = selectedCategoryIds.includes(category.id);
+                                        const selectedServiceCount = selectedServicesByCategory[category.id]?.length || 0;
 
-        return (
-            <label
-                key={category.id}
-                className={`flex w-full cursor-pointer items-start justify-between gap-4 rounded-2xl border p-5 transition-all ${
-                    isSelected
-                        ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
-                        : 'border-slate-200 hover:border-primary/30 hover:bg-slate-50'
-                }`}
-            >
-                <div className="flex flex-1 items-start gap-3">
-                    <input
-                        type="checkbox"
-                        checked={isSelected}
-                        onChange={() => toggleCategory(category.id)}
-                        className="mt-1 h-5 w-5 shrink-0 rounded border-slate-300 text-primary focus:ring-primary"
-                    />
+                                        return (
+                                            <label
+                                                key={category.id}
+                                                className={`flex w-full cursor-pointer items-start justify-between gap-4 rounded-2xl border p-5 transition-all ${isSelected
+                                                    ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
+                                                    : 'border-slate-200 hover:border-primary/30 hover:bg-slate-50'
+                                                    }`}
+                                            >
+                                                <div className="flex flex-1 items-start gap-3">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={isSelected}
+                                                        onChange={() => toggleCategory(category.id)}
+                                                        className="mt-1 h-5 w-5 shrink-0 rounded border-slate-300 text-primary focus:ring-primary"
+                                                    />
 
-                    <div className="flex-1">
-                        <h3 className="text-lg font-bold text-slate-900">
-                            {category.title}
-                        </h3>
+                                                    <div className="flex-1">
+                                                        <h3 className="text-lg font-bold text-slate-900">
+                                                            {category.title}
+                                                        </h3>
 
-                        <p className="mt-1 text-sm text-slate-500">
-                            {category.description}
-                        </p>
+                                                        <p className="mt-1 text-sm text-slate-500">
+                                                            {category.description}
+                                                        </p>
 
-                        {isSelected && (
-                            <div className="mt-3 flex flex-wrap gap-2">
-                                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                                    Seçildi
-                                </span>
+                                                        {isSelected && (
+                                                            <div className="mt-3 flex flex-wrap gap-2">
+                                                                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                                                                    Seçildi
+                                                                </span>
 
-                                {selectedServiceCount > 0 && (
-                                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                                        {selectedServiceCount} alt hizmet seçildi
-                                    </span>
-                                )}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </label>
-        );
-    })}
-</div>
+                                                                {selectedServiceCount > 0 && (
+                                                                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+                                                                        {selectedServiceCount} alt hizmet seçildi
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        );
+                                    })}
+                                </div>
 
                                 <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
                                     <h3 className="text-lg font-bold text-slate-900">Alt Hizmetler</h3>
@@ -410,11 +453,10 @@ const QuickPostPage: React.FC = () => {
                                                             return (
                                                                 <label
                                                                     key={`${category.id}-${item}`}
-                                                                    className={`flex cursor-pointer items-center gap-3 rounded-2xl border p-4 transition-all ${
-                                                                        checked
-                                                                            ? 'border-primary bg-primary/5'
-                                                                            : 'border-slate-200 hover:border-primary/30'
-                                                                    }`}
+                                                                    className={`flex cursor-pointer items-center gap-3 rounded-2xl border p-4 transition-all ${checked
+                                                                        ? 'border-primary bg-primary/5'
+                                                                        : 'border-slate-200 hover:border-primary/30'
+                                                                        }`}
                                                                 >
                                                                     <input
                                                                         type="checkbox"
@@ -465,8 +507,28 @@ const QuickPostPage: React.FC = () => {
                             <p className="mt-2 text-slate-500">
                                 ETA, liman, gemi ve ihtiyaç detaylarını hızlıca girin.
                             </p>
+                            <div className="mt-4 grid gap-5 md:grid-cols-2">
+                            <div className="md:col-span-2">
+                                <label className="mb-2 block text-sm font-semibold text-slate-700">
+                                    İlan Başlığı
+                                </label>
 
-                            <div className="mt-8 grid gap-5 md:grid-cols-2">
+                                <input
+                                    type="text"
+                                    placeholder="Örn: Alanya limanında yükleme için ekip aranıyor"
+                                    value={title}
+                                    maxLength={50}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition focus:border-primary"
+                                />
+
+                                {/* KARAKTER SAYACI */}
+                                <div className="mt-1 text-right text-xs text-slate-400">
+                                    {title.length}/50
+                                </div>
+                            </div>
+                              </div>
+                            <div className="mt-4 grid gap-5 md:grid-cols-2">
                                 <div>
                                     <label className="mb-2 block text-sm font-semibold text-slate-700">
                                         ETA (Tahmini Varış Zamanı)
@@ -479,22 +541,50 @@ const QuickPostPage: React.FC = () => {
                                     />
                                 </div>
 
-                                <div>
+                                <div className="relative" ref={dropdownRef}>
                                     <label className="mb-2 block text-sm font-semibold text-slate-700">
                                         Liman
                                     </label>
-                                    <select
-                                        value={port}
-                                        onChange={(e) => setPort(e.target.value)}
-                                        className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition focus:border-primary"
-                                    >
-                                        <option value="">Liman seçiniz...</option>
-                                        {ports.map((item) => (
-                                            <option key={item} value={item}>
-                                                {item}
-                                            </option>
-                                        ))}
-                                    </select>
+
+                                    {/* INPUT */}
+                                    <input
+                                        type="text"
+                                        placeholder="Liman ara..."
+                                        value={portSearch}
+                                        onChange={(e) => {
+                                            setPortSearch(e.target.value);
+                                            setShowDropdown(true);
+                                        }}
+                                        onFocus={() => setShowDropdown(true)}
+                                        className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none"
+                                    />
+
+                                    {/* DROPDOWN */}
+                                    {showDropdown && (
+                                        <div className="absolute z-50 mt-2 w-full max-h-[220px] overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-lg">
+
+                                            {filteredPorts.map((item) => (
+                                                <div
+                                                    key={item.code}
+                                                    onClick={() => {
+                                                        setPort(item.code);
+                                                        setPortSearch(item.name);
+                                                        setShowDropdown(false);
+                                                    }}
+                                                    className="flex items-center justify-between cursor-pointer px-4 py-3 hover:bg-slate-100 text-sm"
+                                                >
+                                                    {/* SOL: İSİM */}
+                                                    <span>{item.name}</span>
+
+                                                    {/* SAĞ: CODE BADGE */}
+                                                    <span className="text-xs bg-slate-200 text-slate-600 px-2 py-1 rounded-lg">
+                                                        {item.code}
+                                                    </span>
+                                                </div>
+                                            ))}
+
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="md:col-span-2">
@@ -574,6 +664,7 @@ const QuickPostPage: React.FC = () => {
 
                     {step === 4 && (
                         <div className="p-6 md:p-8">
+                            
                             <h2 className="text-2xl font-bold text-slate-900">İlan Önizleme</h2>
                             <p className="mt-2 text-slate-500">
                                 İlan bilgilerinizi kontrol edin ve yayına alın.
@@ -597,7 +688,9 @@ const QuickPostPage: React.FC = () => {
                                     </div>
 
                                     <div className="grid gap-4 md:grid-cols-2">
+                                        
                                         <div className="rounded-2xl bg-white p-4">
+
                                             <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
                                                 ETA
                                             </p>
@@ -673,6 +766,12 @@ const QuickPostPage: React.FC = () => {
 
                                 <div className="rounded-3xl border border-slate-200 bg-white p-6">
                                     <h3 className="text-lg font-bold text-slate-900">Yayın Özeti</h3>
+                                    <div className="rounded-2xl bg-slate-50 p-4">
+    <p className="text-sm text-slate-500">İlan Başlığı</p>
+    <p className="mt-1 font-semibold text-slate-800">
+        {title || '-'}
+    </p>
+</div>
 
                                     <div className="mt-5 space-y-4">
                                         <div className="rounded-2xl bg-slate-50 p-4">
