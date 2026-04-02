@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Mail, Lock, Ship, ArrowRight, UserCircle, Briefcase } from 'lucide-react';
 import FullPageLayout from '@/features/shell/components/FullPageLayout';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [role, setRole] = useState<'agent' | 'subcontractor'>('agent');
+  const location = useLocation();
+  const [role, setRole] = useState<'agent' | 'subcontractor'>(location.state?.role || 'agent');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
