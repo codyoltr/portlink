@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import FullPageLayout from '@/features/shell/components/FullPageLayout';
 import heroImage from '@/assets/hero-image.png';
 import StatsSection from './StatsSection';
+import MapSection from './MapSection';
 
 // --- DUYURULAR ---
 const announcements = [
@@ -125,6 +126,7 @@ const Welcome: React.FC = () => {
           </div>
         </section>
 
+        <MapSection />
         <StatsSection />
       </main>
       <Footer />
