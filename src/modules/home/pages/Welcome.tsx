@@ -180,46 +180,37 @@ const Welcome: React.FC = () => {
 
                 {/* ALT AÇIKLAMA 1 */}
                 <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-xl font-medium">
-                  Acentelerin açtığı iş taleplerini, doğru taşeron ve yerel acentelerle eşleştiren dijital platform. Tüm gemi operasyonlarını tek yerden yönet, teklif al ve hızla çözüme ulaş.
+                  Tüm gemi operasyonlarınızı tek platformdan yönetin, en uygun ekiplerle hızla eşleşip teklif alın.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full max-w-3xl">
                   {/* 1. Buton Grubu */}
                   <div className="flex flex-col items-center flex-1">
                     <button
                       onClick={() => navigate('/login')}
-                      className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                      className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
                     >
                       İş Talebi Aç
                     </button>
-                    <span className="text-sm text-slate-500 font-medium italic mt-3 text-center">
-                      "Gemi için hizmet al"
-                    </span>
                   </div>
 
                   {/* 2. Buton Grubu */}
                   <div className="flex flex-col items-center flex-1">
                     <button
                       onClick={() => navigate('/login')}
-                      className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                      className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
                     >
                       İş Ortaklığı Ara
                     </button>
-                    <span className="text-sm text-slate-500 font-medium italic mt-3 text-center">
-                      "Başka acentelerle çalış"
-                    </span>
                   </div>
 
                   {/* 3. Buton Grubu */}
                   <div className="flex flex-col items-center flex-1">
                     <button
                       onClick={() => navigate('/login')}
-                      className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                      className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
                     >
                       İş Bul
                     </button>
-                    <span className="text-sm text-slate-500 font-medium italic mt-3 text-center">
-                      "İşlere teklif ver"
-                    </span>
                   </div>
                 </div>
 
