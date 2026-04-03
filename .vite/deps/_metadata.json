@@ -1,0 +1,52 @@
+{
+  "hash": "181780e5",
+  "configHash": "df632db3",
+  "lockfileHash": "e2191c9b",
+  "browserHash": "6940e9dd",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "9fc85645",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "80b0ac1f",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "7f0117f8",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "c138ccbd",
+      "needsInterop": false
+    },
+    "framer-motion": {
+      "src": "../../node_modules/framer-motion/dist/es/index.mjs",
+      "file": "framer-motion.js",
+      "fileHash": "ef60e26e",
+      "needsInterop": false
+    },
+    "lucide-react": {
+      "src": "../../node_modules/lucide-react/dist/esm/lucide-react.js",
+      "file": "lucide-react.js",
+      "fileHash": "dfc1b332",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-OHIE3E62": {
+      "file": "chunk-OHIE3E62.js"
+    },
+    "chunk-PGD2RI3G": {
+      "file": "chunk-PGD2RI3G.js"
+    }
+  }
+}

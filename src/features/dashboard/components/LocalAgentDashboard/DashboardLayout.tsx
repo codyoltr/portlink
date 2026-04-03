@@ -10,7 +10,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
   const navigate = useNavigate();
   const location = useLocation();
   // BURASI DEĞİŞTİ: false olan başlangıç değeri true yapıldı.
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true); 
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isSettingsMenuOpen, setIsSettingsMenuOpen] = useState(false);
 
@@ -51,7 +51,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
   ];
 
   const subNavItems = [
-    { label: 'Özet (Dashboard)', path: `/dashboard/subcontractor`, icon: 'dashboard' },
+    { label: 'Dashboard', path: `/dashboard/subcontractor`, icon: 'dashboard' },
     { label: 'İş Ara', path: `/dashboard/subcontractor/jobs`, icon: 'search' },
     { label: 'Verilen Teklifler', path: `/dashboard/subcontractor/offers`, icon: 'send' },
     { label: 'Aktif İşlerim', path: `/dashboard/subcontractor/active-jobs`, icon: 'autorenew' },
@@ -60,7 +60,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
   ];
 
   const captainNavItems = [
-    { label: 'Özet (Dashboard)', path: `/dashboard/captain`, icon: 'dashboard' },
+    { label: 'Dashboard', path: `/dashboard/subcontractor`, icon: 'dashboard' },
     { label: 'Planlanan Seferler', path: `/dashboard/captain/voyages`, icon: 'directions_boat' },
     { label: 'Bekleyen Onaylar', path: `/dashboard/captain/approvals`, icon: 'rule' },
   ];
@@ -102,8 +102,8 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
                   key={item.path}
                   to={item.path}
                   className={`flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3 px-4'} py-3.5 rounded-xl font-semibold transition-all ${isActive
-                      ? 'bg-primary text-white shadow-lg shadow-primary/20'
-                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-primary text-white shadow-lg shadow-primary/20'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   title={isSidebarCollapsed ? item.label : undefined}
                 >
