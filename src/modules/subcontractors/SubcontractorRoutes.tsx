@@ -20,6 +20,7 @@ import SubcontractorProfileEditPage from './pages/SubcontractorProfileEditPage';
 import SubcontractorProfilePage from './pages/SubcontractorProfilePage';
 
 import Gatekeeper from '@/components/Gatekeeper';
+import MessagesPage from '../../pages/MessagesPage';
 
 export default function SubcontractorRoutes() {
   return (
@@ -33,6 +34,7 @@ export default function SubcontractorRoutes() {
           <DashboardLayout role="subcontractor">
             <Routes>
               <Route path="/" element={<SubcontractorDashboardPage />} />
+              <Route path="messages" element={<MessagesPage />} />
               <Route path="jobs" element={<SubcontractorJobSearchPage />} />
               <Route path="offers" element={<SubcontractorOffersPage />} />
               <Route path="wallet" element={<SubcontractorWalletPage />} />

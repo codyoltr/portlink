@@ -29,6 +29,7 @@ import AgentJobDetails from './dashboard/AgentJobDetails';
 import AgentJobList from './dashboard/AgentJobList';
 import Gatekeeper from '@/components/Gatekeeper';
 import QuickPostPage from './pages/QuickPostPage';
+import MessagesPage from '../../pages/MessagesPage';
 
 export default function AgentRoutes() {
   return (
@@ -43,6 +44,7 @@ export default function AgentRoutes() {
           <DashboardLayout role="agent">
             <Routes>
               <Route path="/" element={<AgentDashboardPage />} />
+              <Route path="messages" element={<MessagesPage />} />
               <Route path="subcontractor-directory" element={<SubcontractorDirectory />} />
               <Route path="subcontractor-directory/:id" element={<SubcontractorDirectoryDetail />} />
               <Route path="archive-finance" element={<ArchiveFinance />} />

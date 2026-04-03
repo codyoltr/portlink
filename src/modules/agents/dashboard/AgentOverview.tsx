@@ -4,8 +4,8 @@ const AgentOverview: React.FC = () => {
   return (
     <>
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">Acente Özeti</h2>
-        <p className="text-slate-500 dark:text-slate-400">Son 30 günlük işlem hacminiz ve aktif süreçleriniz.</p>
+        <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">Acente Gösterge Paneli</h2>
+        <p className="text-slate-500 dark:text-slate-400">Gemi acenteliği süreçleriniz, aktif ilanlarınız, gelen teklifler ve taşeron iletişimlerinizi tek bir noktadan, güvenle yönetin.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">

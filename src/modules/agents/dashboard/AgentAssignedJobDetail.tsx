@@ -1,24 +1,19 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import MessageBox from '../../../components/MessageBox';
 
 const AgentAssignedJobDetail: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   // State'ler
-  const [isSendingMessage, setIsSendingMessage] = useState(false);
-  const [messageSent, setMessageSent] = useState(false);
+  const [messageBoxOpen, setMessageBoxOpen] = useState(false);
   
   const [isRequestingReport, setIsRequestingReport] = useState(false);
   const [reportRequested, setReportRequested] = useState(false);
 
   const handleSendMessage = () => {
-    setIsSendingMessage(true);
-    setTimeout(() => {
-      setIsSendingMessage(false);
-      setMessageSent(true);
-      setTimeout(() => setMessageSent(false), 3000); // 3 saniye sonra normale döner
-    }, 1000);
+    setMessageBoxOpen(true);
   };
 
   const handleRequestReport = () => {
@@ -76,21 +71,10 @@ const AgentAssignedJobDetail: React.FC = () => {
           {/* Mesaj Gönder Butonu */}
           <button 
             onClick={handleSendMessage}
-            disabled={isSendingMessage || messageSent}
-            className={`flex items-center gap-2 px-4 py-2 border rounded-xl font-bold shadow-sm transition-all text-sm ${
-              messageSent 
-                ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
-                : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50'
-            }`}
+            className={`flex items-center gap-2 px-4 py-2 border rounded-xl font-bold shadow-sm transition-all text-sm bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-primary dark:hover:text-primary transition-colors`}
           >
-            {isSendingMessage ? (
-              <span className="material-icons-round text-[18px] animate-spin">autorenew</span>
-            ) : messageSent ? (
-              <span className="material-icons-round text-[18px]">check_circle</span>
-            ) : (
-              <span className="material-icons-round text-[18px]">chat</span>
-            )}
-            {isSendingMessage ? 'Gönderiliyor...' : messageSent ? 'Mesaj İletildi' : 'Mesaj Gönder'}
+            <span className="material-icons-round text-[18px]">chat</span>
+            Mesaj Gönder
           </button>
 
           {/* Rapor İste Butonu */}
@@ -285,6 +269,15 @@ const AgentAssignedJobDetail: React.FC = () => {
 
         </div>
       </div>
+
+      {/* Mesajlaşma Kutusu */}
+      <MessageBox 
+        isOpen={messageBoxOpen} 
+        onClose={() => setMessageBoxOpen(false)}
+        recipientName={job.subcontractor}
+        recipientRole="Taşeron"
+        jobTitle={job.title}
+      />
     </div>
   );
 };

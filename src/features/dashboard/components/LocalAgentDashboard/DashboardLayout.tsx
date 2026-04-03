@@ -158,6 +158,22 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
               </button>
             )}
 
+            {/* Messages Menu */}
+            <button
+              onClick={() => navigate(`/dashboard/${role}/messages`)}
+              className="relative w-10 h-10 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-primary hover:bg-slate-50 dark:hover:bg-slate-800 transition-all font-bold"
+              title="Mesajlar"
+            >
+              <span className="material-icons-round">chat</span>
+              {/* Unread badge example */}
+              <span className="absolute -top-1 -right-1 flex h-4 w-4">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                <span className="relative inline-flex flex-col items-center justify-center rounded-full h-4 w-4 bg-rose-500 text-[9px] font-black text-white border-2 border-white dark:border-slate-800">
+                  2
+                </span>
+              </span>
+            </button>
+
             {/* Settings Menu */}
             <div className="relative">
               <button
