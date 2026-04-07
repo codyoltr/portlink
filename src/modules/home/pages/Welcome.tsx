@@ -206,7 +206,7 @@ const Welcome: React.FC = () => {
                   {/* 3. Buton Grubu */}
                   <div className="flex flex-col items-center flex-1">
                     <button
-                      onClick={() => navigate('/login')}
+                      onClick={() => navigate('/login', { state: { role: 'subcontractor' } })}
                       className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
                     >
                       İş Bul

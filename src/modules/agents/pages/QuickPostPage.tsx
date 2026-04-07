@@ -529,7 +529,7 @@ const QuickPostPage: React.FC = () => {
                             </div>
                               </div>
                             <div className="mt-4 grid gap-5 md:grid-cols-2">
-                                <div>
+                                <div className="flex flex-col">
                                     <label className="mb-2 block text-sm font-semibold text-slate-700">
                                         ETA (Tahmini Varış Zamanı)
                                     </label>
@@ -539,6 +539,31 @@ const QuickPostPage: React.FC = () => {
                                         onChange={(e) => setEta(e.target.value)}
                                         className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition focus:border-primary"
                                     />
+                                    <div className="mt-3 flex gap-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                const d = new Date();
+                                                const localIso = new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
+                                                setEta(localIso);
+                                            }}
+                                            className="rounded-xl border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100"
+                                        >
+                                            Bugün
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                const d = new Date();
+                                                d.setDate(d.getDate() + 1);
+                                                const localIso = new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
+                                                setEta(localIso);
+                                            }}
+                                            className="rounded-xl border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100"
+                                        >
+                                            Yarın
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <div className="relative" ref={dropdownRef}>

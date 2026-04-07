@@ -81,49 +81,55 @@ const transactions = [
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700/50">
-          <div className="p-3 w-fit bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-xl mb-4">
-            <span className="material-icons-round">wallet</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
+        <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-8 rounded-[2rem] shadow-xl shadow-blue-500/20 text-white relative overflow-hidden group">
+          <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[150%] bg-white/10 blur-[60px] rotate-12 group-hover:rotate-45 transition-transform duration-700" />
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-6">
+              <div className="p-3 bg-white/20 rounded-2xl backdrop-blur-md">
+                <span className="material-icons-round text-white">account_balance_wallet</span>
+              </div>
+              <span className="text-xs font-bold bg-white/20 px-3 py-1 rounded-full backdrop-blur-md">Aktif Bakiye</span>
+            </div>
+            <h3 className="text-blue-100 text-sm font-bold uppercase tracking-widest mb-1">Kullanılabilir Tutar</h3>
+            <p className="text-4xl font-black italic tracking-tight">₺280.000</p>
+            <div className="mt-8 flex items-center gap-2 text-xs font-bold text-blue-100/80">
+              <span className="material-icons-round text-sm">verified</span>
+              Otomatik Faturalandırma Aktif
+            </div>
           </div>
-          <h3 className="text-slate-500 dark:text-slate-400 text-sm font-semibold mb-1">
-            Mevcut Bakiye
-          </h3>
-          <p className="text-3xl font-extrabold text-slate-800 dark:text-white">₺280.000</p>
-          <p className="mt-3 text-sm text-emerald-500 font-semibold">Güncel kullanılabilir bakiye</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700/50">
-          <div className="p-3 w-fit bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-xl mb-4">
-            <span className="material-icons-round">payments</span>
+        <div className="bg-white dark:bg-slate-800 p-8 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700/50 relative overflow-hidden group">
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-6">
+              <div className="p-3 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 rounded-2xl">
+                <span className="material-icons-round">hourglass_empty</span>
+              </div>
+              <span className="text-xs font-bold bg-amber-100 text-amber-700 px-3 py-1 rounded-full">Havuzda</span>
+            </div>
+            <h3 className="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-widest mb-1">Havuzdaki Bekleyen Tutar</h3>
+            <p className="text-4xl font-black text-slate-800 dark:text-white tracking-tight">₺128.000</p>
+            <p className="mt-8 text-xs font-medium text-slate-400 leading-relaxed">
+              Bu tutar Portlink havuzunda güvence altındadır. İş onaylandığında otomatik olarak bakiyenize aktarılacaktır.
+            </p>
           </div>
-          <h3 className="text-slate-500 dark:text-slate-400 text-sm font-semibold mb-1">
-            Toplam Kazanç
-          </h3>
-          <p className="text-3xl font-extrabold text-slate-800 dark:text-white">₺542.000</p>
-          <p className="mt-3 text-sm text-blue-500 font-semibold">Tüm zamanlar toplamı</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700/50">
-          <div className="p-3 w-fit bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 rounded-xl mb-4">
-            <span className="material-icons-round">hourglass_top</span>
+        <div className="bg-white dark:bg-slate-800 p-8 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700/50 relative">
+          <div className="flex items-center justify-between mb-6">
+            <div className="p-3 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-2xl">
+              <span className="material-icons-round">insights</span>
+            </div>
           </div>
-          <h3 className="text-slate-500 dark:text-slate-400 text-sm font-semibold mb-1">
-            Bekleyen Ödeme
-          </h3>
-          <p className="text-3xl font-extrabold text-slate-800 dark:text-white">₺128.000</p>
-          <p className="mt-3 text-sm text-amber-500 font-semibold">Onay sürecindeki ödemeler</p>
-        </div>
-
-        <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700/50">
-          <div className="p-3 w-fit bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-xl mb-4">
-            <span className="material-icons-round">trending_up</span>
+          <h3 className="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-widest mb-1">Toplam Ciro</h3>
+          <p className="text-4xl font-black text-slate-800 dark:text-white tracking-tight">₺542.000</p>
+          <div className="mt-8 flex items-center gap-2">
+            <span className="flex items-center text-emerald-500 font-bold text-sm">
+              <span className="material-icons-round text-sm">trending_up</span> %12
+            </span>
+            <span className="text-xs text-slate-400 font-medium">geçen aya göre artış</span>
           </div>
-          <h3 className="text-slate-500 dark:text-slate-400 text-sm font-semibold mb-1">
-            Bu Ay Kazanç
-          </h3>
-          <p className="text-3xl font-extrabold text-slate-800 dark:text-white">₺154.000</p>
-          <p className="mt-3 text-sm text-indigo-500 font-semibold">Geçen aya göre +%18</p>
         </div>
       </div>
 

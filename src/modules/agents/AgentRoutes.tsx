@@ -5,6 +5,7 @@ import LocalAgentSelection from './pages/LocalAgentSelection';
 import LocalAgentDetails from './pages/LocalAgentDetails';
 import LocalAgentResults from './pages/LocalAgentResults';
 import AgentOfferView from './pages/AgentOfferView';
+import AgentOfferDetail from './pages/AgentOfferDetail';
 
 // DASHBOARD
 import DashboardLayout from '@/features/dashboard/components/LocalAgentDashboard/DashboardLayout';
@@ -62,6 +63,8 @@ export default function AgentRoutes() {
               <Route path="quick-post" element={<QuickPostPage />} />
               <Route path="quick-post/:id" element={<QuickPostPage />} />
               <Route path="job-search" element={<AgentSearchPage />} />
+              <Route path="offers" element={<AgentOfferView />} />
+              <Route path="offers/:id" element={<AgentOfferDetail />} />
 
             </Routes>
           </DashboardLayout>

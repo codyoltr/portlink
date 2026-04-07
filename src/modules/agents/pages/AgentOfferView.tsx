@@ -61,7 +61,6 @@ const [locationFilter, setLocationFilter] = useState('Tüm Lokasyonlar');
 
 const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
-const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isEvaluateModalOpen, setIsEvaluateModalOpen] = useState(false);
   const filteredOffers = useMemo(() => {
   return incomingOffers.filter((offer) => {
@@ -85,21 +84,14 @@ const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 const closeModals = () => {
   setIsFilterModalOpen(false);
   setIsCompareModalOpen(false);
-  setIsDetailModalOpen(false);
   setIsEvaluateModalOpen(false);
 };
 
-const openDetailModal = (offer: (typeof incomingOffers)[number]) => {
-  setSelectedOffer(offer);
-  setIsCompareModalOpen(false);
-  setIsEvaluateModalOpen(false);
-  setIsDetailModalOpen(true);
-};
+
 
 const openEvaluateModal = (offer: (typeof incomingOffers)[number]) => {
   setSelectedOffer(offer);
   setIsCompareModalOpen(false);
-  setIsDetailModalOpen(false);
   setIsEvaluateModalOpen(true);
 };
 
@@ -306,7 +298,7 @@ const openEvaluateModal = (offer: (typeof incomingOffers)[number]) => {
 
             <div className="pt-4 border-t border-slate-100 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <button
-                onClick={() => openDetailModal(offer)}
+                onClick={() => navigate(`/dashboard/agent/offers/${offer.id}`)}
                 className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:border-primary/40 hover:text-primary transition-all">
                 <span className="material-icons-round text-[18px]">visibility</span>
                 Teklif Detayı
@@ -438,91 +430,7 @@ const openEvaluateModal = (offer: (typeof incomingOffers)[number]) => {
     </div>
   </div>
       )}
-      {isDetailModalOpen && selectedOffer && (
-  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-[2px] px-4">
-    <div className="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
-      <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-700">
-        <div>
-          <h3 className="text-xl font-bold text-slate-800 dark:text-white">Teklif Detayı</h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Gelen teklifin detay bilgileri
-          </p>
-        </div>
-        <button
-          onClick={closeModals}
-          className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all"
-        >
-          <span className="material-icons-round">close</span>
-        </button>
-      </div>
 
-      <div className="p-6">
-        <div className="flex items-start justify-between gap-3 mb-5">
-          <div>
-            <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-              {selectedOffer.jobTitle}
-            </h4>
-            <div className="space-y-1 text-sm text-slate-500 dark:text-slate-400">
-              <div className="flex items-center gap-2">
-                <span className="material-icons-round text-[16px] text-primary">engineering</span>
-                {selectedOffer.subcontractor}
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="material-icons-round text-[16px] text-primary">directions_boat</span>
-                {selectedOffer.vessel}
-              </div>
-            </div>
-          </div>
-
-          <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md whitespace-nowrap ${selectedOffer.statusStyle}`}>
-            {selectedOffer.status}
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-          <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Lokasyon</p>
-            <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{selectedOffer.location}</p>
-          </div>
-
-          <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Teklif</p>
-            <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{selectedOffer.amount}</p>
-          </div>
-
-          <div className="rounded-xl bg-slate-50 dark:bg-slate-900/40 px-4 py-3 border border-slate-100 dark:border-slate-700/60">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Süre</p>
-            <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{selectedOffer.duration}</p>
-          </div>
-        </div>
-
-        <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-700/60 p-5 mb-6">
-          <h5 className="text-sm font-bold text-slate-800 dark:text-white mb-2">Teklif Notu</h5>
-          <p className="text-sm leading-7 text-slate-600 dark:text-slate-300">
-            {selectedOffer.note}
-          </p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row justify-end gap-3">
-          <button
-            onClick={closeModals}
-            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:border-primary/40 hover:text-primary transition-all"
-          >
-            Kapat
-          </button>
-
-          <button
-            onClick={() => openEvaluateModal(selectedOffer)}
-            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-white font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all"
-          >
-            <span className="material-icons-round text-[18px]">check_circle</span>
-            Değerlendir
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-      )}
       {isEvaluateModalOpen && selectedOffer && (
   <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-[2px] px-4">
     <div className="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">

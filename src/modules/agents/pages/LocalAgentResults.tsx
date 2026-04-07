@@ -212,7 +212,10 @@ const LocalAgentResults: React.FC = () => {
                                     >
                                         Hemen Teklif Ver
                                     </button>
-                                    <button className="flex-1 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-600 transition-colors text-sm">
+                                    <button 
+                                        onClick={() => navigate('/dashboard/agent/listing/1')}
+                                        className="flex-1 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-600 transition-colors text-sm"
+                                    >
                                         Detayları Görüntüle
                                     </button>
                                 </div>
