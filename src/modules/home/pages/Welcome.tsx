@@ -186,7 +186,7 @@ const Welcome: React.FC = () => {
                   {/* 1. Buton Grubu */}
                   <div className="flex flex-col items-center flex-1">
                     <button
-                      onClick={() => navigate('/login')}
+                      onClick={() => navigate('/login/agent')}
                       className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
                     >
                       İş Talebi Aç
@@ -196,7 +196,7 @@ const Welcome: React.FC = () => {
                   {/* 2. Buton Grubu */}
                   <div className="flex flex-col items-center flex-1">
                     <button
-                      onClick={() => navigate('/login')}
+                      onClick={() => navigate('/login/agent')}
                       className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
                     >
                       İş Ortaklığı Ara
@@ -206,7 +206,7 @@ const Welcome: React.FC = () => {
                   {/* 3. Buton Grubu */}
                   <div className="flex flex-col items-center flex-1">
                     <button
-                      onClick={() => navigate('/login', { state: { role: 'subcontractor' } })}
+                      onClick={() => navigate('/login/subcontractor')}
                       className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
                     >
                       İş Bul
@@ -457,7 +457,7 @@ const Welcome: React.FC = () => {
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
-                    onClick={() => navigate('/login')}
+                    onClick={() => navigate('/signup')}
                     className="group px-10 py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg hover:bg-blue-500 transition-all duration-300 shadow-[0_0_30px_rgba(37,99,235,0.4)] hover:shadow-[0_0_40px_rgba(37,99,235,0.6)] transform hover:-translate-y-1 flex items-center gap-2"
                   >
                     Ücretsiz Kaydol

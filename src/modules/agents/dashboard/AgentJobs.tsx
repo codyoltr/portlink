@@ -38,60 +38,6 @@ const AgentJobs: React.FC = () => {
     return matchesFilter && matchesSearch;
   });
 
-  const getStatusBadge = (status: Job['status']) => {
-    switch (status) {
-      case 'active':
-        return (
-          <span className="flex items-center gap-1.5 px-3 py-1 bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400 rounded-full text-xs font-bold border border-emerald-200 dark:border-emerald-500/30">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            Yayında
-          </span>
-        );
-      case 'reviewing':
-        return (
-          <span className="flex items-center gap-1.5 px-3 py-1 bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400 rounded-full text-xs font-bold border border-amber-200 dark:border-amber-500/30">
-            <span className="material-icons-round text-[12px]">schedule</span>
-            Değerlendiriliyor
-          </span>
-        );
-      case 'completed':
-        return (
-          <span className="flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-700 dark:bg-slate-500/20 dark:text-slate-400 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-500/30">
-            <span className="material-icons-round text-[12px]">check_circle</span>
-            Tamamlandı
-          </span>
-        );
-    }
-  };
-
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'Mekanik':
-        return 'engineering';
-      case 'Boya':
-        return 'format_paint';
-      case 'Dalış':
-        return 'scuba_diving';
-      case 'Elektronik':
-        return 'memory';
-      case 'Liman İşlemleri':
-        return 'sailing';
-      case 'Yükleme – Boşaltma Operasyonu':
-        return 'local_shipping';
-      case 'Gemi İkmal Hizmetleri':
-        return 'inventory_2';
-      case 'Teknik & Tamir Hizmetleri':
-        return 'build';
-      case 'Personel (Crew) Hizmetleri':
-        return 'groups';
-      case 'Çevre & Atık Hizmetleri':
-        return 'recycling';
-      case 'Evrak & Kurye Hizmetleri':
-        return 'description';
-      default:
-        return 'build';
-    }
-  };
 
   return (
     <div className="flex flex-col gap-6 animate-fade-in">

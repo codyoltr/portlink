@@ -59,12 +59,30 @@ const Navbar = () => {
           </button>
         </nav>
 
-        {/* Giriş Yap Butonu */}
-        <button
-          onClick={() => navigate('/login')}
-          className="hidden md:flex items-center gap-2 bg-blue-600 text-white px-7 py-2.5 rounded-xl font-semibold hover:bg-blue-700 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
-          Giriş Yap <ArrowRight size={18} />
-        </button>
+        {/* Giriş Yap Dropdown */}
+        <div className="relative group hidden md:block">
+          <button className="flex items-center gap-2 bg-blue-600 text-white px-7 py-2.5 rounded-xl font-semibold hover:bg-blue-700 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
+            Giriş Yap <ArrowRight size={18} className="group-hover:rotate-90 transition-transform duration-300" />
+          </button>
+
+          {/* Dropdown Menu */}
+          <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100 z-50">
+            <div className="p-2 space-y-1">
+              <button
+                onClick={() => navigate('/login/agent')}
+                className="w-full text-left px-4 py-2.5 text-sm font-semibold text-slate-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors flex items-center gap-2"
+              >
+                Acente Girişi
+              </button>
+              <button
+                onClick={() => navigate('/login/subcontractor')}
+                className="w-full text-left px-4 py-2.5 text-sm font-semibold text-slate-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors flex items-center gap-2"
+              >
+                Taşeron Girişi
+              </button>
+            </div>
+          </div>
+        </div>
 
       </div>
     </header>

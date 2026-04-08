@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, Users, Globe2, ArrowUpRight, ShieldCheck } from 'lucide-react';
 

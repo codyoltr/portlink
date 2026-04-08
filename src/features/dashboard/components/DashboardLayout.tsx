@@ -96,7 +96,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
         {/* SIDEBAR ÇIKIŞ YAP (GERİ GETİRİLDİ) */}
         <div className={`p-6 border-t border-slate-100 dark:border-slate-700/50 flex flex-shrink-0 ${isSidebarCollapsed ? 'justify-center p-3' : ''}`}>
           <button
-            onClick={() => navigate('/login')}
+            onClick={() => navigate(role === 'agent' ? '/login/agent' : role === 'subcontractor' ? '/login/subcontractor' : '/login')}
             className={`flex items-center ${isSidebarCollapsed ? 'justify-center px-0 w-12 h-12' : 'gap-3 px-4 w-full'} py-3 rounded-xl font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors`}
             title={isSidebarCollapsed ? "Çıkış Yap" : undefined}
           >
@@ -196,7 +196,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
                   </button>
                   <div className="h-px bg-slate-100 dark:bg-slate-700/50 my-1"></div>
                   <button
-                    onClick={() => navigate('/login')}
+                    onClick={() => navigate(role === 'agent' ? '/login/agent' : role === 'subcontractor' ? '/login/subcontractor' : '/login')}
                     className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors"
                   >
                     <span className="material-icons-round text-lg">logout</span>

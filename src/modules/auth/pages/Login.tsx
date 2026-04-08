@@ -5,10 +5,20 @@ import { ArrowLeft, Mail, Lock, Ship, ArrowRight, UserCircle, Briefcase, Anchor 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [role, setRole] = useState<'agent' | 'subcontractor'>(location.state?.role || 'agent');
+  const pathname = location.pathname;
+  
+  const initialRole = pathname.includes('/subcontractor') 
+    ? 'subcontractor' 
+    : pathname.includes('/agent') 
+      ? 'agent' 
+      : location.state?.role || 'agent';
+
+  const [role, setRole] = useState<'agent' | 'subcontractor'>(initialRole);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const isSpecificEndpoint = pathname.includes('/agent') || pathname.includes('/subcontractor');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,37 +79,43 @@ const Login: React.FC = () => {
           </button>
 
           <div className="mb-8">
-            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 mb-2">Hesabınıza Giriş Yapın</h2>
+            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 mb-2">
+              {isSpecificEndpoint 
+                ? (role === 'agent' ? 'Acente Girişi' : 'Taşeron Girişi') 
+                : 'Hesabınıza Giriş Yapın'}
+            </h2>
             <p className="text-slate-500 font-medium">Hizmetlerinize erişmek için lütfen giriş yapın.</p>
           </div>
 
           {/* Role Switcher */}
-          <div className="flex gap-2 mb-8 p-1.5 bg-slate-100 rounded-2xl border border-slate-200/60">
-            <button
-              type="button"
-              onClick={() => setRole('agent')}
-              className={`flex-1 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-300 ${
-                role === 'agent' 
-                  ? 'bg-white text-blue-700 shadow-sm border border-slate-200' 
-                  : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'
-              }`}
-            >
-              <Briefcase size={18} />
-              Acente
-            </button>
-            <button
-              type="button"
-              onClick={() => setRole('subcontractor')}
-              className={`flex-1 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-300 ${
-                role === 'subcontractor' 
-                  ? 'bg-white text-blue-700 shadow-sm border border-slate-200' 
-                  : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'
-              }`}
-            >
-              <UserCircle size={18} />
-              Taşeron
-            </button>
-          </div>
+          {!isSpecificEndpoint && (
+            <div className="flex gap-2 mb-8 p-1.5 bg-slate-100 rounded-2xl border border-slate-200/60">
+              <button
+                type="button"
+                onClick={() => setRole('agent')}
+                className={`flex-1 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-300 ${
+                  role === 'agent' 
+                    ? 'bg-white text-blue-700 shadow-sm border border-slate-200' 
+                    : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'
+                }`}
+              >
+                <Briefcase size={18} />
+                Acente
+              </button>
+              <button
+                type="button"
+                onClick={() => setRole('subcontractor')}
+                className={`flex-1 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-300 ${
+                  role === 'subcontractor' 
+                    ? 'bg-white text-blue-700 shadow-sm border border-slate-200' 
+                    : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'
+                }`}
+              >
+                <UserCircle size={18} />
+                Taşeron
+              </button>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">

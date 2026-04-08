@@ -10,6 +10,8 @@ export default function AuthRoutes() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/login/agent" element={<Login />} />
+      <Route path="/login/subcontractor" element={<Login />} />
 
       <Route element={<Gatekeeper />}>
         <Route path="/signup" element={<Signup />} />
