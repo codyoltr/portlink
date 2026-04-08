@@ -82,7 +82,7 @@ const services = [
 const Welcome: React.FC = () => {
   const navigate = useNavigate();
   const [showRoleBar, setShowRoleBar] = useState(true);
-  
+
   return (
     <FullPageLayout>
       {/* --- QUICK ROLE BAR (WARNING STYLE) --- */}
@@ -191,7 +191,7 @@ const Welcome: React.FC = () => {
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-sky-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                       <span className="material-icons-round relative z-10 text-[22px] transition-colors duration-300 group-hover:text-white">post_add</span>
-                      <span className="relative z-10 transition-colors duration-300 group-hover:text-white tracking-wide">İş Talebi Aç</span>
+                      <span className="relative z-10 transition-colors duration-300 group-hover:text-white tracking-wide">İş Talebi</span>
                     </button>
                   </div>
 
@@ -203,7 +203,7 @@ const Welcome: React.FC = () => {
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-sky-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                       <span className="material-icons-round relative z-10 text-[22px] transition-colors duration-300 group-hover:text-white">handshake</span>
-                      <span className="relative z-10 transition-colors duration-300 group-hover:text-white tracking-wide">İş Ortaklığı Ara</span>
+                      <span className="relative z-10 transition-colors duration-300 group-hover:text-white tracking-wide">İş Ortaklığı</span>
                     </button>
                   </div>
 
@@ -265,16 +265,16 @@ const Welcome: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4">
             <h3 className="text-3xl font-black text-slate-900 mb-12 text-center tracking-tight uppercase">Duyurular & Sektörel Haberler</h3>
             <div className="grid md:grid-cols-3 gap-10">
-               {announcements.map((ann) => (
-                 <div key={ann.id} className="group p-10 bg-slate-50 rounded-[3rem] border border-slate-100 hover:bg-white hover:shadow-xl transition-all cursor-pointer">
-                    <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-blue-600 shadow-sm mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                        <span className="material-icons-round text-2xl">{ann.icon}</span>
-                    </div>
-                    <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">{ann.type}</span>
-                    <h4 className="text-xl font-bold text-slate-900 mt-2 mb-4 leading-tight group-hover:text-blue-600 transition-colors">{ann.title}</h4>
-                    <p className="text-slate-500 text-sm mt-auto font-medium">Güncel veriler ve operasyonel detaylar için tıklayın.</p>
-                 </div>
-               ))}
+              {announcements.map((ann) => (
+                <div key={ann.id} className="group p-10 bg-slate-50 rounded-[3rem] border border-slate-100 hover:bg-white hover:shadow-xl transition-all cursor-pointer">
+                  <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-blue-600 shadow-sm mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                    <span className="material-icons-round text-2xl">{ann.icon}</span>
+                  </div>
+                  <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">{ann.type}</span>
+                  <h4 className="text-xl font-bold text-slate-900 mt-2 mb-4 leading-tight group-hover:text-blue-600 transition-colors">{ann.title}</h4>
+                  <p className="text-slate-500 text-sm mt-auto font-medium">Güncel veriler ve operasyonel detaylar için tıklayın.</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
