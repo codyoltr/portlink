@@ -187,9 +187,11 @@ const Welcome: React.FC = () => {
                   <div className="flex flex-col items-center flex-1">
                     <button
                       onClick={() => navigate('/login/agent')}
-                      className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
+                      className="group relative w-full overflow-hidden rounded-2xl bg-white px-4 py-4 text-base font-bold text-blue-700 shadow-[0_4px_20px_rgba(37,99,235,0.1)] ring-2 ring-blue-600/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(37,99,235,0.2)] hover:ring-blue-600 flex items-center justify-center gap-2"
                     >
-                      İş Talebi Aç
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-sky-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                      <span className="material-icons-round relative z-10 text-[22px] transition-colors duration-300 group-hover:text-white">post_add</span>
+                      <span className="relative z-10 transition-colors duration-300 group-hover:text-white tracking-wide">İş Talebi Aç</span>
                     </button>
                   </div>
 
@@ -197,9 +199,11 @@ const Welcome: React.FC = () => {
                   <div className="flex flex-col items-center flex-1">
                     <button
                       onClick={() => navigate('/login/agent')}
-                      className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
+                      className="group relative w-full overflow-hidden rounded-2xl bg-white px-4 py-4 text-base font-bold text-blue-700 shadow-[0_4px_20px_rgba(37,99,235,0.1)] ring-2 ring-blue-600/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(37,99,235,0.2)] hover:ring-blue-600 flex items-center justify-center gap-2"
                     >
-                      İş Ortaklığı Ara
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-sky-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                      <span className="material-icons-round relative z-10 text-[22px] transition-colors duration-300 group-hover:text-white">handshake</span>
+                      <span className="relative z-10 transition-colors duration-300 group-hover:text-white tracking-wide">İş Ortaklığı Ara</span>
                     </button>
                   </div>
 
@@ -207,9 +211,11 @@ const Welcome: React.FC = () => {
                   <div className="flex flex-col items-center flex-1">
                     <button
                       onClick={() => navigate('/login/subcontractor')}
-                      className="w-full group px-4 py-4 bg-transparent text-blue-700 border-2 border-blue-600 rounded-2xl font-bold text-base hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
+                      className="group relative w-full overflow-hidden rounded-2xl bg-white px-4 py-4 text-base font-bold text-blue-700 shadow-[0_4px_20px_rgba(37,99,235,0.1)] ring-2 ring-blue-600/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(37,99,235,0.2)] hover:ring-blue-600 flex items-center justify-center gap-2"
                     >
-                      İş Bul
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-sky-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                      <span className="material-icons-round relative z-10 text-[22px] transition-colors duration-300 group-hover:text-white">work_outline</span>
+                      <span className="relative z-10 transition-colors duration-300 group-hover:text-white tracking-wide">İş Bul</span>
                     </button>
                   </div>
                 </div>
