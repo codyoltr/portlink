@@ -15,6 +15,7 @@ import SubcontractorRoutes from './modules/subcontractors/SubcontractorRoutes';
 import AuthRoutes from './modules/auth/AuthRoutes';
 import TechnicalExpertRoutes from './modules/technical-expert/TechnicalExpertRoutes';
 import PartnershipRoutes from './modules/partnership/PartnershipRoutes';
+import UnderConstruction from './pages/UnderConstruction';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
       <PartnershipRoutes />
 
       <Routes>
+        <Route path="/under-construction" element={<UnderConstruction />} />
         {/* PROTECTED */}
         <Route element={<Gatekeeper />}>
           {/* CAPTAIN */}
