@@ -66,10 +66,38 @@ const features = [
 ];
 
 const steps = [
-  { id: '01', title: 'İlan Oluştur', description: 'Gemi veya proje detaylarınızı girerek güvenilir bir iş ilanı açın.', icon: <span className="material-icons-round text-[32px]">post_add</span> },
-  { id: '02', title: 'Teklif Al', description: 'Bölgedeki en uygun taşeron ve uzmanlardan anında rekabetçi teklifler toplayın.', icon: <span className="material-icons-round text-[32px]">local_offer</span> },
-  { id: '03', title: 'Değerlendir & Seç', description: 'Profil ve puanları inceleyerek projenize en uygun ekibi seçip süreci başlatın.', icon: <span className="material-icons-round text-[32px]">touch_app</span> },
-  { id: '04', title: 'Operasyonu Yönet', description: 'Tek panelden ilerlemeyi takip edin, raporları alın ve süreci güvenle tamamlayın.', icon: <span className="material-icons-round text-[32px]">dashboard_customize</span> }
+  {
+    id: '01',
+    title: 'İlan Oluştur',
+    description: 'Gemi, liman ve ihtiyaç detaylarını girerek hızlıca ilan açın. Operasyon kapsamınızı netleştirip doğru ekiplerin dikkatini çekin.',
+    image: '/images/step-ilan.jpg',
+    icon: 'post_add',
+    accent: 'from-blue-600 to-sky-500',
+  },
+  {
+    id: '02',
+    title: 'Teklifleri Topla',
+    description: 'Bölgedeki doğrulanmış taşeron ve hizmet sağlayıcılardan fiyat, süre ve kapsam bazlı teklifleri karşılaştırın.',
+    image: '/images/step-teklif.jpg',
+    icon: 'local_offer',
+    accent: 'from-indigo-600 to-blue-500',
+  },
+  {
+    id: '03',
+    title: 'En Uygun Ekibi Seç',
+    description: 'Puanlama, geçmiş iş sayısı, yorumlar ve uzmanlık alanlarına göre en doğru ekibi güvenle belirleyin.',
+    image: '/images/step-secim.jpg',
+    icon: 'verified',
+    accent: 'from-cyan-600 to-sky-500',
+  },
+  {
+    id: '04',
+    title: 'Süreci Yönet',
+    description: 'İş raporları, ilerleme takibi, iletişim ve operasyon yönetimini tek panelden tamamlayarak süreci kapatın.',
+    image: '/images/step-yonetim.jpg',
+    icon: 'dashboard_customize',
+    accent: 'from-blue-700 to-indigo-600',
+  }
 ];
 
 const services = [
@@ -85,7 +113,6 @@ const Welcome: React.FC = () => {
 
   return (
     <FullPageLayout>
-      {/* --- QUICK ROLE BAR (WARNING STYLE) --- */}
       {showRoleBar && (
         <section className="w-full bg-amber-50/60 border-b border-amber-100 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -96,8 +123,6 @@ const Welcome: React.FC = () => {
               <span className="material-icons-round text-[18px]">close</span>
             </button>
             <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-amber-200/60 font-medium">
-
-              {/* ACENTE */}
               <div
                 onClick={() => navigate('/signup/agent')}
                 className="flex-1 flex items-center justify-between px-6 py-5 cursor-pointer hover:bg-amber-100/70 transition-all group"
@@ -106,14 +131,9 @@ const Welcome: React.FC = () => {
                   <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
                     <span className="material-icons-round text-lg">business</span>
                   </div>
-
                   <div>
-                    <div className="font-bold text-slate-900 text-sm">
-                      Portlink Acentesi Ol
-                    </div>
-                    <div className="text-xs text-slate-600">
-                      Hizmet ver & iş al
-                    </div>
+                    <div className="font-bold text-slate-900 text-sm">Portlink Acentesi Ol</div>
+                    <div className="text-xs text-slate-600">Hizmet ver & iş al</div>
                   </div>
                 </div>
                 <span className="material-icons-round text-amber-500 group-hover:translate-x-1 transition">
@@ -121,7 +141,6 @@ const Welcome: React.FC = () => {
                 </span>
               </div>
 
-              {/* TAŞERON */}
               <div
                 onClick={() => navigate('/signup/subcontractor')}
                 className="flex-1 flex items-center justify-between px-6 py-5 cursor-pointer hover:bg-amber-100/70 transition-all group"
@@ -130,14 +149,9 @@ const Welcome: React.FC = () => {
                   <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
                     <span className="material-icons-round text-lg">engineering</span>
                   </div>
-
                   <div>
-                    <div className="font-bold text-slate-900 text-sm">
-                      Portlink Taşeronu Ol
-                    </div>
-                    <div className="text-xs text-slate-600">
-                      İş bul & teklif ver
-                    </div>
+                    <div className="font-bold text-slate-900 text-sm">Portlink Taşeronu Ol</div>
+                    <div className="text-xs text-slate-600">İş bul & teklif ver</div>
                   </div>
                 </div>
 
@@ -145,45 +159,38 @@ const Welcome: React.FC = () => {
                   arrow_forward
                 </span>
               </div>
-
             </div>
-
           </div>
         </section>
       )}
+
       <Navbar />
 
-      {/* Ana İçerik */}
       <main className="flex-1 w-full bg-slate-50 text-slate-800">
-
-        {/* --- PREMIUM HERO SECTION --- */}
         <section className="relative overflow-hidden w-full bg-white border-b border-slate-100">
-          {/* Subtle Dynamic Backgrounds */}
           <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[70%] bg-blue-50/50 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-[-10%] left-[-5%] w-[30%] h-[50%] bg-sky-50/50 rounded-full blur-3xl pointer-events-none"></div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative z-10">
             <div className="grid xl:grid-cols-2 gap-16 items-center">
-
               <div className="space-y-8">
-                {/* ÜST KÜÇÜK BAŞLIK */}
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-100 rounded-full text-blue-700 font-bold text-xs tracking-wide uppercase hover:bg-blue-100 transition-colors cursor-default shadow-sm">
                   <span className="material-icons-round text-base text-blue-500 animate-pulse">rocket_launch</span>
                   Denizcilikte İş Eşleştirme Platformu
                 </div>
 
-                {/* ANA SLOGAN */}
                 <h1 className="text-5xl lg:text-[4rem] font-extrabold text-slate-900 leading-[1.1] tracking-tight">
                   Gemi İhtiyacını <br />
-                  <span className="bg-gradient-to-r from-blue-700 via-sky-600 to-blue-500 bg-clip-text text-transparent">Doğru Ekiplerle Anında Buluştur</span>
+                  <span className="bg-gradient-to-r from-blue-700 via-sky-600 to-blue-500 bg-clip-text text-transparent">
+                    Doğru Ekiplerle Anında Buluştur
+                  </span>
                 </h1>
 
-                {/* ALT AÇIKLAMA 1 */}
                 <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-xl font-medium">
                   Tüm gemi operasyonlarınızı tek platformdan yönetin, en uygun ekiplerle hızla eşleşip teklif alın.
                 </p>
+
                 <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full max-w-3xl">
-                  {/* 1. Buton Grubu */}
                   <div className="flex flex-col items-center flex-1">
                     <button
                       onClick={() => navigate('/login/agent')}
@@ -195,7 +202,6 @@ const Welcome: React.FC = () => {
                     </button>
                   </div>
 
-                  {/* 2. Buton Grubu */}
                   <div className="flex flex-col items-center flex-1">
                     <button
                       onClick={() => navigate('/login/agent')}
@@ -207,7 +213,6 @@ const Welcome: React.FC = () => {
                     </button>
                   </div>
 
-                  {/* 3. Buton Grubu */}
                   <div className="flex flex-col items-center flex-1">
                     <button
                       onClick={() => navigate('/login/subcontractor')}
@@ -220,7 +225,6 @@ const Welcome: React.FC = () => {
                   </div>
                 </div>
 
-                {/* İstatistikler */}
                 <div className="flex flex-wrap items-center gap-10 pt-8 mt-10 border-t border-slate-200">
                   <div className="group hover:-translate-y-1 transition-transform">
                     <div className="text-3xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">450+</div>
@@ -238,7 +242,7 @@ const Welcome: React.FC = () => {
                   </div>
                 </div>
               </div>
-              {/* Sağ Görsel Alanı */}
+
               <div className="relative group perspective-1000 hidden xl:block">
                 <div className="relative z-10 bg-white/60 backdrop-blur-md rounded-[2.5rem] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.06)] border border-white/80 transform transition-transform duration-700 group-hover:scale-[1.03]">
                   <div className="aspect-[4/3] rounded-[2rem] relative overflow-hidden bg-slate-100">
@@ -247,23 +251,21 @@ const Welcome: React.FC = () => {
                       alt="Denizcilik lojistik operasyonları"
                       className="w-full h-full object-cover transform duration-1000 group-hover:scale-105 animate-float"
                     />
-                    {/* Glassmorphic Gradient Overlay on Image */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/10 to-transparent"></div>
                   </div>
                 </div>
-                {/* Dekoratif Halkalar */}
                 <div className="absolute -top-10 -right-10 w-full h-full border-2 border-blue-50 rounded-[3rem] -z-10 transform rotate-3"></div>
                 <div className="absolute -bottom-8 -left-8 w-full h-full border-2 border-sky-50 rounded-[3rem] -z-10 transform -rotate-3"></div>
               </div>
-
             </div>
           </div>
         </section>
 
-        {/* --- DUYURULAR --- (KORUNAN ALAN) */}
         <section className="w-full py-24 bg-white border-b border-slate-100">
           <div className="max-w-7xl mx-auto px-4">
-            <h3 className="text-3xl font-black text-slate-900 mb-12 text-center tracking-tight uppercase">Duyurular & Sektörel Haberler</h3>
+            <h3 className="text-3xl font-black text-slate-900 mb-12 text-center tracking-tight uppercase">
+              Duyurular & Sektörel Haberler
+            </h3>
             <div className="grid md:grid-cols-3 gap-10">
               {announcements.map((ann) => (
                 <div key={ann.id} className="group p-10 bg-slate-50 rounded-[3rem] border border-slate-100 hover:bg-white hover:shadow-xl transition-all cursor-pointer">
@@ -271,15 +273,19 @@ const Welcome: React.FC = () => {
                     <span className="material-icons-round text-2xl">{ann.icon}</span>
                   </div>
                   <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">{ann.type}</span>
-                  <h4 className="text-xl font-bold text-slate-900 mt-2 mb-4 leading-tight group-hover:text-blue-600 transition-colors">{ann.title}</h4>
-                  <p className="text-slate-500 text-sm mt-auto font-medium">Güncel veriler ve operasyonel detaylar için tıklayın.</p>
+                  <h4 className="text-xl font-bold text-slate-900 mt-2 mb-4 leading-tight group-hover:text-blue-600 transition-colors">
+                    {ann.title}
+                  </h4>
+                  <p className="text-slate-500 text-sm mt-auto font-medium">
+                    Güncel veriler ve operasyonel detaylar için tıklayın.
+                  </p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* --- YENİ PREMİUM NASIL ÇALIŞIR BÖLÜMÜ --- */}
+        {/* FOTOĞRAFLI + OKLU 4 ADIM */}
         <section id="how-it-works" className="w-full py-24 bg-slate-50 border-b border-slate-100 scroll-mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
@@ -288,42 +294,59 @@ const Welcome: React.FC = () => {
                 Operasyon Akışı
               </h3>
               <h2 className="text-4xl font-extrabold text-slate-900 mb-4">
-                Mükemmel Sonuç İçin Dört Adım
+                Mükemmel Sonuç İçin 4 Adım
               </h2>
-              {/* ALT AÇIKLAMA 2 */}
               <p className="text-slate-600 max-w-2xl mx-auto text-lg">
-                Gemiye gereken tüm hizmetler için ilan açın, doğru ekiplerden teklif alın ve operasyonu tek platformdan yönetin.
+                Fotoğraflı akış yapısıyla ilan oluşturma sürecinden operasyon yönetimine kadar tüm adımları net şekilde görün.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {steps.map((step) => (
-                <div key={step.id} className="group relative bg-white rounded-3xl p-8 border border-slate-200/60 shadow-sm hover:shadow-[0_20px_40px_rgba(15,23,42,0.06)] hover:-translate-y-2 transition-all duration-300 overflow-hidden">
-                  <div className="absolute top-0 right-0 p-6 text-7xl font-black text-slate-50 transition-colors duration-500 group-hover:text-blue-50 select-none z-0">
-                    {step.id}
-                  </div>
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-8 border border-blue-100 transition-all duration-500 group-hover:bg-blue-600 group-hover:text-white group-hover:shadow-[0_8px_20px_rgba(37,99,235,0.3)]">
-                      {step.icon}
+            <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 xl:gap-8 relative">
+              {steps.map((step, index) => (
+                <div key={step.id} className="relative group">
+                  <div className="bg-white rounded-[2rem] overflow-hidden border border-slate-200 shadow-sm hover:shadow-[0_20px_40px_rgba(15,23,42,0.08)] transition-all duration-300 hover:-translate-y-2 h-full">
+                    <div className="relative h-56 overflow-hidden">
+                      <img
+                        src={step.image}
+                        alt={step.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className={`absolute inset-0 bg-gradient-to-t ${step.accent} opacity-70`}></div>
+
+                      <div className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur text-slate-900 text-xs font-black shadow">
+                        <span className="material-icons-round text-[16px] text-blue-600">{step.icon}</span>
+                        Adım {step.id}
+                      </div>
+
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <h4 className="text-white text-2xl font-extrabold leading-tight drop-shadow-sm">
+                          {step.title}
+                        </h4>
+                      </div>
                     </div>
-                    <h4 className="text-xl font-bold text-slate-900 mb-3">
-                      {step.title}
-                    </h4>
-                    <p className="text-slate-500 leading-relaxed text-sm font-medium">
-                      {step.description}
-                    </p>
+
+                    <div className="p-6">
+                      <p className="text-slate-600 text-sm leading-7 font-medium">
+                        {step.description}
+                      </p>
+                    </div>
                   </div>
-                  <div className="absolute bottom-0 left-0 w-0 h-1.5 bg-gradient-to-r from-blue-500 to-sky-400 transition-all duration-500 group-hover:w-full"></div>
+
+                  {index < steps.length - 1 && (
+                    <div className="hidden xl:flex absolute top-1/2 -right-6 z-20 -translate-y-1/2 items-center justify-center">
+                      <div className="w-12 h-12 rounded-full bg-white border border-slate-200 shadow-lg flex items-center justify-center text-blue-600">
+                        <span className="material-icons-round text-[22px]">east</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* --- HARİTA --- (KORUNAN ALAN) */}
         <MapSection />
 
-        {/* --- NEDEN PORTLINK? SECTION (BENTOS) --- */}
         <section id="about" className="w-full py-24 bg-white scroll-mt-16 border-b border-slate-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row justify-between items-end mb-16 gap-8">
@@ -335,16 +358,13 @@ const Welcome: React.FC = () => {
                   Limanda Gücünüz: <br />Portlink ile Daima İlerde
                 </h2>
               </div>
-              {/* ALT AÇIKLAMA 3 */}
               <p className="text-lg text-slate-600 max-w-lg font-medium border-l-4 border-blue-500 pl-6">
                 Teknik servislerden kumanyaya, crew işlemlerinden liman operasyonlarına kadar tüm ihtiyaçlar tek yerden yönetilir, teklif alınır ve iş birliği kurulur.
               </p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-              {/* Sol Büyük Kutu */}
-              <div className={`lg:col-span-1 lg:row-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden border transition-all duration-300 min-h-[440px] bg-slate-50 border-slate-200 hover:border-blue-300 hover:shadow-2xl`}>
+              <div className="lg:col-span-1 lg:row-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden border transition-all duration-300 min-h-[440px] bg-slate-50 border-slate-200 hover:border-blue-300 hover:shadow-2xl">
                 <div className="relative z-10">
                   <div className={`w-16 h-16 rounded-[1.25rem] flex items-center justify-center mb-8 ${features[0].bgColor} ${features[0].borderColor} border transition-transform duration-500 group-hover:scale-110 shadow-sm`}>
                     {features[0].icon}
@@ -358,8 +378,7 @@ const Welcome: React.FC = () => {
                 </div>
               </div>
 
-              {/* Sağ Üst Yatay Kutu */}
-              <div className={`lg:col-span-2 group rounded-[2.5rem] p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-8 border transition-all duration-300 bg-slate-50 border-slate-200 hover:border-indigo-300 hover:shadow-xl`}>
+              <div className="lg:col-span-2 group rounded-[2.5rem] p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-8 border transition-all duration-300 bg-slate-50 border-slate-200 hover:border-indigo-300 hover:shadow-xl">
                 <div className={`w-20 h-20 rounded-[1.25rem] flex items-center justify-center flex-shrink-0 ${features[1].bgColor} ${features[1].borderColor} border transition-transform duration-500 group-hover:-rotate-6 shadow-sm`}>
                   {features[1].icon}
                 </div>
@@ -373,8 +392,7 @@ const Welcome: React.FC = () => {
                 </div>
               </div>
 
-              {/* Sağ Alt Kutu 1 */}
-              <div className={`lg:col-span-1 group rounded-[2.5rem] p-8 flex flex-col justify-center border transition-all duration-300 min-h-[220px] bg-slate-50 border-slate-200 hover:border-sky-300 hover:shadow-xl`}>
+              <div className="lg:col-span-1 group rounded-[2.5rem] p-8 flex flex-col justify-center border transition-all duration-300 min-h-[220px] bg-slate-50 border-slate-200 hover:border-sky-300 hover:shadow-xl">
                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${features[2].bgColor} ${features[2].borderColor} border shadow-sm`}>
                   {features[2].icon}
                 </div>
@@ -385,8 +403,8 @@ const Welcome: React.FC = () => {
                   {features[2].description}
                 </p>
               </div>
-              {/* Sağ Alt Kutu 2 */}
-              <div className={`lg:col-span-1 group rounded-[2.5rem] p-8 flex flex-col justify-center border transition-all duration-300 min-h-[220px] bg-slate-50 border-slate-200 hover:border-cyan-300 hover:shadow-xl`}>
+
+              <div className="lg:col-span-1 group rounded-[2.5rem] p-8 flex flex-col justify-center border transition-all duration-300 min-h-[220px] bg-slate-50 border-slate-200 hover:border-cyan-300 hover:shadow-xl">
                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${features[3].bgColor} ${features[3].borderColor} border shadow-sm`}>
                   {features[3].icon}
                 </div>
@@ -397,12 +415,10 @@ const Welcome: React.FC = () => {
                   {features[3].description}
                 </p>
               </div>
-
             </div>
           </div>
         </section>
 
-        {/* --- HİZMET SEÇİMİ KARTLARI --- */}
         <section id="services" className="w-full py-24 bg-slate-50 border-b border-slate-200 scroll-mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
@@ -413,7 +429,10 @@ const Welcome: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {services.map((service) => (
                 <div key={service.id} className="relative group h-[500px] w-full rounded-[2.5rem] overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500">
-                  <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" style={{ backgroundImage: `url(${service.image})` }}></div>
+                  <div
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
+                    style={{ backgroundImage: `url(${service.image})` }}
+                  ></div>
                   <div className="absolute inset-0 bg-slate-900/40 transition-opacity duration-500 group-hover:opacity-0"></div>
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-900/95 via-blue-900/60 to-transparent opacity-0 translate-y-10 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500"></div>
 
@@ -434,20 +453,15 @@ const Welcome: React.FC = () => {
           </div>
         </section>
 
-        {/* --- STATS --- (KORUNAN ALAN) */}
         <StatsSection />
 
-        {/* --- HARİKA PREMIUM ÇAĞRI (Gemi ve Harita) BÖLÜMÜ --- */}
         <section className="w-full py-24 bg-white relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-slate-900 rounded-[3rem] text-center text-white relative overflow-hidden shadow-[0_20px_50px_rgba(15,23,42,0.2)] border border-slate-800">
-
-              {/* Harita Arka Plan (Opak) */}
               <div
                 className="absolute inset-0 opacity-[0.05] pointer-events-none bg-center bg-no-repeat bg-[length:70%] z-0"
                 style={{ backgroundImage: "url('/world-map.svg')" }}
               ></div>
-              {/* Canlı Mavi Işıklar */}
               <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 z-0 pointer-events-none"></div>
               <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-sky-500/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/3 z-0 pointer-events-none"></div>
 
@@ -456,7 +470,9 @@ const Welcome: React.FC = () => {
                   <span className="material-icons-round text-5xl text-blue-400">directions_boat</span>
                 </div>
 
-                <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 tracking-tight text-white">Doğru Ekip, Sorunsuz Operasyon</h2>
+                <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 tracking-tight text-white">
+                  Doğru Ekip, Sorunsuz Operasyon
+                </h2>
                 <p className="text-lg lg:text-xl mb-12 text-slate-400 max-w-2xl font-medium">
                   Limanlardaki en güçlü dijital çözüm ortağınızla tanışın. İhtiyacınıza en uygun hizmet sağlayıcısını bulmak ve süreci tek ekrandan yönetmek artık çok kolay.
                 </p>
@@ -477,12 +493,11 @@ const Welcome: React.FC = () => {
                   </button>
                 </div>
               </div>
-
             </div>
           </div>
         </section>
-
       </main>
+
       <Footer />
     </FullPageLayout>
   );
