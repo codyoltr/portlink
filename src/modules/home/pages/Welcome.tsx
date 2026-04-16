@@ -6,69 +6,24 @@ import FullPageLayout from '@/features/shell/components/FullPageLayout';
 import heroImage from '@/assets/hero-image.png';
 import StatsSection from './StatsSection';
 import MapSection from './MapSection';
+import TopAgencies from './TopAgencies';
 
 // --- DUYURULAR ---
 const announcements = [
-  { id: 1, date: 'Bugün', title: 'İstanbul - Yalova Hattı Kapasitesi Artırıldı!', type: 'Operasyon', icon: 'speed' },
-  { id: 2, date: 'Dün', title: 'Ambarlı Limanı Yeni Acente Kayıtları Başladı', type: 'Sistem', icon: 'domain' },
-  { id: 3, date: '15 Mart', title: 'Yalova Tersaneler Bölgesi Özel Entegrasyonu', type: 'Duyuru', icon: 'anchor' },
-];
-
-const features = [
-  {
-    id: 'guvenilir',
-    title: 'Güvenilir Ağ',
-    description: 'Sadece doğrulanmış, lisanslı ve sektörde bilinen premium hizmet sağlayıcılarıyla çalışıyoruz.',
-    icon: (
-      <svg className="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-      </svg>
-    ),
-    bgColor: 'bg-blue-50/80',
-    borderColor: 'border-blue-100',
-  },
-  {
-    id: 'global',
-    title: 'Global Kapsam',
-    description: 'Dünya çapındaki limanlar ve uluslararası sularda denizcilik operasyonlarınızı kesintisiz yürütün.',
-    icon: (
-      <svg className="w-8 h-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-    bgColor: 'bg-indigo-50/80',
-    borderColor: 'border-indigo-100',
-  },
-  {
-    id: 'hizli',
-    title: 'Hızlı Teklif Sistemi',
-    description: 'Zaman kayıplarını minimuma indirin. İhtiyacınıza en hızlı cevap veren tedarikçilerden anında teklif alın.',
-    icon: (
-      <svg className="w-8 h-8 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    ),
-    bgColor: 'bg-sky-50/80',
-    borderColor: 'border-sky-100',
-  },
-  {
-    id: 'dogrulanmis',
-    title: 'Kalite Kontrolü',
-    description: 'Hizmet sonrasında detaylı raporlama ve puanlama sistemiyle tüm süreci güvence altına alıyoruz.',
-    icon: (
-      <svg className="w-8 h-8 text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-    bgColor: 'bg-cyan-50/80',
-    borderColor: 'border-cyan-100',
-  }
+  { id: 1, month: 'NİS', day: '14', text: 'İstanbul - Yalova Hattı Kapasitesi Artırıldı! Özel Entegrasyon Sağlandı - 14.04.2026' },
+  { id: 2, month: 'NİS', day: '14', text: 'Ambarlı Limanı Yeni Acente Kayıtları Başladı - 14.04.2026' },
+  { id: 3, month: 'NİS', day: '13', text: 'Yalova Tersaneler Bölgesi Özel Entegrasyonu Bitti - 13.04.2026' },
+  { id: 4, month: 'NİS', day: '10', text: 'Marmara Denizi Gemi Geçiş Raporu ve Yapay Zeka Analizi Yayımlandı' },
+  { id: 5, month: 'NİS', day: '08', text: 'Liman Otoritelerinin IT, İş ve Bireysel Gelişimlerinde Yeni Araçlar Yayında!' },
+  { id: 6, month: 'NİS', day: '08', text: '2025-2026 Yılı Projeleri Liman İçi Öğrenim / Staj Seçme Sınav Sonuçları' },
+  { id: 7, month: 'NİS', day: '06', text: 'Portlink Yeni Sayısı Çıktı! Dijital Dergi Platformumuzda İnceleyin.' },
+  { id: 8, month: 'NİS', day: '03', text: 'Acente Memnuniyet Anketi Yayında!' },
 ];
 
 const steps = [
   { id: '01', title: 'İlan Oluştur', description: 'Gemi veya proje detaylarınızı girerek güvenilir bir iş ilanı açın.', icon: <span className="material-icons-round text-[32px]">post_add</span> },
   { id: '02', title: 'Teklif Al', description: 'Bölgedeki en uygun taşeron ve uzmanlardan anında rekabetçi teklifler toplayın.', icon: <span className="material-icons-round text-[32px]">local_offer</span> },
-  { id: '03', title: 'Değerlendir & Seç', description: 'Profil ve puanları inceleyerek projenize en uygun ekibi seçip süreci başlatın.', icon: <span className="material-icons-round text-[32px]">touch_app</span> },
+  { id: 3, title: 'Değerlendir & Seç', description: 'Profil ve puanları inceleyerek projenize en uygun ekibi seçip süreci başlatın.', icon: <span className="material-icons-round text-[32px]">touch_app</span> },
   { id: '04', title: 'Operasyonu Yönet', description: 'Tek panelden ilerlemeyi takip edin, raporları alın ve süreci güvenle tamamlayın.', icon: <span className="material-icons-round text-[32px]">dashboard_customize</span> }
 ];
 
@@ -158,7 +113,6 @@ const Welcome: React.FC = () => {
 
         {/* --- PREMIUM HERO SECTION --- */}
         <section className="relative overflow-hidden w-full bg-white border-b border-slate-100">
-          {/* Subtle Dynamic Backgrounds */}
           <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[70%] bg-blue-50/50 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-[-10%] left-[-5%] w-[30%] h-[50%] bg-sky-50/50 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -247,11 +201,9 @@ const Welcome: React.FC = () => {
                       alt="Denizcilik lojistik operasyonları"
                       className="w-full h-full object-cover transform duration-1000 group-hover:scale-105 animate-float"
                     />
-                    {/* Glassmorphic Gradient Overlay on Image */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/10 to-transparent"></div>
                   </div>
                 </div>
-                {/* Dekoratif Halkalar */}
                 <div className="absolute -top-10 -right-10 w-full h-full border-2 border-blue-50 rounded-[3rem] -z-10 transform rotate-3"></div>
                 <div className="absolute -bottom-8 -left-8 w-full h-full border-2 border-sky-50 rounded-[3rem] -z-10 transform -rotate-3"></div>
               </div>
@@ -260,26 +212,7 @@ const Welcome: React.FC = () => {
           </div>
         </section>
 
-        {/* --- DUYURULAR --- (KORUNAN ALAN) */}
-        <section className="w-full py-24 bg-white border-b border-slate-100">
-          <div className="max-w-7xl mx-auto px-4">
-            <h3 className="text-3xl font-black text-slate-900 mb-12 text-center tracking-tight uppercase">Duyurular & Sektörel Haberler</h3>
-            <div className="grid md:grid-cols-3 gap-10">
-              {announcements.map((ann) => (
-                <div key={ann.id} className="group p-10 bg-slate-50 rounded-[3rem] border border-slate-100 hover:bg-white hover:shadow-xl transition-all cursor-pointer">
-                  <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-blue-600 shadow-sm mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                    <span className="material-icons-round text-2xl">{ann.icon}</span>
-                  </div>
-                  <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">{ann.type}</span>
-                  <h4 className="text-xl font-bold text-slate-900 mt-2 mb-4 leading-tight group-hover:text-blue-600 transition-colors">{ann.title}</h4>
-                  <p className="text-slate-500 text-sm mt-auto font-medium">Güncel veriler ve operasyonel detaylar için tıklayın.</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* --- YENİ PREMİUM NASIL ÇALIŞIR BÖLÜMÜ --- */}
+        {/* --- YENİ PREMİUM NASIL ÇALIŞIR BÖLÜMÜ (ÖNCE GÖSTERİLİYOR) --- */}
         <section id="how-it-works" className="w-full py-24 bg-slate-50 border-b border-slate-100 scroll-mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
@@ -320,90 +253,35 @@ const Welcome: React.FC = () => {
           </div>
         </section>
 
-        {/* --- HARİTA --- (KORUNAN ALAN) */}
-        <MapSection />
-
-        {/* --- NEDEN PORTLINK? SECTION (BENTOS) --- */}
-        <section id="about" className="w-full py-24 bg-white scroll-mt-16 border-b border-slate-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col lg:flex-row justify-between items-end mb-16 gap-8">
-              <div className="max-w-2xl">
-                <h3 className="text-xs font-bold text-blue-600 uppercase tracking-[0.25em] mb-4">
-                  Avantajlarımız
-                </h3>
-                <h2 className="text-4xl font-extrabold text-slate-900">
-                  Limanda Gücünüz: <br />Portlink ile Daima İlerde
-                </h2>
-              </div>
-              {/* ALT AÇIKLAMA 3 */}
-              <p className="text-lg text-slate-600 max-w-lg font-medium border-l-4 border-blue-500 pl-6">
-                Teknik servislerden kumanyaya, crew işlemlerinden liman operasyonlarına kadar tüm ihtiyaçlar tek yerden yönetilir, teklif alınır ve iş birliği kurulur.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-              {/* Sol Büyük Kutu */}
-              <div className={`lg:col-span-1 lg:row-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden border transition-all duration-300 min-h-[440px] bg-slate-50 border-slate-200 hover:border-blue-300 hover:shadow-2xl`}>
-                <div className="relative z-10">
-                  <div className={`w-16 h-16 rounded-[1.25rem] flex items-center justify-center mb-8 ${features[0].bgColor} ${features[0].borderColor} border transition-transform duration-500 group-hover:scale-110 shadow-sm`}>
-                    {features[0].icon}
+        {/* --- DUYURULAR (RESTYLED WITH IMAGE DESIGN) --- */}
+        <section className="w-full py-24 bg-[#FAF9F6] border-b border-slate-100">
+          <div className="max-w-7xl mx-auto px-4">
+            <h3 className="text-4xl font-black text-[#2e1b65] mb-12 text-center tracking-tighter uppercase">Duyurular</h3>
+            
+            <div className="grid lg:grid-cols-2 gap-x-8 gap-y-4">
+              {announcements.map((ann) => (
+                <div key={ann.id} className="group flex items-stretch bg-white cursor-pointer shadow-[0_2px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_25px_rgba(0,0,0,0.07)] transition-all">
+                  <div className="bg-[#122336] text-white w-[90px] flex flex-col items-center justify-center py-5 flex-shrink-0">
+                    <span className="text-[13px] font-bold tracking-[0.15em] leading-none mb-1 text-slate-200">{ann.month}</span>
+                    <span className="text-[28px] font-bold leading-none">{ann.day}</span>
                   </div>
-                  <h3 className="text-3xl font-extrabold text-slate-900 mb-4 leading-tight">
-                    {features[0].title}
-                  </h3>
-                  <p className="text-slate-600 text-lg leading-relaxed font-medium">
-                    {features[0].description}
-                  </p>
+                  <div className="p-5 flex items-center text-[#4a5568] font-medium text-[14px] md:text-[15px] leading-relaxed group-hover:text-blue-700 transition-colors w-full border border-slate-50 border-l-0">
+                    {ann.text}
+                  </div>
                 </div>
-              </div>
-
-              {/* Sağ Üst Yatay Kutu */}
-              <div className={`lg:col-span-2 group rounded-[2.5rem] p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-8 border transition-all duration-300 bg-slate-50 border-slate-200 hover:border-indigo-300 hover:shadow-xl`}>
-                <div className={`w-20 h-20 rounded-[1.25rem] flex items-center justify-center flex-shrink-0 ${features[1].bgColor} ${features[1].borderColor} border transition-transform duration-500 group-hover:-rotate-6 shadow-sm`}>
-                  {features[1].icon}
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-3">
-                    {features[1].title}
-                  </h3>
-                  <p className="text-slate-600 text-lg font-medium leading-relaxed">
-                    {features[1].description}
-                  </p>
-                </div>
-              </div>
-
-              {/* Sağ Alt Kutu 1 */}
-              <div className={`lg:col-span-1 group rounded-[2.5rem] p-8 flex flex-col justify-center border transition-all duration-300 min-h-[220px] bg-slate-50 border-slate-200 hover:border-sky-300 hover:shadow-xl`}>
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${features[2].bgColor} ${features[2].borderColor} border shadow-sm`}>
-                  {features[2].icon}
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">
-                  {features[2].title}
-                </h3>
-                <p className="text-slate-600 text-sm font-medium">
-                  {features[2].description}
-                </p>
-              </div>
-              {/* Sağ Alt Kutu 2 */}
-              <div className={`lg:col-span-1 group rounded-[2.5rem] p-8 flex flex-col justify-center border transition-all duration-300 min-h-[220px] bg-slate-50 border-slate-200 hover:border-cyan-300 hover:shadow-xl`}>
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${features[3].bgColor} ${features[3].borderColor} border shadow-sm`}>
-                  {features[3].icon}
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">
-                  {features[3].title}
-                </h3>
-                <p className="text-slate-600 text-sm font-medium">
-                  {features[3].description}
-                </p>
-              </div>
-
+              ))}
             </div>
           </div>
         </section>
 
+        {/* --- HARİTA --- */}
+        <MapSection />
+
+        {/* --- AYIN EN İYİLERİ --- */}
+        <TopAgencies />
+
         {/* --- HİZMET SEÇİMİ KARTLARI --- */}
-        <section id="services" className="w-full py-24 bg-slate-50 border-b border-slate-200 scroll-mt-16">
+        <section id="services" className="w-full py-24 bg-slate-50 border-y border-slate-200 scroll-mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-5xl font-extrabold text-slate-900 tracking-tight">
@@ -434,8 +312,69 @@ const Welcome: React.FC = () => {
           </div>
         </section>
 
-        {/* --- STATS --- (KORUNAN ALAN) */}
+        {/* --- STATS --- */}
         <StatsSection />
+
+        {/* --- YENİ EKLENEN DENİZCİLİK İSTATİSTİKLERİ BÖLÜMÜ --- */}
+        <section className="w-full py-20 bg-slate-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-black text-slate-900 tracking-tight">
+                Ülke Geneli Denizcilik İstatistikleri
+              </h2>
+              <p className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto font-medium">
+                Ulaştırma ve Altyapı Bakanlığı'nın resmi veritabanlarına tek tıkla erişerek sektördeki büyümeyi yakından takip edin.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <a 
+                href="https://denizcilikistatistikleri.uab.gov.tr/yuk-istatistikleri" 
+                target="_blank" 
+                rel="noopener noreferrer"
+               className="group flex flex-col items-center text-center bg-white p-10 rounded-[2rem] border border-slate-200 hover:border-blue-400 hover:shadow-[0_20px_40px_rgba(37,99,235,0.1)] hover:-translate-y-1 transition-all duration-300"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all transform group-hover:scale-110 shadow-sm">
+                  <span className="material-icons-round text-3xl">scale</span>
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">Yük İstatistikleri</h3>
+                <p className="text-slate-500 font-medium text-sm leading-relaxed">
+                  Limanlarımızda elleçlenen yük verilerine ait veri kümesi ve yıllık değişim oranları.
+                </p>
+              </a>
+
+              <a 
+                href="https://denizcilikistatistikleri.uab.gov.tr/konteyner-istatistikleri" 
+                target="_blank" 
+                rel="noopener noreferrer"
+               className="group flex flex-col items-center text-center bg-white p-10 rounded-[2rem] border border-slate-200 hover:border-indigo-400 hover:shadow-[0_20px_40px_rgba(79,70,229,0.1)] hover:-translate-y-1 transition-all duration-300"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-all transform group-hover:scale-110 shadow-sm">
+                  <span className="material-icons-round text-3xl">inventory_2</span>
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">Konteyner İstatistikleri</h3>
+                <p className="text-slate-500 font-medium text-sm leading-relaxed">
+                  Türkiye geneli liman konteyner hacmi (TEU) ve transit operasyon bilgileri.
+                </p>
+              </a>
+
+              <a 
+                href="https://denizcilikistatistikleri.uab.gov.tr/turk-bogazlari-gemi-gecis-istatistikleri" 
+                target="_blank" 
+                rel="noopener noreferrer"
+               className="group flex flex-col items-center text-center bg-white p-10 rounded-[2rem] border border-slate-200 hover:border-cyan-400 hover:shadow-[0_20px_40px_rgba(6,182,212,0.1)] hover:-translate-y-1 transition-all duration-300"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center mb-6 group-hover:bg-cyan-600 group-hover:text-white transition-all transform group-hover:scale-110 shadow-sm">
+                  <span className="material-icons-round text-3xl">directions_boat</span>
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-cyan-600 transition-colors">Türk Boğazları</h3>
+                <p className="text-slate-500 font-medium text-sm leading-relaxed">
+                  İstanbul ve Çanakkale boğazlarında gerçekleşen ticari gemi geçiş verileri.
+                </p>
+              </a>
+            </div>
+          </div>
+        </section>
 
         {/* --- HARİKA PREMIUM ÇAĞRI (Gemi ve Harita) BÖLÜMÜ --- */}
         <section className="w-full py-24 bg-white relative overflow-hidden">
