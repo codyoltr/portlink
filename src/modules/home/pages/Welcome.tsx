@@ -145,7 +145,7 @@ const Welcome: React.FC = () => {
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-sky-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                       <span className="material-icons-round relative z-10 text-[22px] transition-colors duration-300 group-hover:text-white">post_add</span>
-                      <span className="relative z-10 transition-colors duration-300 group-hover:text-white tracking-wide">İş Talebi</span>
+                      <span className="relative z-10 transition-colors duration-300 group-hover:text-white tracking-wide">İlan Ver</span>
                     </button>
                   </div>
 
