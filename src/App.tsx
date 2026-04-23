@@ -7,7 +7,7 @@ import Gatekeeper from './components/Gatekeeper';
 // DASHBOARD
 import DashboardLayout from './features/dashboard/components/LocalAgentDashboard/DashboardLayout';
 import CaptainDashboardPage from './features/dashboard/pages/CaptainDashboardPage';
-
+import AdminRoutes from "./features/admin/AdminRoutes";
 // MODULES
 import HomeRoutes from './modules/home/HomeRoutes';
 import AgentRoutes from './modules/agents/AgentRoutes';
@@ -28,6 +28,7 @@ function App() {
       <AuthRoutes />
       <TechnicalExpertRoutes />
       <PartnershipRoutes />
+      <AdminRoutes />
 
       <Routes>
         <Route path="/under-construction" element={<UnderConstruction />} />
