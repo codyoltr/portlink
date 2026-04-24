@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, UserCircle, CheckCircle2 } from 'lucide-react';
 import FullPageLayout from '@/features/shell/components/FullPageLayout';
+import { useAuthStore } from '../../../store/useAuthStore';
 
 const SignupSubcontractor: React.FC = () => {
   const navigate = useNavigate();
+  const { registerSubcontractor } = useAuthStore();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -17,8 +19,9 @@ const SignupSubcontractor: React.FC = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setMessage('');
     if (!name || !phone || !email || !password || !company || !serviceType || !port || !workType) {
       setMessage('Lütfen tüm alanları doldurun.');
       return;
@@ -28,10 +31,24 @@ const SignupSubcontractor: React.FC = () => {
       return;
     }
     setLoading(true);
-    setTimeout(() => {
+    try {
+      // Split service types or tags by comma if user enters them that way, or just send what we have
+      const tags = [serviceType, workType].filter(Boolean);
+      
+      await registerSubcontractor({
+        email,
+        password,
+        fullName: name,
+        companyName: company,
+        phone,
+        expertiseTags: tags
+      });
+      // After successful registration, navigate to dashboard
+      navigate('/dashboard/subcontractor');
+    } catch (err: any) {
       setLoading(false);
-      navigate('/login');
-    }, 700);
+      setMessage(err.response?.data?.message || 'Kayıt işlemi başarısız.');
+    }
   };
 
   return (

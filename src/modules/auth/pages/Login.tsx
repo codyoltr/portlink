@@ -1,35 +1,45 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Mail, Lock, Ship, ArrowRight, UserCircle, Briefcase, Anchor } from 'lucide-react';
+import { useAuthStore } from '../../../store/useAuthStore';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
   
-  const initialRole = pathname.includes('/subcontractor') 
-    ? 'subcontractor' 
-    : pathname.includes('/agent') 
-      ? 'agent' 
-      : location.state?.role || 'agent';
+  // URL'den rolü kesin olarak belirliyoruz (Artık sekme yok)
+  const role = pathname.includes('/subcontractor') ? 'subcontractor' : 'agent';
 
-  const [role, setRole] = useState<'agent' | 'subcontractor'>(initialRole);
+  const { login, logout } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const isSpecificEndpoint = pathname.includes('/agent') || pathname.includes('/subcontractor');
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      localStorage.setItem('is_authenticated', 'true');
-      localStorage.setItem('role', role);
-      if (role === 'agent') navigate('/dashboard/agent/job-list');
+    setError(null);
+    try {
+      const user = await login({ email, password });
+      
+      // Kullanıcının seçtiği rol (sekme) ile backend'den dönen gerçek rol uyuşmuyorsa:
+      if (user.role !== role) {
+        logout(false); // Yanlış sekmeden girdiği için token'ı temizle, ancak sayfayı yönlendirme!
+        setLoading(false);
+        setError(`Bu hesap bir ${user.role === 'agent' ? 'Acente' : 'Taşeron'} hesabıdır. Lütfen doğru giriş sekmesini kullanın.`);
+        return;
+      }
+      
+      // Rol uyuyorsa kendi paneline yönlendir:
+      if (user.role === 'agent') navigate('/dashboard/agent/job-list');
       else navigate('/dashboard/subcontractor');
-    }, 600);
+      
+    } catch (err: any) {
+      setLoading(false);
+      setError(err.response?.data?.message || 'Giriş başarısız, bilgileri kontrol edin.');
+    }
   };
 
   return (
@@ -80,40 +90,14 @@ const Login: React.FC = () => {
 
           <div className="mb-8">
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 mb-2">
-              {isSpecificEndpoint 
-                ? (role === 'agent' ? 'Acente Girişi' : 'Taşeron Girişi') 
-                : 'Hesabınıza Giriş Yapın'}
+              {role === 'agent' ? 'Acente Girişi' : 'Taşeron Girişi'}
             </h2>
             <p className="text-slate-500 font-medium">Hizmetlerinize erişmek için lütfen giriş yapın.</p>
           </div>
 
-          {/* Role Switcher */}
-          {!isSpecificEndpoint && (
-            <div className="flex gap-2 mb-8 p-1.5 bg-slate-100 rounded-2xl border border-slate-200/60">
-              <button
-                type="button"
-                onClick={() => setRole('agent')}
-                className={`flex-1 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-300 ${
-                  role === 'agent' 
-                    ? 'bg-white text-blue-700 shadow-sm border border-slate-200' 
-                    : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'
-                }`}
-              >
-                <Briefcase size={18} />
-                Acente
-              </button>
-              <button
-                type="button"
-                onClick={() => setRole('subcontractor')}
-                className={`flex-1 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-300 ${
-                  role === 'subcontractor' 
-                    ? 'bg-white text-blue-700 shadow-sm border border-slate-200' 
-                    : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'
-                }`}
-              >
-                <UserCircle size={18} />
-                Taşeron
-              </button>
+          {error && (
+            <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-600 text-sm font-semibold">
+              {error}
             </div>
           )}
 

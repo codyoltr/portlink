@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Briefcase, CheckCircle2 } from 'lucide-react';
 import FullPageLayout from '@/features/shell/components/FullPageLayout';
+import { useAuthStore } from '../../../store/useAuthStore';
 
 const SignupAgent: React.FC = () => {
   const navigate = useNavigate();
+  const { registerAgent } = useAuthStore();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -17,8 +19,9 @@ const SignupAgent: React.FC = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setMessage('');
     if (!name || !email || !phone || !password || !company || !country || !city || !taxNumber) {
       setMessage('Lütfen tüm alanları doldurun.');
       return;
@@ -28,10 +31,23 @@ const SignupAgent: React.FC = () => {
       return;
     }
     setLoading(true);
-    setTimeout(() => {
+    try {
+      await registerAgent({
+        email,
+        password,
+        fullName: name,
+        companyName: company,
+        phone,
+        country,
+        city,
+        taxNumber
+      });
+      // After successful registration, Zustand stores the token and we can redirect to dashboard
+      navigate('/dashboard/agent/job-list');
+    } catch (err: any) {
       setLoading(false);
-      navigate('/login');
-    }, 700);
+      setMessage(err.response?.data?.message || 'Kayıt işlemi başarısız.');
+    }
   };
 
   return (
