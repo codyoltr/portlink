@@ -1,45 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import MessageBox from '../../../components/MessageBox';
+import { agencyService, type AssignedJobDetailResponse } from '@/api/services/agencyService';
 
 const AgentAssignedJobDetail: React.FC = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  // State'ler
   const [messageBoxOpen, setMessageBoxOpen] = useState(false);
-  
   const [isRequestingReport, setIsRequestingReport] = useState(false);
   const [reportRequested, setReportRequested] = useState(false);
+  const [job, setJob] = useState<AssignedJobDetailResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isCompleting, setIsCompleting] = useState(false);
+
+  useEffect(() => {
+    if (!id) return;
+    const fetchDetail = async () => {
+      try {
+        const data = await agencyService.getAssignedJobDetail(id);
+        setJob(data);
+      } catch (error) {
+        console.error('İş detayı çekilirken hata:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchDetail();
+  }, [id]);
 
   const handleSendMessage = () => {
     setMessageBoxOpen(true);
   };
 
-  const handleRequestReport = () => {
+  const handleRequestReport = async () => {
+    if (!id) return;
     setIsRequestingReport(true);
-    setTimeout(() => {
-      setIsRequestingReport(false);
+    try {
+      await agencyService.requestReport(id);
       setReportRequested(true);
-      setTimeout(() => setReportRequested(false), 3000); // 3 saniye sonra normale döner
-    }, 1000);
+      setTimeout(() => setReportRequested(false), 3000);
+    } catch (error) {
+      console.error('Rapor istenirken hata:', error);
+    } finally {
+      setIsRequestingReport(false);
+    }
   };
 
-  // Sabit veri, gerçek senaryoda API'den id'ye göre çekilecek
-  const job = {
-    id: id,
-    title: 'Ana Makine Rodaj ve Overhaul İşlemleri',
-    shipName: 'M/V Ocean Explorer',
-    subcontractor: 'Port Teknik A.Ş.',
-    subcontractorInitials: 'PT',
-    progress: 65,
-    status: 'in_progress',
-    startDate: '10 Mart 2026',
-    dueDate: '20 Mart 2026',
-    description: 'Geminin ana makinesinin detaylı bakımı, rodaj işlemleri ve aşınan parçaların değişimi. Tüm süreç uluslararası denizcilik standartlarına uygun olarak gerçekleştirilmektedir.',
-    price: '₺125,000',
-    location: 'Pendik Tersanesi, İstanbul'
+  const handleCompleteJob = async () => {
+    if (!id) return;
+    const confirmed = window.confirm('Bu işi tamamlandı olarak işaretlemek istediğinize emin misiniz?');
+    if (!confirmed) return;
+
+    setIsCompleting(true);
+    try {
+      await agencyService.updateAssignedJob(id, { status: 'completed' });
+      alert('İş başarıyla tamamlandı.');
+      navigate('/dashboard/agent/assigned');
+    } catch (error) {
+      console.error('İş tamamlanırken hata:', error);
+      alert('Bir hata oluştu.');
+    } finally {
+      setIsCompleting(false);
+    }
   };
+
+  if (isLoading) {
+    return <div className="py-12 text-center text-slate-500">Yükleniyor...</div>;
+  }
+
+  if (!job) {
+    return <div className="py-12 text-center text-slate-500">İş bulunamadı.</div>;
+  }
 
   return (
     <div className="flex flex-col gap-6 animate-fade-in pb-8">
@@ -54,28 +86,30 @@ const AgentAssignedJobDetail: React.FC = () => {
           </button>
           <div>
             <div className="flex items-center gap-3 mb-1">
-              <h2 className="text-2xl font-bold text-slate-800 dark:text-white">{job.title}</h2>
+              <h2 className="text-2xl font-bold text-slate-800 dark:text-white">{job.jobTitle}</h2>
               <span className="flex items-center gap-1.5 px-3 py-1 bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400 rounded-full text-xs font-bold border border-blue-200 dark:border-blue-500/30">
                 <span className="material-icons-round text-[14px]">autorenew</span>
-                Devam Ediyor
+                {job.status === 'completed' ? 'Tamamlandı' : 'Devam Ediyor'}
               </span>
             </div>
             <p className="text-slate-500 dark:text-slate-400 text-sm flex items-center gap-4">
-              <span className="flex items-center gap-1"><span className="material-icons-round text-[16px]">tag</span>İş ID: #{job.id}</span>
-              <span className="flex items-center gap-1"><span className="material-icons-round text-[16px]">location_on</span>{job.location}</span>
+              <span className="flex items-center gap-1"><span className="material-icons-round text-[16px]">tag</span>İş ID: #{job.id.substring(0, 8)}</span>
             </p>
           </div>
         </div>
         
         <div className="flex items-center gap-3">
-          {/* Mesaj Gönder Butonu */}
-          <button 
-            onClick={handleSendMessage}
-            className={`flex items-center gap-2 px-4 py-2 border rounded-xl font-bold shadow-sm transition-all text-sm bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-primary dark:hover:text-primary transition-colors`}
-          >
-            <span className="material-icons-round text-[18px]">chat</span>
-            Mesaj Gönder
-          </button>
+          {/* İşi Tamamla Butonu */}
+          {job.status !== 'completed' && (
+            <button 
+              onClick={handleCompleteJob}
+              disabled={isCompleting}
+              className={`flex items-center gap-2 px-4 py-2 border rounded-xl font-bold shadow-sm transition-all text-sm bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-700/50 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors`}
+            >
+              <span className="material-icons-round text-[18px]">check_circle</span>
+              {isCompleting ? 'Tamamlanıyor...' : 'İşi Tamamla'}
+            </button>
+          )}
 
           {/* Rapor İste Butonu */}
           <button 
@@ -125,19 +159,19 @@ const AgentAssignedJobDetail: React.FC = () => {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-slate-100 dark:border-slate-700/50 mt-4">
               <div className="flex flex-col">
                 <span className="text-xs font-bold text-slate-400 mb-1">Gemi Adı</span>
-                <span className="text-sm font-semibold text-slate-800 dark:text-white flex items-center gap-1.5"><span className="material-icons-round text-[16px] text-slate-400">directions_boat</span> {job.shipName}</span>
+                <span className="text-sm font-semibold text-slate-800 dark:text-white flex items-center gap-1.5"><span className="material-icons-round text-[16px] text-slate-400">directions_boat</span> - </span>
               </div>
               <div className="flex flex-col">
                 <span className="text-xs font-bold text-slate-400 mb-1">Başlama Tarihi</span>
-                <span className="text-sm font-semibold text-slate-800 dark:text-white flex items-center gap-1.5"><span className="material-icons-round text-[16px] text-slate-400">today</span> {job.startDate}</span>
+                <span className="text-sm font-semibold text-slate-800 dark:text-white flex items-center gap-1.5"><span className="material-icons-round text-[16px] text-slate-400">today</span> {job.startDate || '-'}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-xs font-bold text-slate-400 mb-1">Hedeflenen Bitiş</span>
-                <span className="text-sm font-semibold text-slate-800 dark:text-white flex items-center gap-1.5"><span className="material-icons-round text-[16px] text-primary">event_busy</span> {job.dueDate}</span>
+                <span className="text-sm font-semibold text-slate-800 dark:text-white flex items-center gap-1.5"><span className="material-icons-round text-[16px] text-primary">event_busy</span> {job.dueDate || '-'}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-xs font-bold text-slate-400 mb-1">Bütçe</span>
-                <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5"><span className="material-icons-round text-[16px]">payments</span> {job.price}</span>
+                <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5"><span className="material-icons-round text-[16px]">payments</span> - </span>
               </div>
             </div>
           </div>
@@ -149,7 +183,7 @@ const AgentAssignedJobDetail: React.FC = () => {
               İş Açıklaması
             </h3>
             <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-              {job.description}
+              Bu işe ait genel bir açıklama bulunmamaktadır.
             </p>
           </div>
 
@@ -161,32 +195,22 @@ const AgentAssignedJobDetail: React.FC = () => {
             </h3>
             
             <div className="relative border-l border-slate-200 dark:border-slate-700 ml-3 space-y-6 pb-4">
-              <div className="relative pl-6">
-                <span className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-500 border-4 border-white dark:border-slate-800"></span>
-                <p className="text-xs font-bold text-blue-500 mb-1">Bugün, 14:30</p>
-                <div className="bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700/50 p-3 rounded-xl inline-block w-full">
-                  <h4 className="text-sm font-bold text-slate-800 dark:text-white">Rodaj kontrolleri başladı.</h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Ekip şefi tarafından ilk rapor sisteme yüklendi.</p>
-                </div>
-              </div>
-
-              <div className="relative pl-6">
-                <span className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-slate-300 dark:bg-slate-600 border-4 border-white dark:border-slate-800"></span>
-                <p className="text-xs font-bold text-slate-500 mb-1">Dün, 09:15</p>
-                <div className="bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700/50 p-3 rounded-xl inline-block w-full">
-                  <h4 className="text-sm font-bold text-slate-800 dark:text-white">Gemiye intikal edildi.</h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Tüm ekip ve ekipmanlar tersaneye giriş yaptı.</p>
-                </div>
-              </div>
-
-              <div className="relative pl-6">
-                <span className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-slate-300 dark:bg-slate-600 border-4 border-white dark:border-slate-800"></span>
-                <p className="text-xs font-bold text-slate-500 mb-1">10 Mart 2026, 11:00</p>
-                <div className="bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700/50 p-3 rounded-xl inline-block w-full">
-                  <h4 className="text-sm font-bold text-slate-800 dark:text-white">İş Planlaması Onaylandı.</h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Taraflar arasında sözleşme imzalandı ve iş resmi olarak başlatıldı.</p>
-                </div>
-              </div>
+              {job.logs && job.logs.length > 0 ? (
+                job.logs.map((log, index) => (
+                  <div key={log.id} className="relative pl-6">
+                    <span className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full ${index === 0 ? 'bg-blue-500' : 'bg-slate-300 dark:bg-slate-600'} border-4 border-white dark:border-slate-800`}></span>
+                    <p className={`text-xs font-bold ${index === 0 ? 'text-blue-500' : 'text-slate-500'} mb-1`}>
+                      {new Date(log.createdAt).toLocaleString('tr-TR')}
+                    </p>
+                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700/50 p-3 rounded-xl inline-block w-full">
+                      <h4 className="text-sm font-bold text-slate-800 dark:text-white">{log.title}</h4>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{log.description || '-'}</p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="pl-6 text-sm text-slate-500">Henüz süreç logu bulunmuyor.</div>
+              )}
             </div>
           </div>
 
@@ -201,10 +225,10 @@ const AgentAssignedJobDetail: React.FC = () => {
             
             <div className="flex items-center gap-4 mb-6">
               <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary font-bold text-xl border border-primary/20 shrink-0">
-                {job.subcontractorInitials}
+                {job.subcontractorCompanyName.charAt(0)}
               </div>
               <div className="overflow-hidden">
-                <h4 className="text-lg font-bold text-slate-800 dark:text-white truncate">{job.subcontractor}</h4>
+                <h4 className="text-lg font-bold text-slate-800 dark:text-white truncate">{job.subcontractorCompanyName}</h4>
                 <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
                   <span className="material-icons-round text-[14px]">verified</span>
                   Onaylı Firma
@@ -243,27 +267,22 @@ const AgentAssignedJobDetail: React.FC = () => {
             </div>
 
             <div className="space-y-3">
-              <a href="#" className="flex items-start gap-3 p-3 rounded-xl border border-slate-100 dark:border-slate-700/50 hover:border-primary/50 hover:bg-primary/5 transition-all group">
-                <div className="p-2 bg-red-50 dark:bg-red-900/20 text-red-500 rounded-lg group-hover:bg-red-100 transition-colors">
-                  <span className="material-icons-round text-[20px]">picture_as_pdf</span>
-                </div>
-                <div className="flex-1 overflow-hidden">
-                  <h4 className="text-sm font-bold text-slate-800 dark:text-white truncate">Sözleşme_Protokolü.pdf</h4>
-                  <p className="text-xs text-slate-500">2.4 MB • 10 Mart 2026</p>
-                </div>
-                <span className="material-icons-round text-slate-400 group-hover:text-primary transition-colors">download</span>
-              </a>
-
-              <a href="#" className="flex items-start gap-3 p-3 rounded-xl border border-slate-100 dark:border-slate-700/50 hover:border-primary/50 hover:bg-primary/5 transition-all group">
-                <div className="p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-500 rounded-lg group-hover:bg-blue-100 transition-colors">
-                  <span className="material-icons-round text-[20px]">image</span>
-                </div>
-                <div className="flex-1 overflow-hidden">
-                  <h4 className="text-sm font-bold text-slate-800 dark:text-white truncate">Ilk_Durum_Fotolari.zip</h4>
-                  <p className="text-xs text-slate-500">14.8 MB • 11 Mart 2026</p>
-                </div>
-                <span className="material-icons-round text-slate-400 group-hover:text-primary transition-colors">download</span>
-              </a>
+              {job.reports && job.reports.length > 0 ? (
+                job.reports.map((report) => (
+                  <a key={report.id} href={report.fileUrl} target="_blank" rel="noreferrer" className="flex items-start gap-3 p-3 rounded-xl border border-slate-100 dark:border-slate-700/50 hover:border-primary/50 hover:bg-primary/5 transition-all group">
+                    <div className="p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-500 rounded-lg group-hover:bg-blue-100 transition-colors">
+                      <span className="material-icons-round text-[20px]">description</span>
+                    </div>
+                    <div className="flex-1 overflow-hidden">
+                      <h4 className="text-sm font-bold text-slate-800 dark:text-white truncate">{report.fileName}</h4>
+                      <p className="text-xs text-slate-500">{new Date(report.createdAt).toLocaleDateString('tr-TR')}</p>
+                    </div>
+                    <span className="material-icons-round text-slate-400 group-hover:text-primary transition-colors">download</span>
+                  </a>
+                ))
+              ) : (
+                <div className="text-sm text-slate-500">Henüz rapor dosyası bulunmuyor.</div>
+              )}
             </div>
           </div>
 
@@ -274,9 +293,9 @@ const AgentAssignedJobDetail: React.FC = () => {
       <MessageBox 
         isOpen={messageBoxOpen} 
         onClose={() => setMessageBoxOpen(false)}
-        recipientName={job.subcontractor}
+        recipientName={job.subcontractorCompanyName}
         recipientRole="Taşeron"
-        jobTitle={job.title}
+        jobTitle={job.jobTitle}
       />
     </div>
   );

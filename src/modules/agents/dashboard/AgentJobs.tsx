@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-interface Job {
-  id: string;
-  title: string;
-  shipName: string;
-  location: string;
-  date: string;
-  status: 'active' | 'reviewing' | 'completed';
-  offerCount: number;
-  category: string;
-}
+import { agencyService, type JobListingResponse } from '@/api/services/agencyService';
+
+type Job = JobListingResponse;
 
 const AgentJobs: React.FC = () => {
   const [filter, setFilter] = useState<'all' | 'active' | 'reviewing' | 'completed'>('all');
@@ -18,24 +11,30 @@ const AgentJobs: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const savedJobs = localStorage.getItem('jobs');
+  const [isLoading, setIsLoading] = useState(false);
 
-    if (savedJobs) {
-      setJobs(JSON.parse(savedJobs));
-    } else {
-      setJobs([]);
-    }
-  }, []);
+  useEffect(() => {
+    const fetchJobs = async () => {
+      setIsLoading(true);
+      try {
+        const data = await agencyService.getJobs(filter === 'all' ? undefined : filter);
+        setJobs(data);
+      } catch (error) {
+        console.error('İlanlar çekilirken hata:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchJobs();
+  }, [filter]);
 
   const filteredJobs = jobs.filter((job) => {
-    const matchesFilter = filter === 'all' ? true : job.status === filter;
     const matchesSearch =
-      job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.shipName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.location.toLowerCase().includes(searchQuery.toLowerCase());
+      job.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.shipName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.location?.toLowerCase().includes(searchQuery.toLowerCase());
 
-    return matchesFilter && matchesSearch;
+    return matchesSearch;
   });
 
 
@@ -110,15 +109,19 @@ const AgentJobs: React.FC = () => {
 
         {/* List */}
         <div className="flex flex-col divide-y divide-slate-100 dark:divide-slate-700/50">
-          {filteredJobs.map((job) => {
-            const dateParts = job.date.split('.');
-            const formattedDate = dateParts.length === 3 
-                ? { top: `${dateParts[0]} Eki`, bottom: dateParts[2] || '2024' } 
-                : { top: job.date.substring(0, 6) || job.date, bottom: job.date.substring(6) || '2024' };
+          {isLoading ? (
+            <div className="py-12 text-center text-slate-500">Yükleniyor...</div>
+          ) : filteredJobs.map((job) => {
+            const dateStr = new Date(job.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' });
+            const dateParts = dateStr.split(' ');
+            const formattedDate = dateParts.length >= 3 
+                ? { top: `${dateParts[0]} ${dateParts[1]}`, bottom: dateParts[2] } 
+                : { top: dateStr, bottom: '' };
             
-            const locationParts = job.location.split(' ');
-            const locTop = locationParts[0] || job.location;
-            const locBottom = locationParts.slice(1).join(' ') || 'Limanı';
+            const locStr = job.location || job.portName || job.portCode || 'Belirtilmedi';
+            const locationParts = locStr.split(' ');
+            const locTop = locationParts[0] || locStr;
+            const locBottom = locationParts.slice(1).join(' ') || (locStr !== 'Belirtilmedi' ? 'Limanı' : '');
 
             return (
               <div
@@ -137,7 +140,7 @@ const AgentJobs: React.FC = () => {
                   </div>
                   
                   <div className="flex flex-col items-start gap-1">
-                    <span className="text-xs font-medium text-slate-400">#{job.id.padStart(10, '0')}</span>
+                    <span className="text-xs font-medium text-slate-400">#{job.id.substring(0, 8)}</span>
                     <h3 className="line-clamp-2 text-base font-bold text-blue-700 transition-colors group-hover:text-blue-600 dark:text-blue-400">
                       {job.title}
                     </h3>
@@ -177,7 +180,7 @@ const AgentJobs: React.FC = () => {
         </div>
       </div>
 
-      {filteredJobs.length === 0 && (
+      {!isLoading && filteredJobs.length === 0 && (
         <div className="flex flex-col items-center justify-center py-16 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700/50 text-center px-4">
           <div className="w-24 h-24 rounded-full bg-slate-50 dark:bg-slate-700 flex items-center justify-center text-slate-300 dark:text-slate-600 mb-4">
             <span className="material-icons-round text-5xl">search_off</span>

@@ -1,95 +1,38 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-interface AssignedJob {
-  id: string;
-  jobNumber: string;
-  title: string;
-  shipName: string;
-  subcontractor: string;
-  description: string;
-  progress: number;
-  status: 'planning' | 'in_progress' | 'review' | 'completed';
-  startDate: string;
-  dueDate: string;
-  location: string;
-  locationDetail: string;
-}
-
-const mockAssignedJobs: AssignedJob[] = [
-  {
-    id: '1',
-    jobNumber: '#0000000001',
-    title: 'Ana Makine Rodaj ve Overhaul İşlemleri',
-    shipName: 'M/V Ocean Explorer',
-    subcontractor: 'Port Teknik A.Ş.',
-    description: 'Motor sökümü, parça kontrolü ve yeniden montaj işlemleri',
-    progress: 65,
-    status: 'in_progress',
-    startDate: '10 Mart 2026',
-    dueDate: '20 Mart 2026',
-    location: 'İzmir',
-    locationDetail: 'Alsancak',
-  },
-  {
-    id: '2',
-    jobNumber: '#0000000002',
-    title: 'Pervane ve Dümen Yelkeni Temizliği',
-    shipName: 'M/V Pacific Star',
-    subcontractor: 'Marine Destek Ltd.',
-    description: 'Su altı temizlik, boya ve koruyucu kaplama işlemleri',
-    progress: 100,
-    status: 'completed',
-    startDate: '05 Mart 2026',
-    dueDate: '09 Mart 2026',
-    location: 'İstanbul',
-    locationDetail: 'Tuzla',
-  },
-  {
-    id: '3',
-    jobNumber: '#0000000003',
-    title: 'Seyir Cihazları ve Radar Kalibrasyonu',
-    shipName: 'M/V Mediterranean',
-    subcontractor: 'ElektroDeniz A.Ş.',
-    description: 'GPS, AIS ve radar sistemlerinin test ve kalibrasyonu',
-    progress: 25,
-    status: 'planning',
-    startDate: '16 Mart 2026',
-    dueDate: '18 Mart 2026',
-    location: 'İzmir',
-    locationDetail: 'Çiğli',
-  },
-  {
-    id: '4',
-    jobNumber: '#0000000004',
-    title: 'Güverte Boya ve Pas Giderme',
-    shipName: 'S/S Atlantic',
-    subcontractor: 'BoyaMarin Sanayi',
-    description: 'Sandblast, astar ve boya uygulamaları',
-    progress: 80,
-    status: 'review',
-    startDate: '01 Mart 2026',
-    dueDate: '15 Mart 2026',
-    location: 'Mersin',
-    locationDetail: 'Liman',
-  },
-];
+import { agencyService, type AssignedJobResponse } from '@/api/services/agencyService';
 
 const AgentAssignedJobs: React.FC = () => {
   const [filter, setFilter] = useState<'all' | 'planning' | 'in_progress' | 'review' | 'completed'>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [assignedJobs, setAssignedJobs] = useState<AssignedJobResponse[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const filteredJobs = mockAssignedJobs.filter((job) => {
-    const matchesFilter = filter === 'all' ? true : job.status === filter;
+  React.useEffect(() => {
+    const fetchJobs = async () => {
+      setIsLoading(true);
+      try {
+        const data = await agencyService.getAssignedJobs(filter === 'all' ? undefined : filter);
+        setAssignedJobs(data);
+      } catch (error) {
+        console.error('Atanmış işler çekilirken hata:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchJobs();
+  }, [filter]);
+
+  const filteredJobs = assignedJobs.filter((job) => {
     const matchesSearch =
-      job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.shipName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.subcontractor.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesFilter && matchesSearch;
+      job.jobTitle?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.subcontractorCompanyName?.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesSearch;
   });
 
-  const getStatusInfo = (status: AssignedJob['status']) => {
+  const getStatusInfo = (status: string) => {
     switch (status) {
       case 'planning':
         return { label: 'Planlanıyor', color: 'text-indigo-600 dark:text-indigo-400', icon: 'event' };
@@ -99,6 +42,8 @@ const AgentAssignedJobs: React.FC = () => {
         return { label: 'Kontrol Aşamasında', color: 'text-amber-600 dark:text-amber-400', icon: 'fact_check' };
       case 'completed':
         return { label: 'Tamamlandı', color: 'text-emerald-600 dark:text-emerald-400', icon: 'check_circle' };
+      default:
+        return { label: 'Bilinmiyor', color: 'text-slate-600 dark:text-slate-400', icon: 'help_outline' };
     }
   };
 
@@ -116,11 +61,11 @@ const AgentAssignedJobs: React.FC = () => {
       <div className="flex flex-col xl:flex-row gap-3 xl:items-center justify-between">
         <div className="flex bg-slate-200/50 dark:bg-slate-800/50 p-1.5 rounded-xl overflow-x-auto w-full xl:w-max">
           {[
-            { id: 'all', label: 'Tümü', count: mockAssignedJobs.length },
-            { id: 'planning', label: 'Planlanıyor', count: mockAssignedJobs.filter((j) => j.status === 'planning').length },
-            { id: 'in_progress', label: 'Devam Ediyor', count: mockAssignedJobs.filter((j) => j.status === 'in_progress').length },
-            { id: 'review', label: 'Kontrol Aşamasında', count: mockAssignedJobs.filter((j) => j.status === 'review').length },
-            { id: 'completed', label: 'Tamamlandı', count: mockAssignedJobs.filter((j) => j.status === 'completed').length },
+            { id: 'all', label: 'Tümü' },
+            { id: 'planning', label: 'Planlanıyor' },
+            { id: 'in_progress', label: 'Devam Ediyor' },
+            { id: 'review', label: 'Kontrol Aşamasında' },
+            { id: 'completed', label: 'Tamamlandı' },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -131,9 +76,6 @@ const AgentAssignedJobs: React.FC = () => {
                 }`}
             >
               {tab.label}
-              <span className={`px-2 py-0.5 rounded-md text-[10px] ${filter === tab.id ? 'bg-primary/10 text-primary' : 'bg-slate-200 dark:bg-slate-800 text-slate-500'}`}>
-                {tab.count}
-              </span>
             </button>
           ))}
         </div>
@@ -168,7 +110,12 @@ const AgentAssignedJobs: React.FC = () => {
 
         {/* Rows */}
         <div className="divide-y divide-slate-100 dark:divide-slate-700/40">
-          {filteredJobs.length === 0 ? (
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center py-16 text-slate-400">
+              <span className="material-icons-round text-4xl mb-3 animate-spin">autorenew</span>
+              <p className="text-sm font-medium">Yükleniyor...</p>
+            </div>
+          ) : filteredJobs.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-slate-400">
               <span className="material-icons-round text-4xl mb-3">search_off</span>
               <p className="text-sm font-medium">Sonuç bulunamadı</p>
@@ -188,12 +135,11 @@ const AgentAssignedJobs: React.FC = () => {
                       <span className="material-icons-round text-slate-400 text-2xl">directions_boat</span>
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs text-slate-400 dark:text-slate-500 mb-0.5">{job.jobNumber}</p>
-                      <p className="text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline line-clamp-1">{job.title}</p>
+                      <p className="text-xs text-slate-400 dark:text-slate-500 mb-0.5">#{job.id.substring(0, 8)}</p>
+                      <p className="text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline line-clamp-1">{job.jobTitle}</p>
                       <div className="flex items-center gap-1 mt-1 flex-wrap">
                         <span className="material-icons-round text-amber-500 text-[14px]">stars</span>
-                        <span className="text-xs font-semibold text-amber-600 dark:text-amber-400">{job.subcontractor}</span>
-                        <span className="text-xs text-slate-400 dark:text-slate-500">— {job.description}</span>
+                        <span className="text-xs font-semibold text-amber-600 dark:text-amber-400">{job.subcontractorCompanyName}</span>
                       </div>
                     </div>
                   </div>
@@ -205,13 +151,13 @@ const AgentAssignedJobs: React.FC = () => {
                   {/* Tarih */}
                   <div className="px-6 py-5 text-center">
                     <p className="text-sm font-bold text-slate-700 dark:text-slate-200">
-                      {job.startDate}
+                      {job.startDate || '-'}
                     </p>
                   </div>
                   {/* Konum */}
                   <div className="px-6 py-5 text-center">
-                    <p className="text-sm font-bold text-slate-800 dark:text-white">{job.location}</p>
-                    <p className="text-xs text-slate-400 dark:text-slate-500">{job.locationDetail}</p>
+                    <p className="text-sm font-bold text-slate-800 dark:text-white">-</p>
+                    <p className="text-xs text-slate-400 dark:text-slate-500">-</p>
                   </div>
                 </div>
               );

@@ -1,60 +1,76 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-interface Job {
-  id: string;
-  title: string;
-  shipName: string;
-  location: string;
-  date: string;
-  status: 'active' | 'reviewing' | 'completed';
-  offerCount: number;
-  category: string;
-  listingType?: 'subcontractor' | 'agency-partnership';
-  selectedServices?: string[];
-  eta?: string;
-  needText?: string;
-  fileNames?: string[];
-}
+import { agencyService, type JobListingDetailResponse, type OfferResponse } from '@/api/services/agencyService';
+
+type Job = JobListingDetailResponse;
 
 const AgentJobDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [job, setJob] = useState<Job | null>(null);
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [offers, setOffers] = useState<OfferResponse[]>([]);
+
   useEffect(() => {
-    const savedJobs = localStorage.getItem('jobs');
+    if (!id) return;
 
-    if (!savedJobs) {
-      setJob(null);
-      return;
-    }
+    const fetchDetail = async () => {
+      setIsLoading(true);
+      try {
+        const data = await agencyService.getJobDetail(id);
+        setJob(data);
 
-    const jobs: Job[] = JSON.parse(savedJobs);
-    const foundJob = jobs.find((item) => item.id === id);
-
-    if (foundJob) {
-      setJob(foundJob);
-    } else {
-      setJob(null);
-    }
+        const offersData = await agencyService.getJobOffers(id);
+        setOffers(offersData);
+      } catch (error) {
+        console.error('İlan detayı çekilirken hata:', error);
+        setJob(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchDetail();
   }, [id]);
 
-  const handleDeleteJob = () => {
+  const handleDeleteJob = async () => {
     if (!job) return;
 
     const confirmed = window.confirm('Bu ilanı kaldırmak istediğinize emin misiniz?');
 
-    if (!confirmed) return;
+    try {
+      await agencyService.deleteJob(job.id);
+      alert('İlan kaldırıldı.');
+      navigate('/dashboard/agent/jobs');
+    } catch (error) {
+      console.error('İlan silinirken hata:', error);
+      alert('İlan silinirken bir hata oluştu.');
+    }
+  };
 
-    const savedJobs = localStorage.getItem('jobs');
-    const jobs: Job[] = savedJobs ? JSON.parse(savedJobs) : [];
+  const handleAcceptOffer = async (offerId: string) => {
+    if (!window.confirm('Bu teklifi onaylamak istediğinize emin misiniz?')) return;
+    try {
+      await agencyService.acceptOffer(offerId);
+      alert('Teklif başarıyla onaylandı ve iş taşerona atandı.');
+      navigate('/dashboard/agent/assigned');
+    } catch (error) {
+      console.error('Teklif onaylanırken hata:', error);
+      alert('Teklif onaylanırken hata oluştu.');
+    }
+  };
 
-    const updatedJobs = jobs.filter((item) => item.id !== job.id);
-
-    localStorage.setItem('jobs', JSON.stringify(updatedJobs));
-    alert('İlan kaldırıldı.');
-    navigate('/dashboard/agent/jobs');
+  const handleRejectOffer = async (offerId: string) => {
+    if (!window.confirm('Bu teklifi reddetmek istediğinize emin misiniz?')) return;
+    try {
+      await agencyService.rejectOffer(offerId);
+      alert('Teklif reddedildi.');
+      setOffers(offers.filter(o => o.id !== offerId));
+    } catch (error) {
+      console.error('Teklif reddedilirken hata:', error);
+      alert('Teklif reddedilirken hata oluştu.');
+    }
   };
 
   const handleEditJob = () => {
@@ -62,7 +78,7 @@ const AgentJobDetails: React.FC = () => {
     navigate(`/dashboard/agent/quick-post/${job.id}`);
   };
 
-  const getStatusBadge = (status: Job['status']) => {
+  const getStatusBadge = (status: string) => {
     switch (status) {
       case 'active':
         return (
@@ -87,6 +103,10 @@ const AgentJobDetails: React.FC = () => {
         );
     }
   };
+
+  if (isLoading) {
+    return <div className="py-12 text-center text-slate-500">Yükleniyor...</div>;
+  }
 
   if (!job) {
     return (
@@ -201,7 +221,7 @@ const AgentJobDetails: React.FC = () => {
                     <span className="material-icons-round text-slate-400 text-[18px]">
                       schedule
                     </span>
-                    {job.eta || '-'}
+                    {job.eta ? new Date(job.eta).toLocaleString('tr-TR') : '-'}
                   </p>
                 </div>
               </div>
@@ -227,7 +247,7 @@ const AgentJobDetails: React.FC = () => {
                     <span className="material-icons-round text-slate-400 text-[18px]">
                       calendar_today
                     </span>
-                    {job.date || '-'}
+                    {new Date(job.createdAt).toLocaleDateString('tr-TR')}
                   </p>
                 </div>
 
@@ -304,15 +324,15 @@ const AgentJobDetails: React.FC = () => {
                 {job.needText || 'İhtiyaç açıklaması girilmemiş.'}
               </p>
 
-              {job.fileNames && job.fileNames.length > 0 && (
+              {job.files && job.files.length > 0 && (
                 <div className="flex flex-wrap gap-3">
-                  {job.fileNames.map((fileName, index) => (
+                  {job.files.map((file, index) => (
                     <div
-                      key={`${fileName}-${index}`}
+                      key={file.id || index}
                       className="flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-600 dark:text-slate-300"
                     >
                       <span className="material-icons-round text-blue-500">attach_file</span>
-                      <span className="font-medium">{fileName}</span>
+                      <span className="font-medium">{file.fileName}</span>
                     </div>
                   ))}
                 </div>
@@ -333,11 +353,41 @@ const AgentJobDetails: React.FC = () => {
             </div>
 
             <div className="p-6">
-              {job.offerCount > 0 ? (
+              {offers.length > 0 ? (
                 <div className="space-y-4">
-                  <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-                    Bu ilan için {job.offerCount} teklif bulunuyor.
-                  </div>
+                  {offers.map(offer => (
+                    <div key={offer.id} className="rounded-xl border border-slate-200 bg-slate-50 p-4 flex flex-col gap-3">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <p className="text-sm font-bold text-slate-700">{offer.subcontractorCompanyName}</p>
+                          <p className="text-xs text-slate-500">{offer.price} {offer.currency} • {offer.estimatedDays ? `${offer.estimatedDays} Gün` : 'Süre belirtilmedi'}</p>
+                          {offer.coverLetter && (
+                            <p className="text-xs text-slate-600 mt-2 bg-white p-2 rounded border border-slate-100">{offer.coverLetter}</p>
+                          )}
+                        </div>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${offer.status === 'pending' ? 'bg-amber-100 text-amber-700' : offer.status === 'accepted' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}`}>
+                          {offer.status === 'pending' ? 'Bekliyor' : offer.status === 'accepted' ? 'Kabul Edildi' : 'Reddedildi'}
+                        </span>
+                      </div>
+
+                      {offer.status === 'pending' && (
+                        <div className="flex justify-end gap-2 mt-2 pt-3 border-t border-slate-200">
+                          <button
+                            onClick={() => handleRejectOffer(offer.id)}
+                            className="text-xs bg-white border border-slate-200 px-3 py-1.5 rounded-lg text-rose-600 font-semibold hover:bg-rose-50 transition-colors"
+                          >
+                            Reddet
+                          </button>
+                          <button
+                            onClick={() => handleAcceptOffer(offer.id)}
+                            className="text-xs bg-primary text-white px-3 py-1.5 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-sm"
+                          >
+                            Kabul Et
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
               ) : (
                 <div className="text-center py-10">
@@ -384,7 +434,7 @@ const AgentJobDetails: React.FC = () => {
               <div className="rounded-xl bg-slate-50 dark:bg-slate-900/50 p-4">
                 <p className="text-xs text-slate-400 uppercase font-bold">Dosya Sayısı</p>
                 <p className="mt-2 text-sm font-semibold text-slate-800 dark:text-white">
-                  {job.fileNames ? job.fileNames.length : 0} dosya
+                  {job.files ? job.files.length : 0} dosya
                 </p>
               </div>
 

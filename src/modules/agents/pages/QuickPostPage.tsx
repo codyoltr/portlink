@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ports from "@/data/ports.json";
+import { agencyService } from '@/api/services/agencyService';
 
 type ListingType = 'subcontractor' | 'agency-partnership';
 
@@ -94,6 +95,7 @@ const QuickPostPage: React.FC = () => {
     //filtreleme liman için
     const [portSearch, setPortSearch] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const selectedCategories = useMemo(
         () => serviceCategories.filter((cat) => selectedCategoryIds.includes(cat.id)),
@@ -153,6 +155,24 @@ const QuickPostPage: React.FC = () => {
         };
     }, []);
 
+    useEffect(() => {
+        if (isEditMode && id) {
+            setIsLoading(true);
+            agencyService.getJobDetail(id)
+                .then((res) => {
+                    setListingType(res.listingType as ListingType);
+                    setEta(res.eta ? res.eta.slice(0, 16) : '');
+                    setPort(res.portCode || '');
+                    setPortSearch(res.location || res.portName || '');
+                    setShip(res.shipName || '');
+                    setNeedText(res.needText || '');
+                    setTitle(res.title || '');
+                })
+                .catch(err => console.error("Detay getirilirken hata:", err))
+                .finally(() => setIsLoading(false));
+        }
+    }, [isEditMode, id]);
+
     const canGoStep2 = !!listingType;
     const canGoStep3 = selectedCategoryIds.length > 0 && totalSelectedServices.length > 0;
     const canGoStep4 =
@@ -210,45 +230,51 @@ const QuickPostPage: React.FC = () => {
         if (step > 1) setStep((prev) => prev - 1);
     };
 
-    const publishListing = () => {
-        const newJob = {
-            id: Date.now().toString(),
-            title:
-                listingType === 'agency-partnership'
-                    ? `${selectedCategories.length > 1
-                        ? 'Çoklu Hizmet Talebi'
-                        : selectedCategories[0]?.title || 'Yeni İlan'
-                    } - İş Ortaklığı`
-                    : selectedCategories.length > 1
-                        ? 'Çoklu Hizmet Talebi'
-                        : selectedCategories[0]?.title || 'Yeni İlan',
-            shipName: ship,
-            location: port,
-            date: new Date().toLocaleDateString('tr-TR'),
-            status: 'active' as const,
-            offerCount: 0,
-            category: selectedCategories.map((cat) => cat.title).join(', '),
-            categories: selectedCategories.map((cat) => ({
-                id: cat.id,
-                title: cat.title,
-                services: selectedServicesByCategory[cat.id] || [],
-            })),
-            listingType,
-            selectedServices: totalSelectedServices,
-            eta,
-            needText,
-            fileNames: files.map((file) => file.name),
-        };
+    const publishListing = async () => {
+        setIsLoading(true);
+        try {
+            const data = {
+                title: title,
+                listingType: listingType || 'subcontractor',
+                shipName: ship,
+                portCode: port,
+                portName: portSearch,
+                location: portSearch,
+                category: selectedCategories.map((cat) => cat.title).join(', '),
+                selectedServices: totalSelectedServices,
+                eta: eta ? new Date(eta).toISOString() : undefined,
+                needText: needText,
+            };
 
-        const existingJobs = localStorage.getItem('jobs');
-        const jobs = existingJobs ? JSON.parse(existingJobs) : [];
+            let savedJobId = id;
 
-        jobs.unshift(newJob);
+            if (isEditMode && id) {
+                await agencyService.updateJob(id, data);
+                alert('İlan başarıyla güncellendi.');
+            } else {
+                const res = await agencyService.createJob(data);
+                savedJobId = res.id;
+                alert('İlan başarıyla yayınlandı.');
+            }
 
-        localStorage.setItem('jobs', JSON.stringify(jobs));
+            // Upload files if any
+            if (files.length > 0 && savedJobId) {
+                for (const file of files) {
+                    try {
+                        await agencyService.uploadJobFile(savedJobId, file);
+                    } catch (e) {
+                        console.error('Dosya yüklenemedi:', file.name, e);
+                    }
+                }
+            }
 
-        alert('İlan başarıyla yayınlandı.');
-        navigate('/dashboard/agent/jobs');
+            navigate('/dashboard/agent/jobs');
+        } catch (error) {
+            console.error('İlan kaydedilirken hata oluştu:', error);
+            alert('İlan kaydedilirken bir hata oluştu.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -833,9 +859,10 @@ const QuickPostPage: React.FC = () => {
                                     <button
                                         type="button"
                                         onClick={publishListing}
-                                        className="mt-6 w-full rounded-2xl bg-primary px-5 py-4 text-center text-base font-bold text-white shadow-lg shadow-primary/20 transition hover:opacity-95"
+                                        disabled={isLoading}
+                                        className="mt-6 w-full rounded-2xl bg-primary px-5 py-4 text-center text-base font-bold text-white shadow-lg shadow-primary/20 transition hover:opacity-95 disabled:opacity-50"
                                     >
-                                        İlanı Yayınla
+                                        {isLoading ? 'İşleniyor...' : (isEditMode ? 'İlanı Güncelle' : 'İlanı Yayınla')}
                                     </button>
                                 </div>
                             </div>
