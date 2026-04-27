@@ -9,9 +9,8 @@ const AgentJobs: React.FC = () => {
   const [filter, setFilter] = useState<'all' | 'active' | 'reviewing' | 'completed'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [isLoading, setIsLoading] = useState(true); // Yükleniyor durumu
   const navigate = useNavigate();
-
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -37,7 +36,6 @@ const AgentJobs: React.FC = () => {
     return matchesSearch;
   });
 
-
   return (
     <div className="flex flex-col gap-6 animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
@@ -57,6 +55,7 @@ const AgentJobs: React.FC = () => {
         </button>
       </div>
 
+      {/* Tabs / Search Filter Bar */}
       <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
         <div className="flex bg-slate-200/50 dark:bg-slate-800/50 rounded-xl overflow-x-auto w-full sm:w-auto p-1.5">
           {[
@@ -107,7 +106,7 @@ const AgentJobs: React.FC = () => {
           <div className="col-span-2 text-center">Konum</div>
         </div>
 
-        {/* List */}
+        {/* List Body */}
         <div className="flex flex-col divide-y divide-slate-100 dark:divide-slate-700/50">
           {isLoading ? (
             <div className="py-12 text-center text-slate-500">Yükleniyor...</div>
@@ -133,7 +132,7 @@ const AgentJobs: React.FC = () => {
                 <div className="col-span-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
                   <div className="h-[90px] w-[140px] shrink-0 overflow-hidden rounded-md border border-slate-200 dark:border-slate-700">
                     <img
-                      src={`https://picsum.photos/seed/${job.id || 'ship'}/280/180`}
+                      src={`https://picsum.photos/seed/${job.id}/280/180`}
                       alt={job.title}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
@@ -150,7 +149,7 @@ const AgentJobs: React.FC = () => {
                         Taşeron İlanı
                       </span>
                       <span className="line-clamp-1 text-xs text-slate-500 dark:text-slate-400">
-                        - {job.category.length > 30 ? job.category.substring(0, 30) + "..." : job.category}
+                        - {job.shipName}
                       </span>
                     </div>
                   </div>
@@ -163,16 +162,16 @@ const AgentJobs: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Date */}
+                {/* Date Display */}
                 <div className="col-span-2 flex items-center justify-start text-sm font-bold text-slate-700 md:flex-col md:justify-center dark:text-slate-300">
                   <span className="mr-2 md:mr-0">{formattedDate.top}</span>
                   <span className="text-xs font-medium text-slate-500">{formattedDate.bottom}</span>
                 </div>
 
-                {/* Location */}
+                {/* Location Display */}
                 <div className="col-span-2 flex items-center justify-start text-sm font-bold text-slate-700 md:flex-col md:justify-center md:text-center dark:text-slate-300">
-                  <span className="mr-2 md:mr-0">{locTop}</span>
-                  <span className="text-xs font-medium text-slate-500">{locBottom}</span>
+                  <span className="mr-2 md:mr-0">{job.location.split(' ')[0]}</span>
+                  <span className="text-xs font-medium text-slate-500">{job.location.split(' ').slice(1).join(' ') || 'Bölgesi'}</span>
                 </div>
               </div>
             );

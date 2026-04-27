@@ -229,5 +229,11 @@ export const agencyService = {
   updateAssignedJob: async (id: string, data: UpdateAssignedJobRequest): Promise<AssignedJobResponse> => {
     const response = await apiClient.put<ApiResponse<AssignedJobResponse>>(`/agent/assigned-jobs/${id}`, data);
     return response.data.data;
+  },
+
+  // --- YENİ EKLENEN İSTATİSTİK FONKSİYONU ---
+  getDashboardStats: async (): Promise<ApiResponse<any>> => {
+    const response = await apiClient.get<ApiResponse<any>>('/agent/dashboard/stats');
+    return response.data;
   }
 };

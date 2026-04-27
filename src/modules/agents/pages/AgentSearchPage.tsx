@@ -1,65 +1,5 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const jobs = [
-  {
-    id: 1,
-    title: 'İzmir Limanı - Acentelik İş Ortaklığı',
-    company: 'Ege Port Services',
-    location: 'İzmir Alsancak Limanı',
-    port: 'İzmir',
-    category: 'Liman İşlemleri',
-    budget: '₺120.000 - ₺160.000',
-    budgetValue: 160000,
-    deadline: '14 Nisan 2026',
-    description:
-      'İzmir bölgesinde yükleme, tahliye ve operasyon yönetim süreçlerinde deneyimli acente partner aranmaktadır.',
-    tag: 'Yeni İlan',
-    serviceType: 'Acentelik',
-    image:
-      'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=300&q=80',
-    isUrgent: false,
-    createdOrder: 3,
-  },
-  {
-    id: 2,
-    title: 'Yalova Tersane Operasyon Desteği',
-    company: 'Marmara Shipyard',
-    location: 'Yalova',
-    port: 'Yalova',
-    category: 'Teknik & Tamir Hizmetleri',
-    budget: '₺85.000 - ₺110.000',
-    budgetValue: 110000,
-    deadline: '10 Nisan 2026',
-    description:
-      'Tersane bakım süreçlerinde koordinasyon sağlayacak, tedarik ve saha yönetimi yapabilecek acente desteği talep edilmektedir.',
-    tag: 'Popüler',
-    serviceType: 'Teknik Servis',
-    image:
-      'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=300&q=80',
-    isUrgent: false,
-    createdOrder: 2,
-  },
-  {
-    id: 3,
-    title: 'Mersin Acil Operasyon Koordinasyonu',
-    company: 'Akdeniz Lojistik',
-    location: 'Mersin Limanı',
-    port: 'Mersin',
-    category: 'Yükleme – Boşaltma Operasyonu',
-    budget: '₺95.000 - ₺140.000',
-    budgetValue: 140000,
-    deadline: '6 Nisan 2026',
-    description:
-      'Yoğun gemi trafiği nedeniyle operasyonel süreçleri hızlandıracak ve vardiya planlamasını yönetecek acente aranmaktadır.',
-    tag: 'Acil',
-    serviceType: 'Lojistik',
-    image:
-      'https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?auto=format&fit=crop&w=300&q=80',
-    isUrgent: true,
-    createdOrder: 4,
-  },
-];
 
 const getTagStyle = (tag: string) => {
   if (tag === 'Acil') {
@@ -74,6 +14,10 @@ const getTagStyle = (tag: string) => {
 const AgentSearchPage: React.FC = () => {
   const navigate = useNavigate();
 
+  // GERÇEK VERİLER İÇİN EKLENEN STATE'LER
+  const [jobs, setJobs] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const [selectedCategory, setSelectedCategory] = useState('Tümü');
   const [selectedPort, setSelectedPort] = useState('Tüm Limanlar');
   const [selectedBudget, setSelectedBudget] = useState('Tüm Bütçeler');
@@ -81,10 +25,10 @@ const AgentSearchPage: React.FC = () => {
   const [onlyUrgent, setOnlyUrgent] = useState(false);
   const [onlyNew, setOnlyNew] = useState(false);
 
-  const [selectedJob, setSelectedJob] = useState<(typeof jobs)[number] | null>(null);
+  const [selectedJob, setSelectedJob] = useState<any | null>(null);
   const [isActionModalOpen, setIsActionModalOpen] = useState(false);
 
-  const openActionModal = (job: (typeof jobs)[number]) => {
+  const openActionModal = (job: any) => {
     setSelectedJob(job);
     setIsActionModalOpen(true);
   };
@@ -94,8 +38,49 @@ const AgentSearchPage: React.FC = () => {
     setSelectedJob(null);
   };
 
+  // SAYFA AÇILDIĞINDA BACKEND'DEN VERİ ÇEKEN KOD
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const baseUrl = import.meta.env.VITE_API_URL;
+        const token = localStorage.getItem('accessToken'); 
+
+        const response = await fetch(`${baseUrl}/agent/jobs`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }); 
+        
+        if (response.ok) {
+          const data = await response.json();
+          // ÇÖZÜM 1: Gelen verinin bir liste olduğundan emin oluyoruz. Değilse boş liste yapıyoruz.
+          if (Array.isArray(data)) {
+            setJobs(data);
+          } else if (data && Array.isArray(data.data)) {
+            setJobs(data.data);
+          } else if (data && Array.isArray(data.items)) {
+            setJobs(data.items);
+          } else {
+            setJobs([]); 
+          }
+        } else {
+          console.error("Hata! Sunucu kapıyı açmadı, durum kodu:", response.status);
+        }
+      } catch (error) {
+        console.error("Bağlantı hatası:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
   const filteredJobs = useMemo(() => {
-    let result = [...jobs];
+    // ÇÖZÜM 2: jobs değişkeni her ne olursa olsun, bir liste değilse beyaz ekran vermemesi için korumaya alıyoruz.
+    let result = Array.isArray(jobs) ? [...jobs] : [];
 
     if (selectedCategory !== 'Tümü') {
       result = result.filter((job) => job.category === selectedCategory || job.serviceType === selectedCategory);
@@ -146,7 +131,7 @@ const AgentSearchPage: React.FC = () => {
     });
 
     return result;
-  }, [selectedCategory, selectedPort, selectedBudget, sortBy, onlyUrgent, onlyNew]);
+  }, [jobs, selectedCategory, selectedPort, selectedBudget, sortBy, onlyUrgent, onlyNew]);
 
   return (
     <>
@@ -319,7 +304,11 @@ const AgentSearchPage: React.FC = () => {
           </div>
 
           <div className="flex flex-col gap-4">
-            {filteredJobs.length > 0 ? (
+            {isLoading ? (
+              <div className="text-center py-10 text-slate-500">
+                İlanlar yükleniyor...
+              </div>
+            ) : filteredJobs.length > 0 ? (
               filteredJobs.map((job) => (
                 <div
                   key={job.id}
@@ -332,7 +321,7 @@ const AgentSearchPage: React.FC = () => {
                   <div className="flex flex-col lg:flex-row lg:items-center gap-5">
                     <div className="flex items-center gap-4 min-w-0 lg:w-[38%]">
                       <img
-                        src={job.image}
+                        src={job.image || 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=300&q=80'}
                         alt={job.title}
                         className="w-24 h-20 rounded-2xl object-cover border border-slate-200 dark:border-slate-700 shrink-0"
                       />
