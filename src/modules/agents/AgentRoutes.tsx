@@ -12,8 +12,9 @@ import DashboardLayout from '@/features/dashboard/components/LocalAgentDashboard
 import AgentDashboardPage from './dashboard/AgentDashboardPage';
 
 // AGENT PAGES
-import SubcontractorDirectory from './pages/SubcontractorDirectory';
+import SubcontractorDirectoryPage from './pages/SubcontractorDirectoryPage';
 import SubcontractorDirectoryDetail from './pages/SubcontractorDirectoryDetail';
+import AgentApplicationsPage from './pages/AgentApplicationsPage';
 import ArchiveFinance from './pages/ArchiveFinance';
 import ArchiveFinanceDetail from './pages/ArchiveFinanceDetail';
 import AddFinance from './pages/FinansEkle'; // Was FinansEkle
@@ -46,8 +47,9 @@ export default function AgentRoutes() {
             <Routes>
               <Route path="/" element={<AgentDashboardPage />} />
               <Route path="messages" element={<MessagesPage />} />
-              <Route path="subcontractor-directory" element={<SubcontractorDirectory />} />
+              <Route path="subcontractor-directory" element={<SubcontractorDirectoryPage />} />
               <Route path="subcontractor-directory/:id" element={<SubcontractorDirectoryDetail />} />
+              <Route path="applications" element={<AgentApplicationsPage />} />
               <Route path="archive-finance" element={<ArchiveFinance />} />
               <Route path="job-list" element={<AgentJobList />} />
               <Route path="archive-finance/:id" element={<ArchiveFinanceDetail />} />
@@ -59,7 +61,7 @@ export default function AgentRoutes() {
               <Route path="assigned/:id" element={<AgentAssignedJobDetail />} />
               <Route path="jobs/:id" element={<AgentJobDetails />} />
               <Route path="listing/:id" element={<AgentListingDetail />} />
-              <Route path="add-subcontractor" element={<SubcontractorDirectory />} />
+              <Route path="add-subcontractor" element={<SubcontractorDirectoryPage />} />
               <Route path="quick-post" element={<QuickPostPage />} />
               <Route path="quick-post/:id" element={<QuickPostPage />} />
               <Route path="job-search" element={<AgentSearchPage />} />
